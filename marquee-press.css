@@ -1,0 +1,770 @@
+/* ====================================================================
+   MARQUEE PRESS · v1 · 2026-05-27
+   Adam Hansen's canonical house design system.
+   Synthesized from 6 design rounds + curveball pass.
+
+   To use: link this file in any HTML <head>:
+     <link rel="stylesheet" href="marquee-press.css">
+
+   Plus the Google Fonts import (in HTML <head>):
+     <link rel="preconnect" href="https://fonts.googleapis.com">
+     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;700&family=Bodoni+Moda:ital,wght@0,400;0,500;0,700;0,900;1,400;1,700;1,900&family=Lora:ital,wght@0,400;0,500;0,700;1,400&family=IBM+Plex+Mono:wght@300;400;500;700&family=IBM+Plex+Sans:wght@400;500;700&family=Bowlby+One&display=swap" rel="stylesheet">
+
+   Living spec: revise via new design rounds. Versioning increment each round.
+   ==================================================================== */
+
+:root {
+  /* ---------- PAPER LAYER (substrate + ink) ---------- */
+  --mp-paper: #f1e8d2;             /* page background — warm cream */
+  --mp-paper-dark: #e8dcc0;        /* raised surfaces — cards, sidebars */
+  --mp-paper-deep: #ddcfa8;        /* deeper surfaces — TLDR blocks */
+  --mp-ink: #2c1c0e;               /* primary text — deeper espresso */
+  --mp-ink-soft: #5a4634;          /* secondary text — italic captions */
+  --mp-ink-faint: #7a6750;         /* meta labels — timestamps */
+
+  /* ---------- MARQUEE ACCENTS (the spine) ---------- */
+  --mp-red: #b32027;               /* cinnabar — primary accent · love · CTAs */
+  --mp-red-dark: #851a1f;          /* depth shadow, button-hover */
+  --mp-red-deep: #5e1216;          /* shadow tier 2 */
+  --mp-gold: #f5d447;              /* bright sun — marquee borders · ticket stubs */
+  --mp-gold-dark: #c9a917;         /* gold depth · gold button border */
+  --mp-gold-deep: #8a5e10;         /* gold shadow tier 2 */
+
+  /* ---------- PENGUIN CHROME ---------- */
+  --mp-orange: #e85a26;            /* Penguin sunset — spec strip · button · roundel */
+  --mp-orange-light: #f4ead4;      /* paper-warm used on orange */
+
+  /* ---------- MOOD ACCENTS ---------- */
+  --mp-cool: #0d5c5e;              /* cinecolor cyan — info · event · cool counterpoint */
+  --mp-cool-light: #2a8c8e;        /* cyan hover · highlights */
+  --mp-warm-brown: #8a6332;        /* NMT · caution · walnut */
+  --mp-forest: #1b6e2a;            /* success · "Done" badges */
+  --mp-plum: #4a1a3a;              /* posters · giallo-adjacent deep accent */
+
+  /* ---------- TYPE STACK ---------- */
+  --mp-font-display: 'Bowlby One', 'Anton', Impact, sans-serif;          /* HERO TITLES */
+  --mp-font-display-serif: 'Bodoni Moda', 'Didot', Georgia, serif;        /* H2 · pull quotes · drop caps */
+  --mp-font-body: 'Iowan Old Style', 'Lora', Georgia, 'Palatino Linotype', serif;  /* BODY READING */
+  --mp-font-mono: 'IBM Plex Mono', 'Courier New', monospace;              /* labels · stats · code */
+  --mp-font-sans: 'IBM Plex Sans', 'Atkinson Hyperlegible', system-ui, sans-serif; /* Penguin chrome · UI */
+
+  /* ---------- SPACING SCALE (base unit 8px) ---------- */
+  --mp-space-1: 4px;
+  --mp-space-2: 8px;
+  --mp-space-3: 12px;
+  --mp-space-4: 16px;
+  --mp-space-5: 24px;
+  --mp-space-6: 32px;
+  --mp-space-7: 48px;
+  --mp-space-8: 72px;
+
+  /* ---------- BORDER / RADIUS ---------- */
+  --mp-radius-sm: 2px;
+  --mp-radius-md: 6px;
+  --mp-radius-pill: 30px;
+
+  /* ---------- SEMANTIC (for components) ---------- */
+  --mp-love: var(--mp-red);
+  --mp-fine: #6b6b5a;
+  --mp-nmt: var(--mp-warm-brown);
+  --mp-hate: var(--mp-ink);
+  --mp-event: var(--mp-cool);
+}
+
+/* ====================================================================
+   BASE — body, headings, links, paper grain
+   ==================================================================== */
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--mp-paper);
+  color: var(--mp-ink);
+  font-family: var(--mp-font-body);
+  font-size: 17px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+
+  /* Newsprint halftone + paper grain — R5 Q04 winner */
+  background-image:
+    radial-gradient(circle at 1px 1px, rgba(255,20,147,0.04) 1px, transparent 1.5px),
+    radial-gradient(circle at 3px 3px, rgba(0,206,209,0.04) 1px, transparent 1.5px),
+    radial-gradient(circle at 2px 2px, rgba(0,0,0,0.10) 1px, transparent 1.5px);
+  background-size: 4px 4px, 4px 4px, 5px 5px;
+
+  /* Penguin tri-band orange edges — R5 Q14 winner */
+  border-top: 14px solid var(--mp-orange);
+  border-bottom: 14px solid var(--mp-orange);
+  min-height: 100vh;
+}
+
+/* Headings — Bowlby One for big, Bodoni Moda for serif */
+h1, .mp-h1 {
+  font-family: var(--mp-font-display);
+  font-weight: 400;
+  font-size: 40px;
+  line-height: 1;
+  letter-spacing: 0.005em;
+  text-transform: uppercase;
+  color: var(--mp-ink);
+  margin: 0;
+}
+h2, .mp-h2 {
+  font-family: var(--mp-font-display);
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 1.15;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  color: var(--mp-ink);
+  margin: 0;
+}
+h3, .mp-h3 {
+  font-family: var(--mp-font-display-serif);
+  font-weight: 500;
+  font-size: 22px;
+  line-height: 1.2;
+  color: var(--mp-ink);
+  margin: 0;
+}
+
+/* Body text */
+p {
+  font-family: var(--mp-font-body);
+  font-size: 17px;
+  line-height: 1.55;
+  color: var(--mp-ink);
+  margin: 0 0 var(--mp-space-3);
+}
+
+/* Inline emphasis — R5 Q13 winner: italic only */
+em { font-style: italic; color: var(--mp-ink); }
+strong { color: var(--mp-ink); font-weight: 700; }
+
+/* Small caps for proper-noun emphasis */
+.mp-sc { font-variant: small-caps; letter-spacing: 0.05em; font-weight: 600; }
+
+/* Links — R5 Q12 winner: cyan italic no underline */
+a {
+  color: var(--mp-cool);
+  font-style: italic;
+  font-weight: 700;
+  text-decoration: none;
+  transition: color 0.15s;
+}
+a:hover { color: var(--mp-red); }
+
+/* Code */
+code, .mp-code {
+  font-family: var(--mp-font-mono);
+  font-size: 0.9em;
+  background: var(--mp-paper-dark);
+  padding: 1px 6px;
+  border-radius: var(--mp-radius-sm);
+  color: var(--mp-ink);
+}
+
+/* ====================================================================
+   MARQUEE POSTER MASTHEAD — daily / hero pages
+   R6 Q01 winner
+   ==================================================================== */
+
+.mp-spec-strip {
+  background: var(--mp-orange);
+  color: var(--mp-orange-light);
+  padding: var(--mp-space-3) var(--mp-space-5);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--mp-font-sans);
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  gap: var(--mp-space-3);
+  flex-wrap: wrap;
+}
+
+/* Penguin roundel — R5 Q09 winner: double-ring book-stamp */
+.mp-roundel {
+  background: var(--mp-orange);
+  color: var(--mp-orange-light);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--mp-font-sans);
+  font-weight: 700;
+  font-size: 13px;
+  border: 2px solid var(--mp-ink);
+  box-shadow: inset 0 0 0 4px var(--mp-orange), inset 0 0 0 5px var(--mp-orange-light);
+  letter-spacing: 0;
+  flex-shrink: 0;
+}
+
+/* Hero — Futurist diagonal title + red intrusion */
+.mp-hero {
+  background: var(--mp-ink);
+  color: var(--mp-paper);
+  padding: 48px 32px 60px;
+  min-height: 320px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.mp-hero::before {
+  /* Rotated red square — R5 Q03 winner */
+  content: "";
+  position: absolute;
+  top: -50px;
+  right: -60px;
+  width: 220px;
+  height: 220px;
+  background: var(--mp-red);
+  transform: rotate(15deg);
+}
+.mp-hero .mp-kicker {
+  position: relative;
+  z-index: 2;
+  font-family: var(--mp-font-mono);
+  font-size: 13px;
+  color: var(--mp-red);
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  font-weight: 700;
+  text-shadow: 1px 1px 0 var(--mp-ink);
+}
+.mp-hero .mp-title {
+  position: relative;
+  z-index: 2;
+  font-family: var(--mp-font-display);
+  font-weight: 400;
+  font-size: 40px;
+  line-height: 1;
+  margin-top: var(--mp-space-3);
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  transform: rotate(-9deg);                   /* R5 Q02 — aggressive */
+  transform-origin: left center;
+  letter-spacing: 0.005em;
+  word-break: keep-all;
+  color: var(--mp-paper);
+}
+.mp-hero .mp-title .mp-line-2 { color: var(--mp-gold); }   /* R5 Q04 — per-line color */
+.mp-hero .mp-subtitle {
+  position: relative;
+  z-index: 2;
+  font-family: var(--mp-font-body);
+  font-style: italic;
+  font-size: 19px;
+  color: var(--mp-gold);
+  margin-top: var(--mp-space-5);
+  transform: rotate(1deg);
+}
+
+/* ====================================================================
+   RISO REGISTRATION RULE — dividers, drop-cap shadows
+   R5 Q05 winner: 1-2px subtle offset
+   R5 Q06 winner: cinnabar + cinecolor cyan
+   ==================================================================== */
+
+.mp-reg-rule {
+  margin: var(--mp-space-4) 0 var(--mp-space-5);
+  height: 4px;
+  position: relative;
+  clear: both;
+}
+.mp-reg-rule::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: var(--mp-red);
+}
+.mp-reg-rule::after {
+  content: "";
+  position: absolute;
+  top: 2px; left: 1px; right: -1px;
+  height: 2px;
+  background: var(--mp-cool);
+}
+
+/* ====================================================================
+   SECTION HEADER
+   ==================================================================== */
+
+.mp-section { margin-bottom: var(--mp-space-7); }
+.mp-section-head {
+  display: flex;
+  align-items: baseline;
+  gap: var(--mp-space-3);
+  margin: 0;
+}
+.mp-section-head .mp-num {
+  font-family: var(--mp-font-mono);
+  font-size: 12px;
+  letter-spacing: 0.2em;
+  color: var(--mp-red);
+  font-weight: 700;
+  text-transform: uppercase;
+}
+.mp-section-head .mp-title {
+  font-family: var(--mp-font-display);
+  font-weight: 400;
+  font-size: 22px;
+  line-height: 1.15;
+  text-transform: uppercase;
+  color: var(--mp-ink);
+  letter-spacing: 0.01em;
+}
+
+/* ====================================================================
+   DROP CAP — R5 Q17 winner: solid cinnabar Bodoni
+   ==================================================================== */
+
+.mp-dropcap {
+  font-family: var(--mp-font-display-serif);
+  font-weight: 900;
+  font-size: 68px;
+  color: var(--mp-red);
+  float: left;
+  line-height: 0.85;
+  margin: 6px 12px 0 0;
+}
+
+/* ====================================================================
+   BUTTONS — R6 Q15 button winner: Penguin sans block
+   R5 Q08 winner: pill rounded
+   ==================================================================== */
+
+.mp-btn {
+  font-family: var(--mp-font-sans);
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 11px 24px;
+  border-radius: var(--mp-radius-pill);
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: box-shadow 0.15s, transform 0.1s;
+  border: 1px solid var(--mp-ink);
+  background: var(--mp-orange);
+  color: var(--mp-orange-light);
+  font-style: normal;
+}
+.mp-btn:hover {
+  /* R5 Q20 winner: riso offset reveal */
+  box-shadow: 3px 3px 0 var(--mp-cool);
+  color: var(--mp-orange-light);
+}
+.mp-btn.secondary {
+  background: var(--mp-paper-dark);
+  color: var(--mp-ink);
+}
+.mp-btn.red {
+  background: var(--mp-red);
+  color: var(--mp-paper);
+  border-color: var(--mp-red-dark);
+}
+.mp-btn.red:hover { box-shadow: 3px 3px 0 var(--mp-cool); }
+.mp-btn.ghost {
+  background: transparent;
+  color: var(--mp-ink);
+}
+
+/* Pill italic-serif button variant (R5 Q10 alternative — Bodoni italic) */
+.mp-btn-italic {
+  font-family: var(--mp-font-body);
+  font-style: italic;
+  font-weight: 700;
+  font-size: 15px;
+  padding: 10px 24px;
+  border: none;
+  border-radius: var(--mp-radius-pill);
+  background: var(--mp-red);
+  color: var(--mp-paper);
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.mp-btn-italic:hover { box-shadow: 3px 3px 0 var(--mp-cool); color: var(--mp-paper); }
+
+/* ====================================================================
+   STATUS PILLS — R5 Q18 winner: mono uppercase
+   ==================================================================== */
+
+.mp-pill {
+  font-family: var(--mp-font-mono);
+  font-weight: 700;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: var(--mp-radius-pill);
+  white-space: nowrap;
+  display: inline-block;
+}
+.mp-pill.urgent  { background: var(--mp-red);        color: var(--mp-paper); }
+.mp-pill.focus   { background: var(--mp-gold);       color: var(--mp-ink); border: 1px solid var(--mp-ink); }
+.mp-pill.event   { background: var(--mp-cool);       color: var(--mp-paper); }
+.mp-pill.flag    { background: var(--mp-paper-dark); color: var(--mp-ink); border: 1px solid var(--mp-ink); }
+.mp-pill.active  { background: var(--mp-red);        color: var(--mp-paper); }
+.mp-pill.alert   { background: var(--mp-ink);        color: var(--mp-red); border: 1px solid var(--mp-red); }
+.mp-pill.done    { background: var(--mp-forest);     color: var(--mp-paper); }
+.mp-pill.dorm    { background: var(--mp-paper-dark); color: var(--mp-ink-faint); border: 1px solid var(--mp-ink-faint); }
+
+/* ====================================================================
+   CARDS — R5 Q13/Q08 winners: border-only + double-frame
+   ==================================================================== */
+
+.mp-card {
+  border: 1px solid var(--mp-ink);
+  border-radius: var(--mp-radius-md);
+  background: var(--mp-paper);
+  padding: var(--mp-space-4) var(--mp-space-5);
+}
+.mp-card.double-frame {
+  border: 1px solid var(--mp-ink);
+  padding: 6px;
+}
+.mp-card.double-frame > .inner {
+  border: 1px solid var(--mp-ink);
+  padding: var(--mp-space-3) var(--mp-space-4);
+  border-radius: 3px;
+}
+
+/* Bordered card row — R6 Q10 winner */
+.mp-row {
+  border: 1px solid var(--mp-ink);
+  border-radius: var(--mp-radius-md);
+  padding: 10px 14px;
+  background: var(--mp-paper);
+  display: flex;
+  align-items: center;
+  gap: var(--mp-space-3);
+  font-family: var(--mp-font-body);
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+.mp-row .mp-row-body { flex: 1; line-height: 1.4; }
+.mp-row .mp-row-meta {
+  font-family: var(--mp-font-mono);
+  font-size: 10px;
+  color: var(--mp-ink-soft);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* ====================================================================
+   SIDEBAR BOX — R6 Q14 winner: Penguin sidebar
+   ==================================================================== */
+
+.mp-sidebar {
+  background: var(--mp-paper-dark);
+  border-top: 4px solid var(--mp-orange);
+  border-bottom: 4px solid var(--mp-orange);
+  padding: var(--mp-space-4) var(--mp-space-5);
+  margin: var(--mp-space-5) 0;
+}
+.mp-sidebar .mp-sidebar-label {
+  font-family: var(--mp-font-sans);
+  font-weight: 700;
+  font-size: 10px;
+  color: var(--mp-orange);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+.mp-sidebar p {
+  font-family: var(--mp-font-sans);
+  font-weight: 500;
+  font-size: 14px;
+  color: var(--mp-ink);
+  margin: 4px 0 0;
+  line-height: 1.5;
+}
+
+/* ====================================================================
+   PULL QUOTE — R5 Q16 winner: cinnabar bar + riso offset
+   ==================================================================== */
+
+.mp-pullquote {
+  border-left: 4px solid var(--mp-red);
+  box-shadow: 1px 1px 0 var(--mp-cool);
+  padding: 14px 18px;
+  background: var(--mp-paper);
+  font-family: var(--mp-font-body);
+  font-style: italic;
+  font-size: 17px;
+  color: var(--mp-ink);
+  line-height: 1.4;
+  margin: var(--mp-space-5) 0;
+}
+
+/* ====================================================================
+   CALLOUT — R3 winner: left border + label
+   ==================================================================== */
+
+.mp-callout {
+  margin: var(--mp-space-4) 0;
+  padding: 14px 18px;
+  border-left: 4px solid var(--mp-gold);
+  background: var(--mp-paper-dark);
+  border-radius: 0 var(--mp-radius-md) var(--mp-radius-md) 0;
+}
+.mp-callout .mp-callout-label {
+  font-family: var(--mp-font-mono);
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--mp-gold-dark);
+  margin-bottom: 4px;
+  font-weight: 700;
+}
+.mp-callout.tldr { border-left-color: var(--mp-gold); background: var(--mp-paper-deep); }
+.mp-callout.info { border-left-color: var(--mp-cool); }
+.mp-callout.info .mp-callout-label { color: var(--mp-cool); }
+.mp-callout.warning { border-left-color: var(--mp-red); }
+.mp-callout.warning .mp-callout-label { color: var(--mp-red); }
+
+/* ====================================================================
+   CODE BLOCK — R5 Q15 winner: riso overprint mode
+   ==================================================================== */
+
+.mp-pre {
+  background: var(--mp-paper-dark);
+  color: var(--mp-ink);
+  padding: 12px 14px;
+  border-left: 2px solid var(--mp-red);
+  border-bottom: 2px solid var(--mp-cool);
+  box-shadow: 2px 2px 0 var(--mp-cool);
+  font-family: var(--mp-font-mono);
+  font-size: 12px;
+  line-height: 1.5;
+  border-radius: 0;
+  overflow-x: auto;
+  margin: var(--mp-space-4) 0;
+}
+.mp-pre .mp-comment { color: var(--mp-red); }
+.mp-pre .mp-var { color: var(--mp-cool); }
+
+/* ====================================================================
+   IMAGE CAPTION — R6 Q13 winner: Penguin orange spec
+   ==================================================================== */
+
+.mp-fig { margin: var(--mp-space-5) 0; }
+.mp-fig .mp-caption {
+  background: var(--mp-orange);
+  color: var(--mp-orange-light);
+  padding: 5px 14px;
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--mp-font-sans);
+  font-weight: 700;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  border-radius: var(--mp-radius-md);
+}
+
+/* ====================================================================
+   TABLES — R3 winner: newspaper grid + R6 Q13 caption energy
+   ==================================================================== */
+
+.mp-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--mp-font-body);
+  font-size: 14px;
+}
+.mp-table th {
+  border: 1px solid var(--mp-ink);
+  padding: 6px 12px;
+  background: var(--mp-paper-dark);
+  font-family: var(--mp-font-mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 700;
+  text-align: left;
+}
+.mp-table td {
+  border: 1px solid var(--mp-ink);
+  padding: 6px 12px;
+}
+
+/* ====================================================================
+   FOOTER COLOPHON — R6 Q19 winner: always visible
+   ==================================================================== */
+
+.mp-colophon {
+  margin: var(--mp-space-8) 0 0;
+  padding: var(--mp-space-6) var(--mp-space-5);
+  text-align: center;
+  font-family: var(--mp-font-body);
+  font-style: italic;
+  font-size: 13px;
+  color: var(--mp-ink-soft);
+  line-height: 1.6;
+}
+.mp-colophon hr {
+  border: 0;
+  border-top: 1px solid var(--mp-ink);
+  width: 160px;
+  margin: 8px auto;
+}
+.mp-logotype {
+  font-family: var(--mp-font-display);
+  font-style: normal;
+  font-size: 22px;
+  color: var(--mp-ink);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  display: block;
+  margin: var(--mp-space-3) 0 6px;
+}
+
+/* ====================================================================
+   PROGRESS BAR / STICKY HEADER
+   ==================================================================== */
+
+.mp-progress-bar {
+  position: sticky;
+  top: 0;
+  background: var(--mp-paper);
+  border-bottom: 1px solid var(--mp-ink);
+  padding: var(--mp-space-3) var(--mp-space-5);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--mp-space-3);
+  z-index: 100;
+  font-family: var(--mp-font-mono);
+  font-size: 12px;
+  align-items: center;
+}
+
+/* ====================================================================
+   FORM INPUTS — R5 Q13 winner: pill rounded
+   ==================================================================== */
+
+.mp-input, .mp-textarea {
+  width: 100%;
+  padding: 11px 18px;
+  font-family: var(--mp-font-body);
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--mp-ink);
+  background: var(--mp-paper-dark);
+  border: 1px solid var(--mp-ink);
+  border-radius: var(--mp-radius-pill);
+  outline: none;
+}
+.mp-textarea {
+  border-radius: var(--mp-radius-md);
+  min-height: 120px;
+  resize: vertical;
+}
+.mp-input:focus, .mp-textarea:focus {
+  border-color: var(--mp-red);
+  box-shadow: 2px 2px 0 var(--mp-cool);
+}
+.mp-input::placeholder, .mp-textarea::placeholder {
+  color: var(--mp-ink-faint);
+  font-style: italic;
+}
+
+/* ====================================================================
+   PARAGRAPH-BREAK DINGBAT — R3 winner: three asterisks
+   ==================================================================== */
+
+.mp-break {
+  text-align: center;
+  color: var(--mp-ink);
+  letter-spacing: 0.8em;
+  margin: var(--mp-space-4) 0;
+  font-size: 14px;
+}
+.mp-break::before { content: "* * *"; }
+
+/* ====================================================================
+   PENGUIN NUMBERED TABS — R6 Q15 winner
+   ==================================================================== */
+
+.mp-tabs {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  border-bottom: 1px solid var(--mp-ink);
+  padding-bottom: 6px;
+  flex-wrap: wrap;
+}
+.mp-tab {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  text-decoration: none;
+  font-style: normal;
+}
+.mp-tab .mp-tab-num {
+  background: var(--mp-paper-dark);
+  color: var(--mp-orange);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--mp-font-sans);
+  font-weight: 700;
+  font-size: 11px;
+  border: 1px solid var(--mp-orange);
+}
+.mp-tab .mp-tab-label {
+  font-family: var(--mp-font-sans);
+  font-weight: 600;
+  font-size: 11px;
+  color: var(--mp-ink-soft);
+  letter-spacing: 0.05em;
+}
+.mp-tab.active .mp-tab-num {
+  background: var(--mp-orange);
+  color: var(--mp-orange-light);
+  border-color: var(--mp-ink);
+}
+.mp-tab.active .mp-tab-label { color: var(--mp-ink); font-weight: 700; }
+
+/* ====================================================================
+   RESPONSIVE — keep the rotated hero contained on small screens
+   ==================================================================== */
+
+@media (max-width: 720px) {
+  .mp-hero { padding: 36px 20px 48px; min-height: 280px; }
+  .mp-hero .mp-title { font-size: 28px; line-height: 1.05; }
+  .mp-hero .mp-subtitle { font-size: 16px; margin-top: 18px; }
+  .mp-hero::before { width: 140px; height: 140px; top: -30px; right: -30px; }
+  .mp-spec-strip { flex-direction: column; align-items: stretch; gap: 8px; padding: 10px 16px; text-align: center; }
+  body { font-size: 16px; }
+}
+@media (max-width: 480px) {
+  .mp-hero { padding: 32px 16px 44px; min-height: 260px; }
+  .mp-hero .mp-title { font-size: 24px; line-height: 1.1; transform: rotate(-6deg); }
+  .mp-hero .mp-kicker { font-size: 11px; letter-spacing: 0.22em; }
+  .mp-hero .mp-subtitle { font-size: 14px; transform: rotate(0); margin-top: 14px; }
+  .mp-hero::before { width: 110px; height: 110px; }
+}
