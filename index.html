@@ -1,0 +1,2805 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+<title>The Daily — 2026-07-23 — Marquee Press</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bowlby+One&family=Bodoni+Moda:ital,wght@0,400;0,500;0,700;0,900;1,400;1,700;1,900&family=Lora:ital,wght@0,400;0,500;0,700;1,400&family=IBM+Plex+Mono:wght@300;400;500;700&family=IBM+Plex+Sans:wght@400;500;700&family=Oswald:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>/* ====================================================================
+   MARQUEE PRESS · v1 · 2026-05-27
+   Adam Hansen's canonical house design system.
+   Synthesized from 6 design rounds + curveball pass.
+
+   To use: link this file in any HTML <head>:
+     <link rel="stylesheet" href="marquee-press.css">
+
+   Plus the Google Fonts import (in HTML <head>):
+     <link rel="preconnect" href="https://fonts.googleapis.com">
+     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;700&family=Bodoni+Moda:ital,wght@0,400;0,500;0,700;0,900;1,400;1,700;1,900&family=Lora:ital,wght@0,400;0,500;0,700;1,400&family=IBM+Plex+Mono:wght@300;400;500;700&family=IBM+Plex+Sans:wght@400;500;700&family=Bowlby+One&display=swap" rel="stylesheet">
+
+   Living spec: revise via new design rounds. Versioning increment each round.
+   ==================================================================== */
+
+:root {
+  /* ---------- PAPER LAYER (substrate + ink) ---------- */
+  --mp-paper: #f1e8d2;             /* page background — warm cream */
+  --mp-paper-dark: #e8dcc0;        /* raised surfaces — cards, sidebars */
+  --mp-paper-deep: #ddcfa8;        /* deeper surfaces — TLDR blocks */
+  --mp-ink: #2c1c0e;               /* primary text — deeper espresso */
+  --mp-ink-soft: #5a4634;          /* secondary text — italic captions */
+  --mp-ink-faint: #7a6750;         /* meta labels — timestamps */
+
+  /* ---------- MARQUEE ACCENTS (the spine) ---------- */
+  --mp-red: #b32027;               /* cinnabar — primary accent · love · CTAs */
+  --mp-red-dark: #851a1f;          /* depth shadow, button-hover */
+  --mp-red-deep: #5e1216;          /* shadow tier 2 */
+  --mp-gold: #f5d447;              /* bright sun — marquee borders · ticket stubs */
+  --mp-gold-dark: #c9a917;         /* gold depth · gold button border */
+  --mp-gold-deep: #8a5e10;         /* gold shadow tier 2 */
+
+  /* ---------- PENGUIN CHROME ---------- */
+  --mp-orange: #e85a26;            /* Penguin sunset — spec strip · button · roundel */
+  --mp-orange-light: #f4ead4;      /* paper-warm used on orange */
+
+  /* ---------- MOOD ACCENTS ---------- */
+  --mp-cool: #0d5c5e;              /* cinecolor cyan — info · event · cool counterpoint */
+  --mp-cool-light: #2a8c8e;        /* cyan hover · highlights */
+  --mp-warm-brown: #8a6332;        /* NMT · caution · walnut */
+  --mp-forest: #1b6e2a;            /* success · "Done" badges */
+  --mp-plum: #4a1a3a;              /* posters · giallo-adjacent deep accent */
+
+  /* ---------- TYPE STACK ---------- */
+  --mp-font-display: 'Bowlby One', 'Anton', Impact, sans-serif;          /* HERO TITLES */
+  --mp-font-display-serif: 'Bodoni Moda', 'Didot', Georgia, serif;        /* H2 · pull quotes · drop caps */
+  --mp-font-body: 'Iowan Old Style', 'Lora', Georgia, 'Palatino Linotype', serif;  /* BODY READING */
+  --mp-font-mono: 'IBM Plex Mono', 'Courier New', monospace;              /* labels · stats · code */
+  --mp-font-sans: 'IBM Plex Sans', 'Atkinson Hyperlegible', system-ui, sans-serif; /* Penguin chrome · UI */
+
+  /* ---------- SPACING SCALE (base unit 8px) ---------- */
+  --mp-space-1: 4px;
+  --mp-space-2: 8px;
+  --mp-space-3: 12px;
+  --mp-space-4: 16px;
+  --mp-space-5: 24px;
+  --mp-space-6: 32px;
+  --mp-space-7: 48px;
+  --mp-space-8: 72px;
+
+  /* ---------- BORDER / RADIUS ---------- */
+  --mp-radius-sm: 2px;
+  --mp-radius-md: 6px;
+  --mp-radius-pill: 30px;
+
+  /* ---------- SEMANTIC (for components) ---------- */
+  --mp-love: var(--mp-red);
+  --mp-fine: #6b6b5a;
+  --mp-nmt: var(--mp-warm-brown);
+  --mp-hate: var(--mp-ink);
+  --mp-event: var(--mp-cool);
+}
+
+/* ====================================================================
+   BASE — body, headings, links, paper grain
+   ==================================================================== */
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--mp-paper);
+  color: var(--mp-ink);
+  font-family: var(--mp-font-body);
+  font-size: 17px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+
+  /* Newsprint halftone + paper grain — R5 Q04 winner */
+  background-image:
+    radial-gradient(circle at 1px 1px, rgba(255,20,147,0.04) 1px, transparent 1.5px),
+    radial-gradient(circle at 3px 3px, rgba(0,206,209,0.04) 1px, transparent 1.5px),
+    radial-gradient(circle at 2px 2px, rgba(0,0,0,0.10) 1px, transparent 1.5px);
+  background-size: 4px 4px, 4px 4px, 5px 5px;
+
+  /* Penguin tri-band orange edges — R5 Q14 winner */
+  border-top: 14px solid var(--mp-orange);
+  border-bottom: 14px solid var(--mp-orange);
+  min-height: 100vh;
+}
+
+/* Headings — Bowlby One for big, Bodoni Moda for serif */
+h1, .mp-h1 {
+  font-family: var(--mp-font-display);
+  font-weight: 400;
+  font-size: 40px;
+  line-height: 1;
+  letter-spacing: 0.005em;
+  text-transform: uppercase;
+  color: var(--mp-ink);
+  margin: 0;
+}
+h2, .mp-h2 {
+  font-family: var(--mp-font-display);
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 1.15;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  color: var(--mp-ink);
+  margin: 0;
+}
+h3, .mp-h3 {
+  font-family: var(--mp-font-display-serif);
+  font-weight: 500;
+  font-size: 22px;
+  line-height: 1.2;
+  color: var(--mp-ink);
+  margin: 0;
+}
+
+/* Body text */
+p {
+  font-family: var(--mp-font-body);
+  font-size: 17px;
+  line-height: 1.55;
+  color: var(--mp-ink);
+  margin: 0 0 var(--mp-space-3);
+}
+
+/* Inline emphasis — R5 Q13 winner: italic only */
+em { font-style: italic; color: var(--mp-ink); }
+strong { color: var(--mp-ink); font-weight: 700; }
+
+/* Small caps for proper-noun emphasis */
+.mp-sc { font-variant: small-caps; letter-spacing: 0.05em; font-weight: 600; }
+
+/* Links — R5 Q12 winner: cyan italic no underline */
+a {
+  color: var(--mp-cool);
+  font-style: italic;
+  font-weight: 700;
+  text-decoration: none;
+  transition: color 0.15s;
+}
+a:hover { color: var(--mp-red); }
+
+/* Code */
+code, .mp-code {
+  font-family: var(--mp-font-mono);
+  font-size: 0.9em;
+  background: var(--mp-paper-dark);
+  padding: 1px 6px;
+  border-radius: var(--mp-radius-sm);
+  color: var(--mp-ink);
+}
+
+/* ====================================================================
+   MARQUEE POSTER MASTHEAD — daily / hero pages
+   R6 Q01 winner
+   ==================================================================== */
+
+.mp-spec-strip {
+  background: var(--mp-orange);
+  color: var(--mp-orange-light);
+  padding: var(--mp-space-3) var(--mp-space-5);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--mp-font-sans);
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  gap: var(--mp-space-3);
+  flex-wrap: wrap;
+}
+
+/* Penguin roundel — R5 Q09 winner: double-ring book-stamp */
+.mp-roundel {
+  background: var(--mp-orange);
+  color: var(--mp-orange-light);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--mp-font-sans);
+  font-weight: 700;
+  font-size: 13px;
+  border: 2px solid var(--mp-ink);
+  box-shadow: inset 0 0 0 4px var(--mp-orange), inset 0 0 0 5px var(--mp-orange-light);
+  letter-spacing: 0;
+  flex-shrink: 0;
+}
+
+/* Hero — Futurist diagonal title + red intrusion */
+.mp-hero {
+  background: var(--mp-ink);
+  color: var(--mp-paper);
+  padding: 48px 32px 60px;
+  min-height: 320px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.mp-hero::before {
+  /* Rotated red square — R5 Q03 winner */
+  content: "";
+  position: absolute;
+  top: -50px;
+  right: -60px;
+  width: 220px;
+  height: 220px;
+  background: var(--mp-red);
+  transform: rotate(15deg);
+}
+.mp-hero .mp-kicker {
+  position: relative;
+  z-index: 2;
+  font-family: var(--mp-font-mono);
+  font-size: 13px;
+  color: var(--mp-red);
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  font-weight: 700;
+  text-shadow: 1px 1px 0 var(--mp-ink);
+}
+.mp-hero .mp-title {
+  position: relative;
+  z-index: 2;
+  font-family: var(--mp-font-display);
+  font-weight: 400;
+  font-size: 40px;
+  line-height: 1;
+  margin-top: var(--mp-space-3);
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  transform: rotate(-9deg);                   /* R5 Q02 — aggressive */
+  transform-origin: left center;
+  letter-spacing: 0.005em;
+  word-break: keep-all;
+  color: var(--mp-paper);
+}
+.mp-hero .mp-title .mp-line-2 { color: var(--mp-gold); }   /* R5 Q04 — per-line color */
+.mp-hero .mp-subtitle {
+  position: relative;
+  z-index: 2;
+  font-family: var(--mp-font-body);
+  font-style: italic;
+  font-size: 19px;
+  color: var(--mp-gold);
+  margin-top: var(--mp-space-5);
+  transform: rotate(1deg);
+}
+
+/* ====================================================================
+   RISO REGISTRATION RULE — dividers, drop-cap shadows
+   R5 Q05 winner: 1-2px subtle offset
+   R5 Q06 winner: cinnabar + cinecolor cyan
+   ==================================================================== */
+
+.mp-reg-rule {
+  margin: var(--mp-space-4) 0 var(--mp-space-5);
+  height: 4px;
+  position: relative;
+  clear: both;
+}
+.mp-reg-rule::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: var(--mp-red);
+}
+.mp-reg-rule::after {
+  content: "";
+  position: absolute;
+  top: 2px; left: 1px; right: -1px;
+  height: 2px;
+  background: var(--mp-cool);
+}
+
+/* ====================================================================
+   SECTION HEADER
+   ==================================================================== */
+
+.mp-section { margin-bottom: var(--mp-space-7); }
+.mp-section-head {
+  display: flex;
+  align-items: baseline;
+  gap: var(--mp-space-3);
+  margin: 0;
+}
+.mp-section-head .mp-num {
+  font-family: var(--mp-font-mono);
+  font-size: 12px;
+  letter-spacing: 0.2em;
+  color: var(--mp-red);
+  font-weight: 700;
+  text-transform: uppercase;
+}
+.mp-section-head .mp-title {
+  font-family: var(--mp-font-display);
+  font-weight: 400;
+  font-size: 22px;
+  line-height: 1.15;
+  text-transform: uppercase;
+  color: var(--mp-ink);
+  letter-spacing: 0.01em;
+}
+
+/* ====================================================================
+   DROP CAP — R5 Q17 winner: solid cinnabar Bodoni
+   ==================================================================== */
+
+.mp-dropcap {
+  font-family: var(--mp-font-display-serif);
+  font-weight: 900;
+  font-size: 68px;
+  color: var(--mp-red);
+  float: left;
+  line-height: 0.85;
+  margin: 6px 12px 0 0;
+}
+
+/* ====================================================================
+   BUTTONS — R6 Q15 button winner: Penguin sans block
+   R5 Q08 winner: pill rounded
+   ==================================================================== */
+
+.mp-btn {
+  font-family: var(--mp-font-sans);
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 11px 24px;
+  border-radius: var(--mp-radius-pill);
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: box-shadow 0.15s, transform 0.1s;
+  border: 1px solid var(--mp-ink);
+  background: var(--mp-orange);
+  color: var(--mp-orange-light);
+  font-style: normal;
+}
+.mp-btn:hover {
+  /* R5 Q20 winner: riso offset reveal */
+  box-shadow: 3px 3px 0 var(--mp-cool);
+  color: var(--mp-orange-light);
+}
+.mp-btn.secondary {
+  background: var(--mp-paper-dark);
+  color: var(--mp-ink);
+}
+.mp-btn.red {
+  background: var(--mp-red);
+  color: var(--mp-paper);
+  border-color: var(--mp-red-dark);
+}
+.mp-btn.red:hover { box-shadow: 3px 3px 0 var(--mp-cool); }
+.mp-btn.ghost {
+  background: transparent;
+  color: var(--mp-ink);
+}
+
+/* Pill italic-serif button variant (R5 Q10 alternative — Bodoni italic) */
+.mp-btn-italic {
+  font-family: var(--mp-font-body);
+  font-style: italic;
+  font-weight: 700;
+  font-size: 15px;
+  padding: 10px 24px;
+  border: none;
+  border-radius: var(--mp-radius-pill);
+  background: var(--mp-red);
+  color: var(--mp-paper);
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.mp-btn-italic:hover { box-shadow: 3px 3px 0 var(--mp-cool); color: var(--mp-paper); }
+
+/* ====================================================================
+   STATUS PILLS — R5 Q18 winner: mono uppercase
+   ==================================================================== */
+
+.mp-pill {
+  font-family: var(--mp-font-mono);
+  font-weight: 700;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: var(--mp-radius-pill);
+  white-space: nowrap;
+  display: inline-block;
+}
+.mp-pill.urgent  { background: var(--mp-red);        color: var(--mp-paper); }
+.mp-pill.focus   { background: var(--mp-gold);       color: var(--mp-ink); border: 1px solid var(--mp-ink); }
+.mp-pill.event   { background: var(--mp-cool);       color: var(--mp-paper); }
+.mp-pill.flag    { background: var(--mp-paper-dark); color: var(--mp-ink); border: 1px solid var(--mp-ink); }
+.mp-pill.active  { background: var(--mp-red);        color: var(--mp-paper); }
+.mp-pill.alert   { background: var(--mp-ink);        color: var(--mp-red); border: 1px solid var(--mp-red); }
+.mp-pill.done    { background: var(--mp-forest);     color: var(--mp-paper); }
+.mp-pill.dorm    { background: var(--mp-paper-dark); color: var(--mp-ink-faint); border: 1px solid var(--mp-ink-faint); }
+
+/* ====================================================================
+   CARDS — R5 Q13/Q08 winners: border-only + double-frame
+   ==================================================================== */
+
+.mp-card {
+  border: 1px solid var(--mp-ink);
+  border-radius: var(--mp-radius-md);
+  background: var(--mp-paper);
+  padding: var(--mp-space-4) var(--mp-space-5);
+}
+.mp-card.double-frame {
+  border: 1px solid var(--mp-ink);
+  padding: 6px;
+}
+.mp-card.double-frame > .inner {
+  border: 1px solid var(--mp-ink);
+  padding: var(--mp-space-3) var(--mp-space-4);
+  border-radius: 3px;
+}
+
+/* Bordered card row — R6 Q10 winner */
+.mp-row {
+  border: 1px solid var(--mp-ink);
+  border-radius: var(--mp-radius-md);
+  padding: 10px 14px;
+  background: var(--mp-paper);
+  display: flex;
+  align-items: center;
+  gap: var(--mp-space-3);
+  font-family: var(--mp-font-body);
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+.mp-row .mp-row-body { flex: 1; line-height: 1.4; }
+.mp-row .mp-row-meta {
+  font-family: var(--mp-font-mono);
+  font-size: 10px;
+  color: var(--mp-ink-soft);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* ====================================================================
+   SIDEBAR BOX — R6 Q14 winner: Penguin sidebar
+   ==================================================================== */
+
+.mp-sidebar {
+  background: var(--mp-paper-dark);
+  border-top: 4px solid var(--mp-orange);
+  border-bottom: 4px solid var(--mp-orange);
+  padding: var(--mp-space-4) var(--mp-space-5);
+  margin: var(--mp-space-5) 0;
+}
+.mp-sidebar .mp-sidebar-label {
+  font-family: var(--mp-font-sans);
+  font-weight: 700;
+  font-size: 10px;
+  color: var(--mp-orange);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+.mp-sidebar p {
+  font-family: var(--mp-font-sans);
+  font-weight: 500;
+  font-size: 14px;
+  color: var(--mp-ink);
+  margin: 4px 0 0;
+  line-height: 1.5;
+}
+
+/* ====================================================================
+   PULL QUOTE — R5 Q16 winner: cinnabar bar + riso offset
+   ==================================================================== */
+
+.mp-pullquote {
+  border-left: 4px solid var(--mp-red);
+  box-shadow: 1px 1px 0 var(--mp-cool);
+  padding: 14px 18px;
+  background: var(--mp-paper);
+  font-family: var(--mp-font-body);
+  font-style: italic;
+  font-size: 17px;
+  color: var(--mp-ink);
+  line-height: 1.4;
+  margin: var(--mp-space-5) 0;
+}
+
+/* ====================================================================
+   CALLOUT — R3 winner: left border + label
+   ==================================================================== */
+
+.mp-callout {
+  margin: var(--mp-space-4) 0;
+  padding: 14px 18px;
+  border-left: 4px solid var(--mp-gold);
+  background: var(--mp-paper-dark);
+  border-radius: 0 var(--mp-radius-md) var(--mp-radius-md) 0;
+}
+.mp-callout .mp-callout-label {
+  font-family: var(--mp-font-mono);
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--mp-gold-dark);
+  margin-bottom: 4px;
+  font-weight: 700;
+}
+.mp-callout.tldr { border-left-color: var(--mp-gold); background: var(--mp-paper-deep); }
+.mp-callout.info { border-left-color: var(--mp-cool); }
+.mp-callout.info .mp-callout-label { color: var(--mp-cool); }
+.mp-callout.warning { border-left-color: var(--mp-red); }
+.mp-callout.warning .mp-callout-label { color: var(--mp-red); }
+
+/* ====================================================================
+   CODE BLOCK — R5 Q15 winner: riso overprint mode
+   ==================================================================== */
+
+.mp-pre {
+  background: var(--mp-paper-dark);
+  color: var(--mp-ink);
+  padding: 12px 14px;
+  border-left: 2px solid var(--mp-red);
+  border-bottom: 2px solid var(--mp-cool);
+  box-shadow: 2px 2px 0 var(--mp-cool);
+  font-family: var(--mp-font-mono);
+  font-size: 12px;
+  line-height: 1.5;
+  border-radius: 0;
+  overflow-x: auto;
+  margin: var(--mp-space-4) 0;
+}
+.mp-pre .mp-comment { color: var(--mp-red); }
+.mp-pre .mp-var { color: var(--mp-cool); }
+
+/* ====================================================================
+   IMAGE CAPTION — R6 Q13 winner: Penguin orange spec
+   ==================================================================== */
+
+.mp-fig { margin: var(--mp-space-5) 0; }
+.mp-fig .mp-caption {
+  background: var(--mp-orange);
+  color: var(--mp-orange-light);
+  padding: 5px 14px;
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--mp-font-sans);
+  font-weight: 700;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  border-radius: var(--mp-radius-md);
+}
+
+/* ====================================================================
+   TABLES — R3 winner: newspaper grid + R6 Q13 caption energy
+   ==================================================================== */
+
+.mp-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--mp-font-body);
+  font-size: 14px;
+}
+.mp-table th {
+  border: 1px solid var(--mp-ink);
+  padding: 6px 12px;
+  background: var(--mp-paper-dark);
+  font-family: var(--mp-font-mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 700;
+  text-align: left;
+}
+.mp-table td {
+  border: 1px solid var(--mp-ink);
+  padding: 6px 12px;
+}
+
+/* ====================================================================
+   FOOTER COLOPHON — R6 Q19 winner: always visible
+   ==================================================================== */
+
+.mp-colophon {
+  margin: var(--mp-space-8) 0 0;
+  padding: var(--mp-space-6) var(--mp-space-5);
+  text-align: center;
+  font-family: var(--mp-font-body);
+  font-style: italic;
+  font-size: 13px;
+  color: var(--mp-ink-soft);
+  line-height: 1.6;
+}
+.mp-colophon hr {
+  border: 0;
+  border-top: 1px solid var(--mp-ink);
+  width: 160px;
+  margin: 8px auto;
+}
+.mp-logotype {
+  font-family: var(--mp-font-display);
+  font-style: normal;
+  font-size: 22px;
+  color: var(--mp-ink);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  display: block;
+  margin: var(--mp-space-3) 0 6px;
+}
+
+/* ====================================================================
+   PROGRESS BAR / STICKY HEADER
+   ==================================================================== */
+
+.mp-progress-bar {
+  position: sticky;
+  top: 0;
+  background: var(--mp-paper);
+  border-bottom: 1px solid var(--mp-ink);
+  padding: var(--mp-space-3) var(--mp-space-5);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--mp-space-3);
+  z-index: 100;
+  font-family: var(--mp-font-mono);
+  font-size: 12px;
+  align-items: center;
+}
+
+/* ====================================================================
+   FORM INPUTS — R5 Q13 winner: pill rounded
+   ==================================================================== */
+
+.mp-input, .mp-textarea {
+  width: 100%;
+  padding: 11px 18px;
+  font-family: var(--mp-font-body);
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--mp-ink);
+  background: var(--mp-paper-dark);
+  border: 1px solid var(--mp-ink);
+  border-radius: var(--mp-radius-pill);
+  outline: none;
+}
+.mp-textarea {
+  border-radius: var(--mp-radius-md);
+  min-height: 120px;
+  resize: vertical;
+}
+.mp-input:focus, .mp-textarea:focus {
+  border-color: var(--mp-red);
+  box-shadow: 2px 2px 0 var(--mp-cool);
+}
+.mp-input::placeholder, .mp-textarea::placeholder {
+  color: var(--mp-ink-faint);
+  font-style: italic;
+}
+
+/* ====================================================================
+   PARAGRAPH-BREAK DINGBAT — R3 winner: three asterisks
+   ==================================================================== */
+
+.mp-break {
+  text-align: center;
+  color: var(--mp-ink);
+  letter-spacing: 0.8em;
+  margin: var(--mp-space-4) 0;
+  font-size: 14px;
+}
+.mp-break::before { content: "* * *"; }
+
+/* ====================================================================
+   PENGUIN NUMBERED TABS — R6 Q15 winner
+   ==================================================================== */
+
+.mp-tabs {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  border-bottom: 1px solid var(--mp-ink);
+  padding-bottom: 6px;
+  flex-wrap: wrap;
+}
+.mp-tab {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  text-decoration: none;
+  font-style: normal;
+}
+.mp-tab .mp-tab-num {
+  background: var(--mp-paper-dark);
+  color: var(--mp-orange);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--mp-font-sans);
+  font-weight: 700;
+  font-size: 11px;
+  border: 1px solid var(--mp-orange);
+}
+.mp-tab .mp-tab-label {
+  font-family: var(--mp-font-sans);
+  font-weight: 600;
+  font-size: 11px;
+  color: var(--mp-ink-soft);
+  letter-spacing: 0.05em;
+}
+.mp-tab.active .mp-tab-num {
+  background: var(--mp-orange);
+  color: var(--mp-orange-light);
+  border-color: var(--mp-ink);
+}
+.mp-tab.active .mp-tab-label { color: var(--mp-ink); font-weight: 700; }
+
+/* ====================================================================
+   RESPONSIVE — keep the rotated hero contained on small screens
+   ==================================================================== */
+
+@media (max-width: 720px) {
+  .mp-hero { padding: 36px 20px 48px; min-height: 280px; }
+  .mp-hero .mp-title { font-size: 28px; line-height: 1.05; }
+  .mp-hero .mp-subtitle { font-size: 16px; margin-top: 18px; }
+  .mp-hero::before { width: 140px; height: 140px; top: -30px; right: -30px; }
+  .mp-spec-strip { flex-direction: column; align-items: stretch; gap: 8px; padding: 10px 16px; text-align: center; }
+  body { font-size: 16px; }
+}
+@media (max-width: 480px) {
+  .mp-hero { padding: 32px 16px 44px; min-height: 260px; }
+  .mp-hero .mp-title { font-size: 24px; line-height: 1.1; transform: rotate(-6deg); }
+  .mp-hero .mp-kicker { font-size: 11px; letter-spacing: 0.22em; }
+  .mp-hero .mp-subtitle { font-size: 14px; transform: rotate(0); margin-top: 14px; }
+  .mp-hero::before { width: 110px; height: 110px; }
+}
+
+
+/* Force light always — no dark mode, ever (matches Message-Buddies.html). */
+html { color-scheme: light; }
+
+/* Daily-specific layout */
+.buddy-bar {
+  background: var(--mp-ink);
+  color: var(--mp-paper);
+  padding: 12px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.buddy-bar .left {
+  font-family: var(--mp-font-mono);
+  font-size: 11px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--mp-gold);
+  font-weight: 700;
+}
+.buddy-bar .left .pulse {
+  display: inline-block;
+  width: 8px; height: 8px;
+  background: var(--mp-red);
+  border-radius: 50%;
+  margin-right: 8px;
+  box-shadow: 0 0 0 2px rgba(179,32,39,0.3);
+  animation: mp-blink 1.6s ease-in-out infinite;
+}
+@keyframes mp-blink { 50% { opacity: 0.4; } }
+.buddy-bar a.cta {
+  background: var(--mp-orange);
+  color: #f5ead4;
+  font-family: var(--mp-font-sans);
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 9px 22px;
+  border-radius: var(--mp-radius-pill);
+  text-decoration: none;
+  font-style: normal;
+  border: 1px solid var(--mp-ink);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: box-shadow 0.15s;
+}
+.buddy-bar a.cta:hover {
+  box-shadow: 3px 3px 0 var(--mp-cool);
+  color: #f5ead4;
+}
+.buddy-bar a.cta::before { content: "✉"; font-size: 14px; }
+
+.weather-strip {
+  background: var(--mp-paper-dark);
+  color: var(--mp-ink);
+  padding: 10px 24px;
+  font-family: var(--mp-font-mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  text-align: center;
+  border-bottom: 1px solid var(--mp-ink);
+}
+.weather-strip strong { color: var(--mp-red); }
+
+main { max-width: 820px; margin: 32px auto 0; padding: 0 24px; }
+
+.crumbs {
+  font-family: var(--mp-font-mono);
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--mp-ink-soft);
+  margin: 0 0 var(--mp-space-5);
+  word-break: break-word;
+}
+.crumbs .wikilink {
+  color: var(--mp-cool);
+  font-style: italic;
+  font-weight: 700;
+}
+.crumbs .wikilink::before { content: ""; }
+.crumbs .wikilink::after { content: ""; }
+
+/* Glance block */
+.glance {
+  background: var(--mp-paper);
+  padding: 22px 26px;
+  border: 1px solid var(--mp-ink);
+  border-radius: var(--mp-radius-md);
+}
+.glance .deck {
+  font-family: var(--mp-font-body);
+  font-size: 17px;
+  line-height: 1.55;
+  color: var(--mp-ink);
+  margin: 0;
+}
+.glance .deck em { font-style: italic; color: var(--mp-red); }
+
+/* Pulse row */
+.pulse-row {
+  border: 1px solid var(--mp-ink);
+  border-radius: var(--mp-radius-md);
+  padding: 12px 16px;
+  background: var(--mp-paper);
+  display: grid;
+  grid-template-columns: minmax(160px, max-content) 1fr;
+  gap: 16px;
+  align-items: baseline;
+  margin-bottom: 8px;
+}
+.pulse-row .name {
+  font-family: var(--mp-font-display);
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--mp-ink);
+}
+.pulse-row .status { display: flex; flex-wrap: wrap; gap: 8px; align-items: baseline; }
+.pulse-row .text { font-family: var(--mp-font-body); font-size: 14px; color: var(--mp-ink); line-height: 1.45; flex: 1; }
+
+/* Pulse accordion cards (tap-to-expand, no truncation) */
+.pulse-card {
+  border: 1px solid var(--mp-ink);
+  border-radius: var(--mp-radius-md);
+  background: var(--mp-paper);
+  margin-bottom: 8px;
+}
+.pulse-card summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 12px 16px;
+  cursor: pointer;
+  list-style: none;
+}
+.pulse-card summary::-webkit-details-marker { display: none; }
+.pulse-card summary::after {
+  content: "+";
+  font-family: var(--mp-font-mono);
+  font-size: 15px;
+  color: var(--mp-ink-faint);
+  flex: 0 0 auto;
+}
+.pulse-card[open] summary::after { content: "–"; }
+.pulse-card summary .name {
+  font-family: var(--mp-font-display);
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--mp-ink);
+  flex: 1;
+  min-width: 0;
+}
+.pulse-card .pulse-body {
+  padding: 0 16px 12px;
+  border-top: 1px dotted var(--mp-ink-faint);
+}
+.pulse-card .pulse-body p {
+  font-family: var(--mp-font-body);
+  font-size: 14px;
+  color: var(--mp-ink);
+  line-height: 1.5;
+  margin: 10px 0 0;
+  overflow-wrap: break-word;
+}
+.pulse-card .pulse-next b { font-family: var(--mp-font-sans); font-size: 12.5px; letter-spacing: 0.03em; text-transform: uppercase; }
+
+/* News grid */
+.news-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 10px;
+}
+.news-card {
+  border: 1px solid var(--mp-ink);
+  border-radius: var(--mp-radius-md);
+  padding: 14px 16px;
+  background: var(--mp-paper);
+}
+.news-card .kicker {
+  font-family: var(--mp-font-mono);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--mp-red);
+  font-weight: 700;
+}
+.news-card .head {
+  font-family: var(--mp-font-display);
+  font-size: 14px;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--mp-ink);
+  margin: 4px 0 6px;
+}
+.news-card .body { font-family: var(--mp-font-body); font-size: 13px; color: var(--mp-ink-soft); line-height: 1.45; }
+
+/* EOD panel — restyle .panel to match Marquee Press */
+.panel {
+  background: var(--mp-paper);
+  border: 1px solid var(--mp-ink);
+  border-radius: var(--mp-radius-md);
+  padding: 18px 22px;
+  margin-top: 20px;
+}
+.panel h2 {
+  font-family: var(--mp-font-display);
+  font-size: 16px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin: 0 0 6px;
+  color: var(--mp-ink);
+}
+.panel-intro { font-family: var(--mp-font-body); font-size: 14px; line-height: 1.5; color: var(--mp-ink); margin: 4px 0 12px; }
+.panel label {
+  display: block;
+  font-family: var(--mp-font-mono);
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  color: var(--mp-red);
+  margin: 12px 0 4px;
+  text-transform: uppercase;
+}
+.panel textarea, .panel input[type=text] {
+  width: 100%;
+  font-family: var(--mp-font-body);
+  font-size: 14px;
+  padding: 10px;
+  background: var(--mp-paper-dark);
+  border: 1px solid var(--mp-ink);
+  border-radius: var(--mp-radius-md);
+  color: var(--mp-ink);
+}
+.panel .actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 14px; }
+.panel button {
+  background: var(--mp-orange);
+  color: #f5ead4;
+  border: 1px solid var(--mp-ink);
+  border-radius: var(--mp-radius-pill);
+  padding: 9px 22px;
+  font-family: var(--mp-font-sans);
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.panel button.secondary { background: var(--mp-paper-dark); color: var(--mp-ink); }
+
+#saved-indicator {
+  font-family: var(--mp-font-mono);
+  font-size: 10px;
+  color: var(--mp-ink-soft);
+  letter-spacing: 0.1em;
+}
+
+/* Section spacing */
+.daily-section { margin-bottom: var(--mp-space-7); }
+.daily-section .head {
+  font-family: var(--mp-font-display);
+  font-weight: 400;
+  font-size: 22px;
+  text-transform: uppercase;
+  color: var(--mp-ink);
+  margin: 0;
+  line-height: 1.15;
+  letter-spacing: 0.01em;
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+}
+.daily-section .head .num {
+  font-family: var(--mp-font-mono);
+  font-size: 12px;
+  letter-spacing: 0.2em;
+  color: var(--mp-red);
+  font-weight: 700;
+}
+
+/* Toast */
+.toast {
+  position: fixed;
+  bottom: 20px; left: 50%;
+  transform: translateX(-50%);
+  background: var(--mp-ink);
+  color: var(--mp-gold);
+  padding: 10px 20px;
+  border-radius: var(--mp-radius-pill);
+  font-family: var(--mp-font-mono);
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  z-index: 1000;
+  box-shadow: 3px 3px 0 var(--mp-red);
+}
+
+/* ==========================================================================
+   TASKS SECTION — per-task done / remove / snooze controls
+   ========================================================================== */
+
+.task-actions-bar {
+  display: flex;
+  align-items: center;
+  gap: var(--mp-space-3);
+  flex-wrap: wrap;
+  margin-bottom: var(--mp-space-4);
+}
+.task-pending {
+  flex: 1;
+  min-width: 180px;
+  font-family: var(--mp-font-mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--mp-ink-soft);
+}
+.task-pending.has-pending { color: var(--mp-red); font-weight: 700; }
+
+.task-row { gap: var(--mp-space-3); position: relative; }
+.task-row .task-done {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--mp-red);
+  cursor: pointer;
+  flex-shrink: 0;
+  margin: 0;
+}
+.task-row .task-text { flex: 1; line-height: 1.4; }
+
+.task-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+.task-controls .task-snooze {
+  border: 1px solid var(--mp-ink);
+  background: var(--mp-paper-dark);
+  color: var(--mp-ink-faint);
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  font-size: 12px;
+  line-height: 1;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.task-controls .task-snooze:hover { color: var(--mp-ink); border-color: var(--mp-cool); }
+.task-controls .task-snooze.is-active {
+  background: var(--mp-cool);
+  color: var(--mp-paper);
+  border-color: var(--mp-cool);
+}
+.task-controls .task-remove {
+  border: 1px solid var(--mp-ink);
+  background: var(--mp-paper-dark);
+  color: var(--mp-ink);
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  font-size: 12px;
+  line-height: 1;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.task-controls .task-remove:hover {
+  background: var(--mp-red);
+  color: var(--mp-paper);
+  border-color: var(--mp-red-dark);
+}
+
+/* Snooze date-picker popup — Marquee Press, minimal (not a full calendar) */
+.task-snooze-pop {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  z-index: 60;
+  margin-top: 6px;
+  width: 220px;
+  background: var(--mp-paper-dark);
+  color: var(--mp-ink);
+  border: 1px solid var(--mp-ink);
+  border-radius: var(--mp-radius-sm);
+  box-shadow: 3px 3px 0 var(--mp-ink);
+  padding: 12px;
+  font-family: var(--mp-font-mono);
+}
+.task-snooze-pop[hidden] { display: none; }
+.task-snooze-pop .pop-title {
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--mp-ink-soft);
+  margin-bottom: 8px;
+}
+.task-snooze-pop .pop-preset {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  border-bottom: 1px solid transparent;
+  color: var(--mp-ink);
+  font-family: inherit;
+  font-size: 13px;
+  padding: 6px 2px;
+  cursor: pointer;
+}
+.task-snooze-pop .pop-preset:hover {
+  color: var(--mp-cool);
+  border-bottom-color: var(--mp-cool);
+}
+.task-snooze-pop .pop-rule {
+  border: none;
+  border-top: 1px dashed var(--mp-ink-faint);
+  margin: 8px 0;
+}
+.task-snooze-pop .pop-pick {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--mp-ink-soft);
+  margin-bottom: 10px;
+}
+.task-snooze-pop .pop-pick input[type="date"] {
+  flex: 1;
+  min-width: 0;
+  font-family: inherit;
+  font-size: 12px;
+  border: 1px solid var(--mp-ink);
+  border-radius: var(--mp-radius-sm);
+  background: var(--mp-paper);
+  color: var(--mp-ink);
+  padding: 3px 5px;
+  color-scheme: light;
+}
+.task-snooze-pop .pop-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.task-snooze-pop .pop-cancel {
+  background: none;
+  border: none;
+  color: var(--mp-ink-soft);
+  font-family: inherit;
+  font-size: 12px;
+  cursor: pointer;
+  padding: 4px 2px;
+}
+.task-snooze-pop .pop-cancel:hover { color: var(--mp-red); }
+.task-snooze-pop .pop-snooze {
+  background: var(--mp-cool);
+  color: var(--mp-paper);
+  border: 1px solid var(--mp-cool);
+  border-radius: var(--mp-radius-sm);
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  padding: 5px 12px;
+  cursor: pointer;
+}
+.task-snooze-pop .pop-snooze:hover { background: var(--mp-ink); border-color: var(--mp-ink); }
+
+.task-row.is-done .task-text { text-decoration: line-through; color: var(--mp-ink-faint); }
+.task-row.is-snoozed { opacity: 0.6; }
+.task-row.is-snoozed .task-text { font-style: italic; }
+.task-row.is-removed {
+  padding: 7px 14px;
+  background: var(--mp-paper-dark);
+  opacity: 0.75;
+}
+.task-row.is-removed .task-done,
+.task-row.is-removed .task-text,
+.task-row.is-removed .task-controls { display: none; }
+
+.task-status {
+  font-family: var(--mp-font-mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--mp-ink-soft);
+  white-space: nowrap;
+}
+.task-status:empty { display: none; }
+.task-status .task-undo { color: var(--mp-cool); font-style: italic; font-weight: 700; }
+.task-status .task-undo:hover { color: var(--mp-red); }
+
+@media (max-width: 520px) {
+  .task-row { flex-wrap: wrap; }
+  .task-controls { width: 100%; justify-content: flex-end; }
+}
+
+/* ==========================================================================
+   RICH ADAM NEWS SECTION — show cards, devforum rows, research list
+   ========================================================================== */
+
+.daily-subblock { margin-bottom: var(--mp-space-6); }
+.news-subhead {
+  font-family: var(--mp-font-display);
+  font-weight: 400;
+  font-size: 18px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--mp-ink);
+  margin: var(--mp-space-5) 0 var(--mp-space-3);
+  border-bottom: 1px solid var(--mp-ink);
+  padding-bottom: 4px;
+}
+.news-lead {
+  font-family: var(--mp-font-body);
+  font-style: italic;
+  font-size: 14px;
+  color: var(--mp-ink-soft);
+  margin: 4px 0 var(--mp-space-4);
+}
+
+/* Subhead inside a section (Local picks / Driveable / Worth a flight) */
+.subhead {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin: var(--mp-space-5) 0 var(--mp-space-3);
+  flex-wrap: wrap;
+}
+.subhead .marker {
+  font-family: var(--mp-font-mono);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  color: var(--mp-red);
+  font-weight: 700;
+  text-transform: uppercase;
+}
+.subhead .label {
+  font-family: var(--mp-font-display-serif);
+  font-style: italic;
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--mp-ink);
+}
+
+/* Show card — concert match */
+.show-card {
+  border: 1px solid var(--mp-ink);
+  border-radius: var(--mp-radius-md);
+  background: var(--mp-paper);
+  padding: 10px 14px;
+  margin-bottom: var(--mp-space-3);
+  display: grid;
+  grid-template-columns: 64px 1fr auto;
+  gap: var(--mp-space-3);
+  align-items: center;
+}
+.show-card.local  { box-shadow: 2px 2px 0 var(--mp-red); }
+.show-card.drive  { box-shadow: 2px 2px 0 var(--mp-cool); }
+.show-card.flight { box-shadow: 2px 2px 0 var(--mp-gold-dark); }
+
+.show-date {
+  font-family: var(--mp-font-display);
+  font-size: 12px;
+  line-height: 1.05;
+  text-align: center;
+  border: 1px solid var(--mp-ink);
+  border-radius: var(--mp-radius-sm);
+  padding: 5px 3px;
+  background: var(--mp-paper-deep);
+  color: var(--mp-ink);
+  text-transform: uppercase;
+}
+.show-date .day {
+  display: block;
+  font-family: var(--mp-font-display);
+  font-size: 22px;
+  line-height: 1;
+  color: var(--mp-red);
+}
+.show-date .mon {
+  display: block;
+  font-family: var(--mp-font-mono);
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  margin-top: 2px;
+}
+.show-date .yr {
+  display: block;
+  font-family: var(--mp-font-mono);
+  font-size: 8px;
+  letter-spacing: 0.14em;
+  color: var(--mp-ink-faint);
+}
+.show-date .rng {
+  display: block;
+  font-family: var(--mp-font-mono);
+  font-size: 8px;
+  color: var(--mp-ink-soft);
+  margin-top: 1px;
+}
+
+.show-body .artist {
+  font-family: var(--mp-font-display-serif);
+  font-weight: 700;
+  font-size: 17px;
+  line-height: 1.1;
+  color: var(--mp-ink);
+}
+.show-body .venue {
+  font-family: var(--mp-font-body);
+  font-size: 12px;
+  color: var(--mp-ink-soft);
+  margin-top: 3px;
+  line-height: 1.35;
+}
+.show-body .rarity {
+  font-family: var(--mp-font-body);
+  font-style: italic;
+  font-size: 12px;
+  color: var(--mp-ink-soft);
+  margin-top: 4px;
+  line-height: 1.4;
+}
+
+.show-meta { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
+.tier-pill {
+  font-family: var(--mp-font-mono);
+  font-weight: 700;
+  font-size: 9px;
+  letter-spacing: 0.16em;
+  padding: 3px 7px;
+  border-radius: var(--mp-radius-pill);
+  border: 1px solid var(--mp-ink);
+  background: var(--mp-paper-dark);
+  color: var(--mp-ink);
+  white-space: nowrap;
+}
+.tier-pill.s { background: var(--mp-gold); }
+.tier-pill.a { background: var(--mp-cool); color: var(--mp-paper); border-color: var(--mp-cool); }
+.tier-pill.b { background: var(--mp-paper-dark); }
+.tier-pill.c { background: var(--mp-paper-deep); }
+
+/* Devforum bullet row */
+.devforum-row {
+  border-left: 4px solid var(--mp-ink);
+  padding: 9px 14px 9px 14px;
+  background: var(--mp-paper);
+  margin-bottom: 8px;
+  font-family: var(--mp-font-body);
+  font-size: 13px;
+  line-height: 1.45;
+  border-radius: 0 var(--mp-radius-sm) var(--mp-radius-sm) 0;
+}
+.devforum-row.breaking { border-left-color: var(--mp-red); background: var(--mp-paper-dark); }
+.devforum-row.release  { border-left-color: var(--mp-gold-dark); }
+.devforum-row.beta     { border-left-color: var(--mp-cool); }
+.devforum-row .label {
+  font-family: var(--mp-font-mono);
+  font-weight: 700;
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--mp-red);
+  margin-right: 8px;
+}
+.devforum-row.release .label { color: var(--mp-gold-dark); }
+.devforum-row.beta    .label { color: var(--mp-cool); }
+
+/* Research link list */
+.research-list { list-style: none; padding: 0; margin: 0; }
+.research-list li {
+  padding: var(--mp-space-3) 0;
+  border-bottom: 1px solid var(--mp-ink-faint);
+}
+.research-list li:last-child { border-bottom: 0; }
+.research-list li.empty {
+  font-style: italic;
+  color: var(--mp-ink-soft);
+}
+.research-list .date {
+  font-family: var(--mp-font-mono);
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  color: var(--mp-ink-faint);
+  text-transform: uppercase;
+}
+.research-list .ttl {
+  font-family: var(--mp-font-display-serif);
+  font-style: italic;
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--mp-ink);
+  display: block;
+  margin: 2px 0;
+}
+.research-list .desc {
+  font-family: var(--mp-font-body);
+  font-size: 13px;
+  color: var(--mp-ink-soft);
+}
+
+@media (max-width: 520px) {
+  .show-card { grid-template-columns: 56px 1fr; }
+  .show-card .show-meta { grid-column: 2 / 3; align-items: flex-start; }
+}
+
+/* --- Daily Adam interactive panels (injected by daily_panels.py) --- */
+.panel-intro{font:400 14px/1.5 var(--mp-font-body);color:var(--mp-ink-soft);margin:.2rem 0 .8rem}
+.panel-buttons{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:.9rem}
+.panel-status{font:500 13px var(--mp-font-sans);color:var(--mp-forest);margin-left:4px}
+.mp-btn{background:var(--mp-paper-deep);color:var(--mp-ink);border:1px solid var(--mp-ink-faint);border-radius:var(--mp-radius-pill);padding:7px 15px;font:600 13px var(--mp-font-sans);cursor:pointer}
+.mp-btn.primary{background:var(--mp-gold);border-color:var(--mp-gold-dark);color:var(--mp-ink)}
+.mp-btn.ghost{background:transparent}
+.mp-btn:hover{filter:brightness(.96)}
+.mp-btn[disabled]{opacity:.5;cursor:default}
+/* Field Notes */
+.fn-tot{display:flex;align-items:center;gap:10px;margin:.35rem 0}
+.fn-tot .fn-pick{flex:1;background:var(--mp-paper-deep);border:1px solid var(--mp-ink-faint);border-radius:var(--mp-radius-md);padding:9px 12px;font:500 14px var(--mp-font-body);color:var(--mp-ink);cursor:pointer;text-align:center}
+.fn-tot .fn-pick.on{background:var(--mp-gold);border-color:var(--mp-gold-dark);font-weight:700}
+.fn-vs{font:italic 600 12px var(--mp-font-display-serif);color:var(--mp-ink-faint)}
+.fn-open{margin:.6rem 0}
+.fn-open label{display:block;font:600 13px var(--mp-font-sans);color:var(--mp-ink-soft);margin-bottom:3px}
+.fn-open input{width:100%;box-sizing:border-box;padding:8px 10px;border:1px solid var(--mp-ink-faint);border-radius:var(--mp-radius-sm);font:400 14px var(--mp-font-body);background:var(--mp-paper)}
+.fn-plank-in{max-width:140px}
+/* Movie + Jukebox rows */
+.mv-row,.jb-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:7px 0;border-bottom:1px dotted var(--mp-ink-faint)}
+.mv-name,.jb-name{font:500 14px var(--mp-font-body);color:var(--mp-ink)}
+.mv-year,.jb-lane{color:var(--mp-ink-faint);font-weight:400}
+.mv-marks,.jb-stars{display:flex;gap:5px;flex:0 0 auto}
+.mv-mark,.jb-star{border:1px solid var(--mp-ink-faint);background:var(--mp-paper-deep);border-radius:var(--mp-radius-sm);padding:5px 9px;font:600 12px var(--mp-font-sans);color:var(--mp-ink-soft);cursor:pointer}
+.jb-star{min-width:30px;text-align:center}
+.mv-mark[data-mark=loved].on{background:var(--mp-love);border-color:var(--mp-love);color:#fff}
+.mv-mark[data-mark=fine].on{background:var(--mp-fine);border-color:var(--mp-fine);color:var(--mp-ink)}
+.mv-mark[data-mark=nmt].on{background:var(--mp-nmt);border-color:var(--mp-nmt);color:var(--mp-ink)}
+.mv-mark[data-mark=hated].on{background:var(--mp-hate);border-color:var(--mp-hate);color:#fff}
+.jb-star.on{background:var(--mp-gold);border-color:var(--mp-gold-dark);color:var(--mp-ink);font-weight:800}
+.jb-flag{border:1px solid var(--mp-ink-faint);background:var(--mp-paper-deep);border-radius:var(--mp-radius-sm);padding:5px 9px;font:600 12px var(--mp-font-sans);color:var(--mp-ink-soft);cursor:pointer}
+.jb-flag.on{background:var(--mp-ink);border-color:var(--mp-ink);color:var(--mp-paper)}
+@media(max-width:560px){.mv-row,.jb-row{flex-wrap:wrap}.mv-marks,.jb-stars{flex-wrap:wrap}}
+</style>
+</head>
+<body data-day="2026-07-23">
+<div class="buddy-bar"><div class="left"><span class="pulse"></span>Both Buddies Online · Greta's at Mom's · Melissa's at home</div><a class="cta" href="Message-Buddies.html">Send to Greta &amp; Melissa</a></div><div class="mp-spec-strip"><div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;"><span>The Adam News</span><span>Vol. XXVI · Issue №204</span></div><div class="mp-roundel">AN</div></div><div class="mp-hero"><div class="mp-kicker">// DAILY · THURSDAY · JULY 23, 2026 · EDITION 204</div><h1 class="mp-title">The Adam<br><span class="mp-line-2">News</span></h1><div class="mp-subtitle">— What's today, what's coming, and what just shipped —</div></div><div class="weather-strip"><strong>WEATHER · LOOK OUT A WINDOW · 100% CHANCE OF TASKS</strong> &nbsp;·&nbsp; <span style="opacity:0.7;">Weather CARTOON</span></div><main><p class="crumbs"><span class="wikilink">Dashboard</span> · <span class="wikilink">The Desk</span> · <span class="wikilink">Events</span> · <span class="wikilink">Tasks</span> · <span class="wikilink">Snoozed</span></p><section class="daily-section">
+<h2 class="head"><span class="num">§ 01</span>Today at a Glance</h2>
+<div class="mp-reg-rule"></div>
+<div class="glance">
+<p class="deck"><span class="mp-dropcap">Q</span>uiet inbox morning</p>
+<div class="mp-reg-rule"></div>
+<div class="mp-row">
+<span class="mp-pill flag">NOW</span>
+<span class="mp-row-body">WEATHER · LOOK OUT A WINDOW · 100% CHANCE OF TASKS</span>
+<span class="mp-row-meta">weather</span>
+</div>
+<div class="mp-row">
+<span class="mp-pill focus">FOCUS</span>
+<span class="mp-row-body">OSS Pop-up: lock staff roster + schedule equipment test — Aug 5 hard deadline (13 days)</span>
+<span class="mp-row-meta">#1</span>
+</div>
+<div class="mp-row">
+<span class="mp-pill focus">FOCUS</span>
+<span class="mp-row-body">Overdue review meetings: Mai Nhia, Trudy, Jessica, Jenny — 22 days past due</span>
+<span class="mp-row-meta">#2</span>
+</div>
+<div class="mp-row">
+<span class="mp-pill focus">FOCUS</span>
+<span class="mp-row-body">Greta sax 5:30pm today</span>
+<span class="mp-row-meta">#3</span>
+</div>
+</div>
+<!-- calendar-inject -->
+<div class="cal-today" style="background:#ede8d5;border:1px solid #c0a060;border-radius:4px;padding:14px 18px;margin-bottom:18px;">
+<div style="font-family:'Bowlby One',sans-serif;font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:#8b7355;margin:4px 0 10px;">On the Calendar Today</div>
+<div style="display:flex;gap:10px;align-items:flex-start;padding:5px 0;border-bottom:1px solid #d4cbb0;">
+<span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:700;background:#c0392b;color:#f5f0e1;padding:2px 6px;border-radius:2px;white-space:nowrap;flex-shrink:0;">08:00</span>
+<span style="font-family:'Iowan Old Style','Palatino',serif;font-size:15px;color:#2c1810;line-height:1.4;">Greta at Nature's Kitchen: Minnesota Harvest @ St. Paul Gym
+ <span style="font-size:11px;color:#8b7355;font-style:italic;font-family:'IBM Plex Sans',sans-serif;">#greta</span>
+ <span style="font-size:11px;color:#8b7355;font-style:italic;font-family:'IBM Plex Sans',sans-serif;">#gcal</span>
+</span></div>
+<div style="display:flex;gap:10px;align-items:flex-start;padding:5px 0;border-bottom:1px solid #d4cbb0;">
+<span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:700;background:#c0392b;color:#f5f0e1;padding:2px 6px;border-radius:2px;white-space:nowrap;flex-shrink:0;">17:30</span>
+<span style="font-family:'Iowan Old Style','Palatino',serif;font-size:15px;color:#2c1810;line-height:1.4;">Greta saxophone lessons
+ <span style="font-size:11px;color:#8b7355;font-style:italic;font-family:'IBM Plex Sans',sans-serif;">#greta</span>
+ <span style="font-size:11px;color:#8b7355;font-style:italic;font-family:'IBM Plex Sans',sans-serif;">#gcal</span>
+</span></div>
+<div style="display:flex;gap:10px;align-items:flex-start;padding:5px 0;border-bottom:1px solid #d4cbb0;">
+<span style="font-family:'Iowan Old Style','Palatino',serif;font-size:15px;color:#2c1810;line-height:1.4;">Greta at Sarah's @ Sarah's
+ <span style="font-size:11px;color:#8b7355;font-style:italic;font-family:'IBM Plex Sans',sans-serif;">#greta</span>
+ <span style="font-size:11px;color:#8b7355;font-style:italic;font-family:'IBM Plex Sans',sans-serif;">#gcal</span>
+</span></div>
+</div>
+<div class="cal-upcoming" style="margin-bottom:8px;">
+<div style="font-family:'Bowlby One',sans-serif;font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:#8b7355;margin:4px 0 10px;">Upcoming — Next 14 Days</div>
+<div style="display:flex;gap:10px;align-items:baseline;padding:4px 0;border-bottom:1px solid #d4cbb0;">
+<span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:700;color:#5a4634;white-space:nowrap;min-width:88px;flex-shrink:0;">Fri Jul 24</span>
+<span style="font-family:'Iowan Old Style','Palatino',serif;font-size:14px;color:#2c1810;line-height:1.4;">Greta at Nature's Kitchen: Minnesota Harvest @ St. Paul Gym
+ <span style="font-size:11px;color:#8b7355;font-style:italic;font-family:'IBM Plex Sans',sans-serif;">#greta</span>
+ <span style="font-size:11px;color:#8b7355;font-style:italic;font-family:'IBM Plex Sans',sans-serif;">#gcal</span>
+</span></div>
+<div style="display:flex;gap:10px;align-items:baseline;padding:4px 0;border-bottom:1px solid #d4cbb0;">
+<span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:700;color:#5a4634;white-space:nowrap;min-width:88px;flex-shrink:0;">Fri Jul 24</span>
+<span style="font-family:'Iowan Old Style','Palatino',serif;font-size:14px;color:#2c1810;line-height:1.4;">Adam Payday
+ <span style="font-size:11px;color:#8b7355;font-style:italic;font-family:'IBM Plex Sans',sans-serif;">#finance</span>
+ <span style="font-size:11px;color:#8b7355;font-style:italic;font-family:'IBM Plex Sans',sans-serif;">#gcal</span>
+</span></div>
+<div style="display:flex;gap:10px;align-items:baseline;padding:4px 0;border-bottom:1px solid #d4cbb0;">
+<span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:700;color:#5a4634;white-space:nowrap;min-width:88px;flex-shrink:0;">Fri Jul 24</span>
+<span style="font-family:'Iowan Old Style','Palatino',serif;font-size:14px;color:#2c1810;line-height:1.4;">Camping at Afton
+ <span style="font-size:11px;color:#8b7355;font-style:italic;font-family:'IBM Plex Sans',sans-serif;">#greta</span>
+ <span style="font-size:11px;color:#8b7355;font-style:italic;font-family:'IBM Plex Sans',sans-serif;">#gcal</span>
+</span></div>
+<div style="display:flex;gap:10px;align-items:baseline;padding:4px 0;border-bottom:1px solid #d4cbb0;">
+<span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:700;color:#5a4634;white-space:nowrap;min-width:88px;flex-shrink:0;">Sat Jul 25</span>
+<span style="font-family:'Iowan Old Style','Palatino',serif;font-size:14px;color:#2c1810;line-height:1.4;">The Gothic Market @ Minneapolis Convention Center
+ <span style="font-size:11px;color:#8b7355;font-style:italic;font-family:'IBM Plex Sans',sans-serif;">#market</span>
+ <span style="font-size:11px;color:#8b7355;font-style:italic;font-family:'IBM Plex Sans',sans-serif;">#horror</span>
+</span></div>
+<div style="display:flex;gap:10px;align-items:baseline;padding:4px 0;border-bottom:1px solid #d4cbb0;">
+<span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:700;color:#5a4634;white-space:nowrap;min-width:88px;flex-shrink:0;">Mon Jul 27</span>
+<span style="font-family:'Iowan Old Style','Palatino',serif;font-size:14px;color:#2c1810;line-height:1.4;">Greta at DayCroix - Buckaroos (bus departs 8:15am, arrives 4:30pm)
+ <span style="font-size:11px;color:#8b7355;font-style:italic;font-family:'IBM Plex Sans',sans-serif;">#greta</span>
+ <span style="font-size:11px;color:#8b7355;font-style:italic;font-family:'IBM Plex Sans',sans-serif;">#gcal</span>
+</span></div>
+<div style="display:flex;gap:10px;align-items:baseline;padding:4px 0;border-bottom:1px solid #d4cbb0;">
+<span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:700;color:#5a4634;white-space:nowrap;min-width:88px;flex-shrink:0;">Mon Jul 27</span>
+<span style="font-family:'Iowan Old Style','Palatino',serif;font-size:14px;color:#2c1810;line-height:1.4;">Greta at Adam's @ Adam's
+ <span style="font-size:11px;color:#8b7355;font-style:italic;font-family:'IBM Plex Sans',sans-serif;">#greta</span>
+ <span style="font-size:11px;color:#8b7355;font-style:italic;font-family:'IBM Plex Sans',sans-serif;">#gcal</span>
+</span></div>
+<div style="display:flex;gap:10px;align-items:baseline;padding:4px 0;border-bottom:1px solid #d4cbb0;">
+<span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:700;color:#5a4634;white-space:nowrap;min-width:88px;flex-shrink:0;">Tue Jul 28</span>
+<span style="font-family:'Iowan Old Style','Palatino',serif;font-size:14px;color:#2c1810;line-height:1.4;">Greta at DayCroix - Buckaroos (bus departs 8:15am, arrives 4:30pm)
+ <span style="font-size:11px;color:#8b7355;font-style:italic;font-family:'IBM Plex Sans',sans-serif;">#greta</span>
+ <span style="font-size:11px;color:#8b7355;font-style:italic;font-family:'IBM Plex Sans',sans-serif;">#gcal</span>
+</span></div>
+<div style="display:flex;gap:10px;align-items:baseline;padding:4px 0;border-bottom:1px solid #d4cbb0;border-left:3px solid #b32027;padding-left:8px;">
+<span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:700;color:#5a4634;white-space:nowrap;min-width:88px;flex-shrink:0;">Tue Jul 28</span>
+<span style="font-family:'Iowan Old Style','Palatino',serif;font-size:14px;color:#b32027;line-height:1.4;">⚑ REMINDER: Payroll due TOMORROW Wed 7/29 by noon
+ <span style="font-size:11px;color:#8b7355;font-style:italic;font-family:'IBM Plex Sans',sans-serif;">#work</span>
+ <span style="font-size:11px;color:#8b7355;font-style:italic;font-family:'IBM Plex Sans',sans-serif;">#payroll</span>
+</span></div>
+<div style="display:flex;gap:10px;align-items:baseline;padding:4px 0;border-bottom:1px solid #d4cbb0;">
+<span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:700;color:#5a4634;white-space:nowrap;min-width:88px;flex-shrink:0;">Wed Jul 29</span>
+<span style="font-family:'Iowan Old Style','Palatino',serif;font-size:14px;color:#2c1810;line-height:1.4;">Greta at DayCroix - Buckaroos (bus departs 8:15am, arrives 4:30pm)
+ <span style="font-size:11px;color:#8b7355;font-style:italic;font-family:'IBM Plex Sans',sans-serif;">#greta</span>
+ <span style="font-size:11px;color:#8b7355;font-style:italic;font-family:'IBM Plex Sans',sans-serif;">#gcal</span>
+</span></div>
+<div style="display:flex;gap:10px;align-items:baseline;padding:4px 0;border-bottom:1px solid #d4cbb0;">
+<span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:700;color:#5a4634;white-space:nowrap;min-width:88px;flex-shrink:0;">Wed Jul 29</span>
+<span style="font-family:'Iowan Old Style','Palatino',serif;font-size:14px;color:#2c1810;line-height:1.4;">Greta at Sarah's @ Sarah's
+ <span style="font-size:11px;color:#8b7355;font-style:italic;font-family:'IBM Plex Sans',sans-serif;">#greta</span>
+ <span style="font-size:11px;color:#8b7355;font-style:italic;font-family:'IBM Plex Sans',sans-serif;">#gcal</span>
+</span></div>
+<div style="display:flex;gap:10px;align-items:baseline;padding:4px 0;border-bottom:1px solid #d4cbb0;">
+<span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:700;color:#5a4634;white-space:nowrap;min-width:88px;flex-shrink:0;">Wed Jul 29</span>
+<span style="font-family:'Iowan Old Style','Palatino',serif;font-size:14px;color:#2c1810;line-height:1.4;">Chris Stapleton (Night 1) @ Mystic Lake Amphitheater, Prior Lake
+ <span style="font-size:11px;color:#8b7355;font-style:italic;font-family:'IBM Plex Sans',sans-serif;">#concert</span>
+ <span style="font-size:11px;color:#8b7355;font-style:italic;font-family:'IBM Plex Sans',sans-serif;">#music</span>
+</span></div>
+<div style="display:flex;gap:10px;align-items:baseline;padding:4px 0;border-bottom:1px solid #d4cbb0;">
+<span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:700;color:#5a4634;white-space:nowrap;min-width:88px;flex-shrink:0;">Thu Jul 30</span>
+<span style="font-family:'Iowan Old Style','Palatino',serif;font-size:14px;color:#2c1810;line-height:1.4;">Greta at DayCroix - Buckaroos (bus departs 8:15am, arrives 4:30pm)
+ <span style="font-size:11px;color:#8b7355;font-style:italic;font-family:'IBM Plex Sans',sans-serif;">#greta</span>
+ <span style="font-size:11px;color:#8b7355;font-style:italic;font-family:'IBM Plex Sans',sans-serif;">#gcal</span>
+</span></div>
+<div style="display:flex;gap:10px;align-items:baseline;padding:4px 0;border-bottom:1px solid #d4cbb0;">
+<span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:700;color:#5a4634;white-space:nowrap;min-width:88px;flex-shrink:0;">Thu Jul 30</span>
+<span style="font-family:'Iowan Old Style','Palatino',serif;font-size:14px;color:#2c1810;line-height:1.4;">Greta teeth cleaning @ 1021 Bandana Blvd. E, Suite 121 St Paul, MN
+ <span style="font-size:11px;color:#8b7355;font-style:italic;font-family:'IBM Plex Sans',sans-serif;">#greta</span>
+ <span style="font-size:11px;color:#8b7355;font-style:italic;font-family:'IBM Plex Sans',sans-serif;">#gcal</span>
+</span></div>
+<div style="display:flex;gap:10px;align-items:baseline;padding:4px 0;border-bottom:1px solid #d4cbb0;">
+<span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:700;color:#5a4634;white-space:nowrap;min-width:88px;flex-shrink:0;">Thu Jul 30</span>
+<span style="font-family:'Iowan Old Style','Palatino',serif;font-size:14px;color:#2c1810;line-height:1.4;">Greta saxophone lessons
+ <span style="font-size:11px;color:#8b7355;font-style:italic;font-family:'IBM Plex Sans',sans-serif;">#greta</span>
+ <span style="font-size:11px;color:#8b7355;font-style:italic;font-family:'IBM Plex Sans',sans-serif;">#gcal</span>
+</span></div>
+<div style="display:flex;gap:10px;align-items:baseline;padding:4px 0;border-bottom:1px solid #d4cbb0;">
+<span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:700;color:#5a4634;white-space:nowrap;min-width:88px;flex-shrink:0;">Thu Jul 30</span>
+<span style="font-family:'Iowan Old Style','Palatino',serif;font-size:14px;color:#2c1810;line-height:1.4;">Chris Stapleton (Night 2) @ Mystic Lake Amphitheater, Prior Lake
+ <span style="font-size:11px;color:#8b7355;font-style:italic;font-family:'IBM Plex Sans',sans-serif;">#concert</span>
+ <span style="font-size:11px;color:#8b7355;font-style:italic;font-family:'IBM Plex Sans',sans-serif;">#music</span>
+</span></div>
+<div style="display:flex;gap:10px;align-items:baseline;padding:4px 0;border-bottom:1px solid #d4cbb0;">
+<span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:700;color:#5a4634;white-space:nowrap;min-width:88px;flex-shrink:0;">Thu Jul 30</span>
+<span style="font-family:'Iowan Old Style','Palatino',serif;font-size:14px;color:#2c1810;line-height:1.4;">Present "Biz 101" @ Nicholas Hannula's DCYF staff meeting
+ <span style="font-size:11px;color:#8b7355;font-style:italic;font-family:'IBM Plex Sans',sans-serif;">#work</span>
+</span></div>
+<div style="display:flex;gap:10px;align-items:baseline;padding:4px 0;border-bottom:1px solid #d4cbb0;">
+<span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:700;color:#5a4634;white-space:nowrap;min-width:88px;flex-shrink:0;">Fri Jul 31</span>
+<span style="font-family:'Iowan Old Style','Palatino',serif;font-size:14px;color:#2c1810;line-height:1.4;">Greta at DayCroix - Buckaroos (bus departs 8:15am, arrives 4:30pm)
+ <span style="font-size:11px;color:#8b7355;font-style:italic;font-family:'IBM Plex Sans',sans-serif;">#greta</span>
+ <span style="font-size:11px;color:#8b7355;font-style:italic;font-family:'IBM Plex Sans',sans-serif;">#gcal</span>
+</span></div>
+<div style="display:flex;gap:10px;align-items:baseline;padding:4px 0;border-bottom:1px solid #d4cbb0;">
+<span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:700;color:#5a4634;white-space:nowrap;min-width:88px;flex-shrink:0;">Sat Aug 1</span>
+<span style="font-family:'Iowan Old Style','Palatino',serif;font-size:14px;color:#2c1810;line-height:1.4;">SNL Lottery
+ <span style="font-size:11px;color:#8b7355;font-style:italic;font-family:'IBM Plex Sans',sans-serif;">#personal</span>
+ <span style="font-size:11px;color:#8b7355;font-style:italic;font-family:'IBM Plex Sans',sans-serif;">#gcal</span>
+</span></div>
+<div style="display:flex;gap:10px;align-items:baseline;padding:4px 0;border-bottom:1px solid #d4cbb0;">
+<span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:700;color:#5a4634;white-space:nowrap;min-width:88px;flex-shrink:0;">Sat Aug 1</span>
+<span style="font-family:'Iowan Old Style','Palatino',serif;font-size:14px;color:#2c1810;line-height:1.4;">SummerSlam 2026 (Night 1) @ U.S. Bank Stadium, Minneapolis (Sec 116 Row 35 Seats 5-6)
+ <span style="font-size:11px;color:#8b7355;font-style:italic;font-family:'IBM Plex Sans',sans-serif;">#wrestling</span>
+</span></div>
+<div style="display:flex;gap:10px;align-items:baseline;padding:4px 0;border-bottom:1px solid #d4cbb0;">
+<span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:700;color:#5a4634;white-space:nowrap;min-width:88px;flex-shrink:0;">Sun Aug 2</span>
+<span style="font-family:'Iowan Old Style','Palatino',serif;font-size:14px;color:#2c1810;line-height:1.4;">SummerSlam 2026 (Night 2) @ U.S. Bank Stadium, Minneapolis (Sec 116 Row 35 Seats 5-6)
+ <span style="font-size:11px;color:#8b7355;font-style:italic;font-family:'IBM Plex Sans',sans-serif;">#wrestling</span>
+</span></div>
+<div style="display:flex;gap:10px;align-items:baseline;padding:4px 0;border-bottom:1px solid #d4cbb0;">
+<span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:700;color:#5a4634;white-space:nowrap;min-width:88px;flex-shrink:0;">Mon Aug 3</span>
+<span style="font-family:'Iowan Old Style','Palatino',serif;font-size:14px;color:#2c1810;line-height:1.4;">Greta at Discovery Club - Horace Mann @ Horace Mann School, 2001 W Eleanor Ave, St Paul
+ <span style="font-size:11px;color:#8b7355;font-style:italic;font-family:'IBM Plex Sans',sans-serif;">#121</span>
+ <span style="font-size:11px;color:#8b7355;font-style:italic;font-family:'IBM Plex Sans',sans-serif;">#greta</span>
+ <span style="font-size:11px;color:#8b7355;font-style:italic;font-family:'IBM Plex Sans',sans-serif;">#gcal</span>
+</span></div>
+<div style="display:flex;gap:10px;align-items:baseline;padding:4px 0;border-bottom:1px solid #d4cbb0;">
+<span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:700;color:#5a4634;white-space:nowrap;min-width:88px;flex-shrink:0;">Mon Aug 3</span>
+<span style="font-family:'Iowan Old Style','Palatino',serif;font-size:14px;color:#2c1810;line-height:1.4;">Greta at Adam's @ Adam's
+ <span style="font-size:11px;color:#8b7355;font-style:italic;font-family:'IBM Plex Sans',sans-serif;">#greta</span>
+ <span style="font-size:11px;color:#8b7355;font-style:italic;font-family:'IBM Plex Sans',sans-serif;">#gcal</span>
+</span></div>
+<div style="display:flex;gap:10px;align-items:baseline;padding:4px 0;border-bottom:1px solid #d4cbb0;">
+<span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:700;color:#5a4634;white-space:nowrap;min-width:88px;flex-shrink:0;">Mon Aug 3</span>
+<span style="font-family:'Iowan Old Style','Palatino',serif;font-size:14px;color:#2c1810;line-height:1.4;">MEEK @ Canterbury Park, Shakopee, MN
+ <span style="font-size:11px;color:#8b7355;font-style:italic;font-family:'IBM Plex Sans',sans-serif;">#concert</span>
+ <span style="font-size:11px;color:#8b7355;font-style:italic;font-family:'IBM Plex Sans',sans-serif;">#music</span>
+</span></div>
+<div style="display:flex;gap:10px;align-items:baseline;padding:4px 0;border-bottom:1px solid #d4cbb0;">
+<span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:700;color:#5a4634;white-space:nowrap;min-width:88px;flex-shrink:0;">Tue Aug 4</span>
+<span style="font-family:'Iowan Old Style','Palatino',serif;font-size:14px;color:#2c1810;line-height:1.4;">Greta at Discovery Club - Horace Mann @ Horace Mann School, 2001 W Eleanor Ave, St Paul
+ <span style="font-size:11px;color:#8b7355;font-style:italic;font-family:'IBM Plex Sans',sans-serif;">#121</span>
+ <span style="font-size:11px;color:#8b7355;font-style:italic;font-family:'IBM Plex Sans',sans-serif;">#greta</span>
+ <span style="font-size:11px;color:#8b7355;font-style:italic;font-family:'IBM Plex Sans',sans-serif;">#gcal</span>
+</span></div>
+<div style="display:flex;gap:10px;align-items:baseline;padding:4px 0;border-bottom:1px solid #d4cbb0;">
+<span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:700;color:#5a4634;white-space:nowrap;min-width:88px;flex-shrink:0;">Wed Aug 5</span>
+<span style="font-family:'Iowan Old Style','Palatino',serif;font-size:14px;color:#2c1810;line-height:1.4;">Greta at Discovery Club - Horace Mann @ Horace Mann School, 2001 W Eleanor Ave, St Paul
+ <span style="font-size:11px;color:#8b7355;font-style:italic;font-family:'IBM Plex Sans',sans-serif;">#121</span>
+ <span style="font-size:11px;color:#8b7355;font-style:italic;font-family:'IBM Plex Sans',sans-serif;">#greta</span>
+ <span style="font-size:11px;color:#8b7355;font-style:italic;font-family:'IBM Plex Sans',sans-serif;">#gcal</span>
+</span></div>
+<div style="display:flex;gap:10px;align-items:baseline;padding:4px 0;border-bottom:1px solid #d4cbb0;">
+<span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:700;color:#5a4634;white-space:nowrap;min-width:88px;flex-shrink:0;">Wed Aug 5</span>
+<span style="font-family:'Iowan Old Style','Palatino',serif;font-size:14px;color:#2c1810;line-height:1.4;">Greta at Sarah's @ Sarah's
+ <span style="font-size:11px;color:#8b7355;font-style:italic;font-family:'IBM Plex Sans',sans-serif;">#greta</span>
+ <span style="font-size:11px;color:#8b7355;font-style:italic;font-family:'IBM Plex Sans',sans-serif;">#gcal</span>
+</span></div>
+<div style="display:flex;gap:10px;align-items:baseline;padding:4px 0;border-bottom:1px solid #d4cbb0;border-left:3px solid #b32027;padding-left:8px;">
+<span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:700;color:#5a4634;white-space:nowrap;min-width:88px;flex-shrink:0;">Wed Aug 5</span>
+<span style="font-family:'Iowan Old Style','Palatino',serif;font-size:14px;color:#b32027;line-height:1.4;">⚑ OSS Pop-up: staff roster locked + equipment test complete
+ <span style="font-size:11px;color:#8b7355;font-style:italic;font-family:'IBM Plex Sans',sans-serif;">#work</span>
+</span></div>
+<div style="display:flex;gap:10px;align-items:baseline;padding:4px 0;border-bottom:1px solid #d4cbb0;">
+<span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:700;color:#5a4634;white-space:nowrap;min-width:88px;flex-shrink:0;">Thu Aug 6</span>
+<span style="font-family:'Iowan Old Style','Palatino',serif;font-size:14px;color:#2c1810;line-height:1.4;">Greta at Discovery Club - Horace Mann @ Horace Mann School, 2001 W Eleanor Ave, St Paul
+ <span style="font-size:11px;color:#8b7355;font-style:italic;font-family:'IBM Plex Sans',sans-serif;">#121</span>
+ <span style="font-size:11px;color:#8b7355;font-style:italic;font-family:'IBM Plex Sans',sans-serif;">#greta</span>
+ <span style="font-size:11px;color:#8b7355;font-style:italic;font-family:'IBM Plex Sans',sans-serif;">#gcal</span>
+</span></div>
+<div style="display:flex;gap:10px;align-items:baseline;padding:4px 0;border-bottom:1px solid #d4cbb0;">
+<span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:700;color:#5a4634;white-space:nowrap;min-width:88px;flex-shrink:0;">Thu Aug 6</span>
+<span style="font-family:'Iowan Old Style','Palatino',serif;font-size:14px;color:#2c1810;line-height:1.4;">Greta at saxophone lessons
+ <span style="font-size:11px;color:#8b7355;font-style:italic;font-family:'IBM Plex Sans',sans-serif;">#greta</span>
+ <span style="font-size:11px;color:#8b7355;font-style:italic;font-family:'IBM Plex Sans',sans-serif;">#gcal</span>
+</span></div>
+</div>
+<!-- /calendar-inject -->
+</section><section class="daily-section" id="tasks-section">
+<h2 class="head"><span class="num">§ 02</span>Tasks</h2>
+<div class="mp-reg-rule"></div>
+<div class="task-actions-bar"><span class="task-pending" id="task-pending">No changes queued</span><button id="tasks-copy" class="mp-btn secondary" type="button">Copy task changes</button><button id="tasks-download" class="mp-btn ghost" type="button">Download</button></div>
+<div class="mp-row task-row" data-taskid="tkb956576d">
+<input type="checkbox" class="task-done" data-taskid="tkb956576d" aria-label="Mark done">
+<span class="mp-row-body task-text">Run <code>claude update</code> (2.1.214 → 2.1.218) — at the keyboard, auto-update stays off on purpose → <span class="wikilink">Claude-Code-Autoupdate-TCC-Churn</span></span>
+<span class="task-controls">
+<button type="button" class="task-snooze" data-taskid="tkb956576d" aria-label="Snooze" title="Snooze">&#x1F4A4;</button>
+<button type="button" class="task-remove" data-taskid="tkb956576d" aria-label="Remove" title="Remove task">&times;</button>
+<div class="task-snooze-pop" data-taskid="tkb956576d" hidden><div class="pop-title">&#x1F4A4; Snooze until&hellip;</div><button type="button" class="pop-preset" data-preset="tomorrow" data-taskid="tkb956576d">Tomorrow</button><button type="button" class="pop-preset" data-preset="monday" data-taskid="tkb956576d">Next Monday</button><button type="button" class="pop-preset" data-preset="2weeks" data-taskid="tkb956576d">2 weeks</button><hr class="pop-rule"><label class="pop-pick">Pick date <input type="date" class="task-snooze-pick" data-taskid="tkb956576d"></label><div class="pop-foot"><button type="button" class="pop-cancel" data-taskid="tkb956576d">Cancel</button><button type="button" class="pop-snooze" data-taskid="tkb956576d">Snooze</button></div></div>
+</span>
+<span class="task-status" data-taskid="tkb956576d"></span>
+</div>
+<div class="mp-row task-row" data-taskid="tk1cbb7919">
+<input type="checkbox" class="task-done" data-taskid="tk1cbb7919" aria-label="Mark done">
+<span class="mp-row-body task-text">Add unlocked front-door issue to work meeting agenda (from Dianna — raised in her staff meeting 7/21)</span>
+<span class="task-controls">
+<button type="button" class="task-snooze" data-taskid="tk1cbb7919" aria-label="Snooze" title="Snooze">&#x1F4A4;</button>
+<button type="button" class="task-remove" data-taskid="tk1cbb7919" aria-label="Remove" title="Remove task">&times;</button>
+<div class="task-snooze-pop" data-taskid="tk1cbb7919" hidden><div class="pop-title">&#x1F4A4; Snooze until&hellip;</div><button type="button" class="pop-preset" data-preset="tomorrow" data-taskid="tk1cbb7919">Tomorrow</button><button type="button" class="pop-preset" data-preset="monday" data-taskid="tk1cbb7919">Next Monday</button><button type="button" class="pop-preset" data-preset="2weeks" data-taskid="tk1cbb7919">2 weeks</button><hr class="pop-rule"><label class="pop-pick">Pick date <input type="date" class="task-snooze-pick" data-taskid="tk1cbb7919"></label><div class="pop-foot"><button type="button" class="pop-cancel" data-taskid="tk1cbb7919">Cancel</button><button type="button" class="pop-snooze" data-taskid="tk1cbb7919">Snooze</button></div></div>
+</span>
+<span class="task-status" data-taskid="tk1cbb7919"></span>
+</div>
+<div class="mp-row task-row" data-taskid="tk4bbbb9b3">
+<input type="checkbox" class="task-done" data-taskid="tk4bbbb9b3" aria-label="Mark done">
+<span class="mp-row-body task-text">Review SLT meeting work dates (7/22 inbox note — image only, unreadable at intake)</span>
+<span class="task-controls">
+<button type="button" class="task-snooze" data-taskid="tk4bbbb9b3" aria-label="Snooze" title="Snooze">&#x1F4A4;</button>
+<button type="button" class="task-remove" data-taskid="tk4bbbb9b3" aria-label="Remove" title="Remove task">&times;</button>
+<div class="task-snooze-pop" data-taskid="tk4bbbb9b3" hidden><div class="pop-title">&#x1F4A4; Snooze until&hellip;</div><button type="button" class="pop-preset" data-preset="tomorrow" data-taskid="tk4bbbb9b3">Tomorrow</button><button type="button" class="pop-preset" data-preset="monday" data-taskid="tk4bbbb9b3">Next Monday</button><button type="button" class="pop-preset" data-preset="2weeks" data-taskid="tk4bbbb9b3">2 weeks</button><hr class="pop-rule"><label class="pop-pick">Pick date <input type="date" class="task-snooze-pick" data-taskid="tk4bbbb9b3"></label><div class="pop-foot"><button type="button" class="pop-cancel" data-taskid="tk4bbbb9b3">Cancel</button><button type="button" class="pop-snooze" data-taskid="tk4bbbb9b3">Snooze</button></div></div>
+</span>
+<span class="task-status" data-taskid="tk4bbbb9b3"></span>
+</div>
+<div class="mp-row task-row" data-taskid="tkaa2e5f4e">
+<input type="checkbox" class="task-done" data-taskid="tkaa2e5f4e" aria-label="Mark done">
+<span class="mp-row-body task-text">Schedule remaining review meetings: Mai Nhia, Trudy, Jessica, Jenny (due 6/30 — overdue)</span>
+<span class="task-controls">
+<button type="button" class="task-snooze" data-taskid="tkaa2e5f4e" aria-label="Snooze" title="Snooze">&#x1F4A4;</button>
+<button type="button" class="task-remove" data-taskid="tkaa2e5f4e" aria-label="Remove" title="Remove task">&times;</button>
+<div class="task-snooze-pop" data-taskid="tkaa2e5f4e" hidden><div class="pop-title">&#x1F4A4; Snooze until&hellip;</div><button type="button" class="pop-preset" data-preset="tomorrow" data-taskid="tkaa2e5f4e">Tomorrow</button><button type="button" class="pop-preset" data-preset="monday" data-taskid="tkaa2e5f4e">Next Monday</button><button type="button" class="pop-preset" data-preset="2weeks" data-taskid="tkaa2e5f4e">2 weeks</button><hr class="pop-rule"><label class="pop-pick">Pick date <input type="date" class="task-snooze-pick" data-taskid="tkaa2e5f4e"></label><div class="pop-foot"><button type="button" class="pop-cancel" data-taskid="tkaa2e5f4e">Cancel</button><button type="button" class="pop-snooze" data-taskid="tkaa2e5f4e">Snooze</button></div></div>
+</span>
+<span class="task-status" data-taskid="tkaa2e5f4e"></span>
+</div>
+<div class="mp-row task-row" data-taskid="tk2376abb5">
+<input type="checkbox" class="task-done" data-taskid="tk2376abb5" aria-label="Mark done">
+<span class="mp-row-body task-text">Trudy: updated signed PD to HR before 6/30 (overdue)</span>
+<span class="task-controls">
+<button type="button" class="task-snooze" data-taskid="tk2376abb5" aria-label="Snooze" title="Snooze">&#x1F4A4;</button>
+<button type="button" class="task-remove" data-taskid="tk2376abb5" aria-label="Remove" title="Remove task">&times;</button>
+<div class="task-snooze-pop" data-taskid="tk2376abb5" hidden><div class="pop-title">&#x1F4A4; Snooze until&hellip;</div><button type="button" class="pop-preset" data-preset="tomorrow" data-taskid="tk2376abb5">Tomorrow</button><button type="button" class="pop-preset" data-preset="monday" data-taskid="tk2376abb5">Next Monday</button><button type="button" class="pop-preset" data-preset="2weeks" data-taskid="tk2376abb5">2 weeks</button><hr class="pop-rule"><label class="pop-pick">Pick date <input type="date" class="task-snooze-pick" data-taskid="tk2376abb5"></label><div class="pop-foot"><button type="button" class="pop-cancel" data-taskid="tk2376abb5">Cancel</button><button type="button" class="pop-snooze" data-taskid="tk2376abb5">Snooze</button></div></div>
+</span>
+<span class="task-status" data-taskid="tk2376abb5"></span>
+</div>
+<div class="mp-row task-row" data-taskid="tk6cc5ec00">
+<input type="checkbox" class="task-done" data-taskid="tk6cc5ec00" aria-label="Mark done">
+<span class="mp-row-body task-text">Post reception job (ASAP — per Jessica)</span>
+<span class="task-controls">
+<button type="button" class="task-snooze" data-taskid="tk6cc5ec00" aria-label="Snooze" title="Snooze">&#x1F4A4;</button>
+<button type="button" class="task-remove" data-taskid="tk6cc5ec00" aria-label="Remove" title="Remove task">&times;</button>
+<div class="task-snooze-pop" data-taskid="tk6cc5ec00" hidden><div class="pop-title">&#x1F4A4; Snooze until&hellip;</div><button type="button" class="pop-preset" data-preset="tomorrow" data-taskid="tk6cc5ec00">Tomorrow</button><button type="button" class="pop-preset" data-preset="monday" data-taskid="tk6cc5ec00">Next Monday</button><button type="button" class="pop-preset" data-preset="2weeks" data-taskid="tk6cc5ec00">2 weeks</button><hr class="pop-rule"><label class="pop-pick">Pick date <input type="date" class="task-snooze-pick" data-taskid="tk6cc5ec00"></label><div class="pop-foot"><button type="button" class="pop-cancel" data-taskid="tk6cc5ec00">Cancel</button><button type="button" class="pop-snooze" data-taskid="tk6cc5ec00">Snooze</button></div></div>
+</span>
+<span class="task-status" data-taskid="tk6cc5ec00"></span>
+</div>
+<div class="mp-row task-row" data-taskid="tk57b35d01">
+<input type="checkbox" class="task-done" data-taskid="tk57b35d01" aria-label="Mark done">
+<span class="mp-row-body task-text">Post UCC vacancies ASAP (Trudy&#x27;s team down 2→3)</span>
+<span class="task-controls">
+<button type="button" class="task-snooze" data-taskid="tk57b35d01" aria-label="Snooze" title="Snooze">&#x1F4A4;</button>
+<button type="button" class="task-remove" data-taskid="tk57b35d01" aria-label="Remove" title="Remove task">&times;</button>
+<div class="task-snooze-pop" data-taskid="tk57b35d01" hidden><div class="pop-title">&#x1F4A4; Snooze until&hellip;</div><button type="button" class="pop-preset" data-preset="tomorrow" data-taskid="tk57b35d01">Tomorrow</button><button type="button" class="pop-preset" data-preset="monday" data-taskid="tk57b35d01">Next Monday</button><button type="button" class="pop-preset" data-preset="2weeks" data-taskid="tk57b35d01">2 weeks</button><hr class="pop-rule"><label class="pop-pick">Pick date <input type="date" class="task-snooze-pick" data-taskid="tk57b35d01"></label><div class="pop-foot"><button type="button" class="pop-cancel" data-taskid="tk57b35d01">Cancel</button><button type="button" class="pop-snooze" data-taskid="tk57b35d01">Snooze</button></div></div>
+</span>
+<span class="task-status" data-taskid="tk57b35d01"></span>
+</div>
+<div class="mp-row task-row" data-taskid="tk745e9f6e">
+<input type="checkbox" class="task-done" data-taskid="tk745e9f6e" aria-label="Mark done">
+<span class="mp-row-body task-text">Submit Achievement Award nominations to Meagan (window Jul 1–Aug 31) → <span class="wikilink">Achievement-Awards-2026</span></span>
+<span class="task-controls">
+<button type="button" class="task-snooze" data-taskid="tk745e9f6e" aria-label="Snooze" title="Snooze">&#x1F4A4;</button>
+<button type="button" class="task-remove" data-taskid="tk745e9f6e" aria-label="Remove" title="Remove task">&times;</button>
+<div class="task-snooze-pop" data-taskid="tk745e9f6e" hidden><div class="pop-title">&#x1F4A4; Snooze until&hellip;</div><button type="button" class="pop-preset" data-preset="tomorrow" data-taskid="tk745e9f6e">Tomorrow</button><button type="button" class="pop-preset" data-preset="monday" data-taskid="tk745e9f6e">Next Monday</button><button type="button" class="pop-preset" data-preset="2weeks" data-taskid="tk745e9f6e">2 weeks</button><hr class="pop-rule"><label class="pop-pick">Pick date <input type="date" class="task-snooze-pick" data-taskid="tk745e9f6e"></label><div class="pop-foot"><button type="button" class="pop-cancel" data-taskid="tk745e9f6e">Cancel</button><button type="button" class="pop-snooze" data-taskid="tk745e9f6e">Snooze</button></div></div>
+</span>
+<span class="task-status" data-taskid="tk745e9f6e"></span>
+</div>
+<div class="mp-row task-row" data-taskid="tk67ff83c9">
+<input type="checkbox" class="task-done" data-taskid="tk67ff83c9" aria-label="Mark done">
+<span class="mp-row-body task-text">BS Hub: re-upload hub.html/hub.aspx + hub-admin.html from <code>DEPLOY/</code> to Teams (training removed; PDFs retired — browser print only)</span>
+<span class="task-controls">
+<button type="button" class="task-snooze" data-taskid="tk67ff83c9" aria-label="Snooze" title="Snooze">&#x1F4A4;</button>
+<button type="button" class="task-remove" data-taskid="tk67ff83c9" aria-label="Remove" title="Remove task">&times;</button>
+<div class="task-snooze-pop" data-taskid="tk67ff83c9" hidden><div class="pop-title">&#x1F4A4; Snooze until&hellip;</div><button type="button" class="pop-preset" data-preset="tomorrow" data-taskid="tk67ff83c9">Tomorrow</button><button type="button" class="pop-preset" data-preset="monday" data-taskid="tk67ff83c9">Next Monday</button><button type="button" class="pop-preset" data-preset="2weeks" data-taskid="tk67ff83c9">2 weeks</button><hr class="pop-rule"><label class="pop-pick">Pick date <input type="date" class="task-snooze-pick" data-taskid="tk67ff83c9"></label><div class="pop-foot"><button type="button" class="pop-cancel" data-taskid="tk67ff83c9">Cancel</button><button type="button" class="pop-snooze" data-taskid="tk67ff83c9">Snooze</button></div></div>
+</span>
+<span class="task-status" data-taskid="tk67ff83c9"></span>
+</div>
+<div class="mp-row task-row" data-taskid="tkf33f399e">
+<input type="checkbox" class="task-done" data-taskid="tkf33f399e" aria-label="Mark done">
+<span class="mp-row-body task-text">BS Hub: Fix docs 060/117/110 content losses (see FIDELITY-AUDIT-2026-07-11.md §1) + SME-verify 020 certificate matrix grids</span>
+<span class="task-controls">
+<button type="button" class="task-snooze" data-taskid="tkf33f399e" aria-label="Snooze" title="Snooze">&#x1F4A4;</button>
+<button type="button" class="task-remove" data-taskid="tkf33f399e" aria-label="Remove" title="Remove task">&times;</button>
+<div class="task-snooze-pop" data-taskid="tkf33f399e" hidden><div class="pop-title">&#x1F4A4; Snooze until&hellip;</div><button type="button" class="pop-preset" data-preset="tomorrow" data-taskid="tkf33f399e">Tomorrow</button><button type="button" class="pop-preset" data-preset="monday" data-taskid="tkf33f399e">Next Monday</button><button type="button" class="pop-preset" data-preset="2weeks" data-taskid="tkf33f399e">2 weeks</button><hr class="pop-rule"><label class="pop-pick">Pick date <input type="date" class="task-snooze-pick" data-taskid="tkf33f399e"></label><div class="pop-foot"><button type="button" class="pop-cancel" data-taskid="tkf33f399e">Cancel</button><button type="button" class="pop-snooze" data-taskid="tkf33f399e">Snooze</button></div></div>
+</span>
+<span class="task-status" data-taskid="tkf33f399e"></span>
+</div>
+<div class="mp-row task-row" data-taskid="tkd701550a">
+<input type="checkbox" class="task-done" data-taskid="tkd701550a" aria-label="Mark done">
+<span class="mp-row-body task-text">BS Hub: Top coverage gap — BIR Declaration of Wrongful Filing needs a procedure first (it&#x27;s your program); see SITE-COVERAGE-GAPS-2026-07-11.md</span>
+<span class="task-controls">
+<button type="button" class="task-snooze" data-taskid="tkd701550a" aria-label="Snooze" title="Snooze">&#x1F4A4;</button>
+<button type="button" class="task-remove" data-taskid="tkd701550a" aria-label="Remove" title="Remove task">&times;</button>
+<div class="task-snooze-pop" data-taskid="tkd701550a" hidden><div class="pop-title">&#x1F4A4; Snooze until&hellip;</div><button type="button" class="pop-preset" data-preset="tomorrow" data-taskid="tkd701550a">Tomorrow</button><button type="button" class="pop-preset" data-preset="monday" data-taskid="tkd701550a">Next Monday</button><button type="button" class="pop-preset" data-preset="2weeks" data-taskid="tkd701550a">2 weeks</button><hr class="pop-rule"><label class="pop-pick">Pick date <input type="date" class="task-snooze-pick" data-taskid="tkd701550a"></label><div class="pop-foot"><button type="button" class="pop-cancel" data-taskid="tkd701550a">Cancel</button><button type="button" class="pop-snooze" data-taskid="tkd701550a">Snooze</button></div></div>
+</span>
+<span class="task-status" data-taskid="tkd701550a"></span>
+</div>
+<div class="mp-row task-row" data-taskid="tk7a6e1eaf">
+<input type="checkbox" class="task-done" data-taskid="tk7a6e1eaf" aria-label="Mark done">
+<span class="mp-row-body task-text">BS Hub: Standalone training tool — build pending; seed in <code>_training-tool-seed/</code> → <span class="wikilink">bs-procedure-hub-training-tool</span></span>
+<span class="task-controls">
+<button type="button" class="task-snooze" data-taskid="tk7a6e1eaf" aria-label="Snooze" title="Snooze">&#x1F4A4;</button>
+<button type="button" class="task-remove" data-taskid="tk7a6e1eaf" aria-label="Remove" title="Remove task">&times;</button>
+<div class="task-snooze-pop" data-taskid="tk7a6e1eaf" hidden><div class="pop-title">&#x1F4A4; Snooze until&hellip;</div><button type="button" class="pop-preset" data-preset="tomorrow" data-taskid="tk7a6e1eaf">Tomorrow</button><button type="button" class="pop-preset" data-preset="monday" data-taskid="tk7a6e1eaf">Next Monday</button><button type="button" class="pop-preset" data-preset="2weeks" data-taskid="tk7a6e1eaf">2 weeks</button><hr class="pop-rule"><label class="pop-pick">Pick date <input type="date" class="task-snooze-pick" data-taskid="tk7a6e1eaf"></label><div class="pop-foot"><button type="button" class="pop-cancel" data-taskid="tk7a6e1eaf">Cancel</button><button type="button" class="pop-snooze" data-taskid="tk7a6e1eaf">Snooze</button></div></div>
+</span>
+<span class="task-status" data-taskid="tk7a6e1eaf"></span>
+</div>
+<div class="mp-row task-row" data-taskid="tk716006f3">
+<input type="checkbox" class="task-done" data-taskid="tk716006f3" aria-label="Mark done">
+<span class="mp-row-body task-text">Submit travel expense form</span>
+<span class="task-controls">
+<button type="button" class="task-snooze" data-taskid="tk716006f3" aria-label="Snooze" title="Snooze">&#x1F4A4;</button>
+<button type="button" class="task-remove" data-taskid="tk716006f3" aria-label="Remove" title="Remove task">&times;</button>
+<div class="task-snooze-pop" data-taskid="tk716006f3" hidden><div class="pop-title">&#x1F4A4; Snooze until&hellip;</div><button type="button" class="pop-preset" data-preset="tomorrow" data-taskid="tk716006f3">Tomorrow</button><button type="button" class="pop-preset" data-preset="monday" data-taskid="tk716006f3">Next Monday</button><button type="button" class="pop-preset" data-preset="2weeks" data-taskid="tk716006f3">2 weeks</button><hr class="pop-rule"><label class="pop-pick">Pick date <input type="date" class="task-snooze-pick" data-taskid="tk716006f3"></label><div class="pop-foot"><button type="button" class="pop-cancel" data-taskid="tk716006f3">Cancel</button><button type="button" class="pop-snooze" data-taskid="tk716006f3">Snooze</button></div></div>
+</span>
+<span class="task-status" data-taskid="tk716006f3"></span>
+</div>
+<div class="mp-row task-row" data-taskid="tkb5be3afb">
+<input type="checkbox" class="task-done" data-taskid="tkb5be3afb" aria-label="Mark done">
+<span class="mp-row-body task-text">Re-open Grindhouse in Godot from <code>~/Desktop/Projects/Game_Projects/Grindhouse_Godot/project.godot</code> (one time — heals Godot&#x27;s project list after the 7/9 reorg)</span>
+<span class="task-controls">
+<button type="button" class="task-snooze" data-taskid="tkb5be3afb" aria-label="Snooze" title="Snooze">&#x1F4A4;</button>
+<button type="button" class="task-remove" data-taskid="tkb5be3afb" aria-label="Remove" title="Remove task">&times;</button>
+<div class="task-snooze-pop" data-taskid="tkb5be3afb" hidden><div class="pop-title">&#x1F4A4; Snooze until&hellip;</div><button type="button" class="pop-preset" data-preset="tomorrow" data-taskid="tkb5be3afb">Tomorrow</button><button type="button" class="pop-preset" data-preset="monday" data-taskid="tkb5be3afb">Next Monday</button><button type="button" class="pop-preset" data-preset="2weeks" data-taskid="tkb5be3afb">2 weeks</button><hr class="pop-rule"><label class="pop-pick">Pick date <input type="date" class="task-snooze-pick" data-taskid="tkb5be3afb"></label><div class="pop-foot"><button type="button" class="pop-cancel" data-taskid="tkb5be3afb">Cancel</button><button type="button" class="pop-snooze" data-taskid="tkb5be3afb">Snooze</button></div></div>
+</span>
+<span class="task-status" data-taskid="tkb5be3afb"></span>
+</div>
+<div class="mp-row task-row" data-taskid="tk9735942b">
+<input type="checkbox" class="task-done" data-taskid="tk9735942b" aria-label="Mark done">
+<span class="mp-row-body task-text">Ask about Power BI dataset access + CRM &quot;waiting on customer&quot; status (Queue Tracker v2 gate)</span>
+<span class="task-controls">
+<button type="button" class="task-snooze" data-taskid="tk9735942b" aria-label="Snooze" title="Snooze">&#x1F4A4;</button>
+<button type="button" class="task-remove" data-taskid="tk9735942b" aria-label="Remove" title="Remove task">&times;</button>
+<div class="task-snooze-pop" data-taskid="tk9735942b" hidden><div class="pop-title">&#x1F4A4; Snooze until&hellip;</div><button type="button" class="pop-preset" data-preset="tomorrow" data-taskid="tk9735942b">Tomorrow</button><button type="button" class="pop-preset" data-preset="monday" data-taskid="tk9735942b">Next Monday</button><button type="button" class="pop-preset" data-preset="2weeks" data-taskid="tk9735942b">2 weeks</button><hr class="pop-rule"><label class="pop-pick">Pick date <input type="date" class="task-snooze-pick" data-taskid="tk9735942b"></label><div class="pop-foot"><button type="button" class="pop-cancel" data-taskid="tk9735942b">Cancel</button><button type="button" class="pop-snooze" data-taskid="tk9735942b">Snooze</button></div></div>
+</span>
+<span class="task-status" data-taskid="tk9735942b"></span>
+</div>
+<div class="mp-row task-row" data-taskid="tk221fb591">
+<input type="checkbox" class="task-done" data-taskid="tk221fb591" aria-label="Mark done">
+<span class="mp-row-body task-text">Prep full Briefing for the new BIR/UCC/Notary team build → stub in <span class="wikilink">bir</span></span>
+<span class="task-controls">
+<button type="button" class="task-snooze" data-taskid="tk221fb591" aria-label="Snooze" title="Snooze">&#x1F4A4;</button>
+<button type="button" class="task-remove" data-taskid="tk221fb591" aria-label="Remove" title="Remove task">&times;</button>
+<div class="task-snooze-pop" data-taskid="tk221fb591" hidden><div class="pop-title">&#x1F4A4; Snooze until&hellip;</div><button type="button" class="pop-preset" data-preset="tomorrow" data-taskid="tk221fb591">Tomorrow</button><button type="button" class="pop-preset" data-preset="monday" data-taskid="tk221fb591">Next Monday</button><button type="button" class="pop-preset" data-preset="2weeks" data-taskid="tk221fb591">2 weeks</button><hr class="pop-rule"><label class="pop-pick">Pick date <input type="date" class="task-snooze-pick" data-taskid="tk221fb591"></label><div class="pop-foot"><button type="button" class="pop-cancel" data-taskid="tk221fb591">Cancel</button><button type="button" class="pop-snooze" data-taskid="tk221fb591">Snooze</button></div></div>
+</span>
+<span class="task-status" data-taskid="tk221fb591"></span>
+</div>
+<div class="mp-row task-row" data-taskid="tk591208b2">
+<input type="checkbox" class="task-done" data-taskid="tk591208b2" aria-label="Mark done">
+<span class="mp-row-body task-text">Set up small workgroup for BIR email blocking procedures</span>
+<span class="task-controls">
+<button type="button" class="task-snooze" data-taskid="tk591208b2" aria-label="Snooze" title="Snooze">&#x1F4A4;</button>
+<button type="button" class="task-remove" data-taskid="tk591208b2" aria-label="Remove" title="Remove task">&times;</button>
+<div class="task-snooze-pop" data-taskid="tk591208b2" hidden><div class="pop-title">&#x1F4A4; Snooze until&hellip;</div><button type="button" class="pop-preset" data-preset="tomorrow" data-taskid="tk591208b2">Tomorrow</button><button type="button" class="pop-preset" data-preset="monday" data-taskid="tk591208b2">Next Monday</button><button type="button" class="pop-preset" data-preset="2weeks" data-taskid="tk591208b2">2 weeks</button><hr class="pop-rule"><label class="pop-pick">Pick date <input type="date" class="task-snooze-pick" data-taskid="tk591208b2"></label><div class="pop-foot"><button type="button" class="pop-cancel" data-taskid="tk591208b2">Cancel</button><button type="button" class="pop-snooze" data-taskid="tk591208b2">Snooze</button></div></div>
+</span>
+<span class="task-status" data-taskid="tk591208b2"></span>
+</div>
+<div class="mp-row task-row" data-taskid="tkc584dcfa">
+<input type="checkbox" class="task-done" data-taskid="tkc584dcfa" aria-label="Mark done">
+<span class="mp-row-body task-text">Set up giant intro call: service companies, Mary, Jessica, Nhia, Trudy</span>
+<span class="task-controls">
+<button type="button" class="task-snooze" data-taskid="tkc584dcfa" aria-label="Snooze" title="Snooze">&#x1F4A4;</button>
+<button type="button" class="task-remove" data-taskid="tkc584dcfa" aria-label="Remove" title="Remove task">&times;</button>
+<div class="task-snooze-pop" data-taskid="tkc584dcfa" hidden><div class="pop-title">&#x1F4A4; Snooze until&hellip;</div><button type="button" class="pop-preset" data-preset="tomorrow" data-taskid="tkc584dcfa">Tomorrow</button><button type="button" class="pop-preset" data-preset="monday" data-taskid="tkc584dcfa">Next Monday</button><button type="button" class="pop-preset" data-preset="2weeks" data-taskid="tkc584dcfa">2 weeks</button><hr class="pop-rule"><label class="pop-pick">Pick date <input type="date" class="task-snooze-pick" data-taskid="tkc584dcfa"></label><div class="pop-foot"><button type="button" class="pop-cancel" data-taskid="tkc584dcfa">Cancel</button><button type="button" class="pop-snooze" data-taskid="tkc584dcfa">Snooze</button></div></div>
+</span>
+<span class="task-status" data-taskid="tkc584dcfa"></span>
+</div>
+<div class="mp-row task-row" data-taskid="tka98df6b3">
+<input type="checkbox" class="task-done" data-taskid="tka98df6b3" aria-label="Mark done">
+<span class="mp-row-body task-text">OSS Pop-up: determine filings offered + write SOP</span>
+<span class="task-controls">
+<button type="button" class="task-snooze" data-taskid="tka98df6b3" aria-label="Snooze" title="Snooze">&#x1F4A4;</button>
+<button type="button" class="task-remove" data-taskid="tka98df6b3" aria-label="Remove" title="Remove task">&times;</button>
+<div class="task-snooze-pop" data-taskid="tka98df6b3" hidden><div class="pop-title">&#x1F4A4; Snooze until&hellip;</div><button type="button" class="pop-preset" data-preset="tomorrow" data-taskid="tka98df6b3">Tomorrow</button><button type="button" class="pop-preset" data-preset="monday" data-taskid="tka98df6b3">Next Monday</button><button type="button" class="pop-preset" data-preset="2weeks" data-taskid="tka98df6b3">2 weeks</button><hr class="pop-rule"><label class="pop-pick">Pick date <input type="date" class="task-snooze-pick" data-taskid="tka98df6b3"></label><div class="pop-foot"><button type="button" class="pop-cancel" data-taskid="tka98df6b3">Cancel</button><button type="button" class="pop-snooze" data-taskid="tka98df6b3">Snooze</button></div></div>
+</span>
+<span class="task-status" data-taskid="tka98df6b3"></span>
+</div>
+<div class="mp-row task-row" data-taskid="tk6380e6d1">
+<input type="checkbox" class="task-done" data-taskid="tk6380e6d1" aria-label="Mark done">
+<span class="mp-row-body task-text">OSS Pop-up: confirm staff roster by Aug 5 (courthouse rotunda; equipment test same day)</span>
+<span class="task-controls">
+<button type="button" class="task-snooze" data-taskid="tk6380e6d1" aria-label="Snooze" title="Snooze">&#x1F4A4;</button>
+<button type="button" class="task-remove" data-taskid="tk6380e6d1" aria-label="Remove" title="Remove task">&times;</button>
+<div class="task-snooze-pop" data-taskid="tk6380e6d1" hidden><div class="pop-title">&#x1F4A4; Snooze until&hellip;</div><button type="button" class="pop-preset" data-preset="tomorrow" data-taskid="tk6380e6d1">Tomorrow</button><button type="button" class="pop-preset" data-preset="monday" data-taskid="tk6380e6d1">Next Monday</button><button type="button" class="pop-preset" data-preset="2weeks" data-taskid="tk6380e6d1">2 weeks</button><hr class="pop-rule"><label class="pop-pick">Pick date <input type="date" class="task-snooze-pick" data-taskid="tk6380e6d1"></label><div class="pop-foot"><button type="button" class="pop-cancel" data-taskid="tk6380e6d1">Cancel</button><button type="button" class="pop-snooze" data-taskid="tk6380e6d1">Snooze</button></div></div>
+</span>
+<span class="task-status" data-taskid="tk6380e6d1"></span>
+</div>
+<div class="mp-row task-row" data-taskid="tk4be2c97b">
+<input type="checkbox" class="task-done" data-taskid="tk4be2c97b" aria-label="Mark done">
+<span class="mp-row-body task-text">Check w/ Jenny: chafing dish + sterno inventory for OSS picnic</span>
+<span class="task-controls">
+<button type="button" class="task-snooze" data-taskid="tk4be2c97b" aria-label="Snooze" title="Snooze">&#x1F4A4;</button>
+<button type="button" class="task-remove" data-taskid="tk4be2c97b" aria-label="Remove" title="Remove task">&times;</button>
+<div class="task-snooze-pop" data-taskid="tk4be2c97b" hidden><div class="pop-title">&#x1F4A4; Snooze until&hellip;</div><button type="button" class="pop-preset" data-preset="tomorrow" data-taskid="tk4be2c97b">Tomorrow</button><button type="button" class="pop-preset" data-preset="monday" data-taskid="tk4be2c97b">Next Monday</button><button type="button" class="pop-preset" data-preset="2weeks" data-taskid="tk4be2c97b">2 weeks</button><hr class="pop-rule"><label class="pop-pick">Pick date <input type="date" class="task-snooze-pick" data-taskid="tk4be2c97b"></label><div class="pop-foot"><button type="button" class="pop-cancel" data-taskid="tk4be2c97b">Cancel</button><button type="button" class="pop-snooze" data-taskid="tk4be2c97b">Snooze</button></div></div>
+</span>
+<span class="task-status" data-taskid="tk4be2c97b"></span>
+</div>
+<div class="mp-row task-row" data-taskid="tk6cbc3e55">
+<input type="checkbox" class="task-done" data-taskid="tk6cbc3e55" aria-label="Mark done">
+<span class="mp-row-body task-text">OSS picnic (Sept): price out Costco fruit trays + cookies; check what can be pre-ordered (you&#x27;re on trivia + Costco)</span>
+<span class="task-controls">
+<button type="button" class="task-snooze" data-taskid="tk6cbc3e55" aria-label="Snooze" title="Snooze">&#x1F4A4;</button>
+<button type="button" class="task-remove" data-taskid="tk6cbc3e55" aria-label="Remove" title="Remove task">&times;</button>
+<div class="task-snooze-pop" data-taskid="tk6cbc3e55" hidden><div class="pop-title">&#x1F4A4; Snooze until&hellip;</div><button type="button" class="pop-preset" data-preset="tomorrow" data-taskid="tk6cbc3e55">Tomorrow</button><button type="button" class="pop-preset" data-preset="monday" data-taskid="tk6cbc3e55">Next Monday</button><button type="button" class="pop-preset" data-preset="2weeks" data-taskid="tk6cbc3e55">2 weeks</button><hr class="pop-rule"><label class="pop-pick">Pick date <input type="date" class="task-snooze-pick" data-taskid="tk6cbc3e55"></label><div class="pop-foot"><button type="button" class="pop-cancel" data-taskid="tk6cbc3e55">Cancel</button><button type="button" class="pop-snooze" data-taskid="tk6cbc3e55">Snooze</button></div></div>
+</span>
+<span class="task-status" data-taskid="tk6cbc3e55"></span>
+</div>
+<div class="mp-row task-row" data-taskid="tk1905f2b4">
+<input type="checkbox" class="task-done" data-taskid="tk1905f2b4" aria-label="Mark done">
+<span class="mp-row-body task-text">Bring up summer renewal email question at team meeting</span>
+<span class="task-controls">
+<button type="button" class="task-snooze" data-taskid="tk1905f2b4" aria-label="Snooze" title="Snooze">&#x1F4A4;</button>
+<button type="button" class="task-remove" data-taskid="tk1905f2b4" aria-label="Remove" title="Remove task">&times;</button>
+<div class="task-snooze-pop" data-taskid="tk1905f2b4" hidden><div class="pop-title">&#x1F4A4; Snooze until&hellip;</div><button type="button" class="pop-preset" data-preset="tomorrow" data-taskid="tk1905f2b4">Tomorrow</button><button type="button" class="pop-preset" data-preset="monday" data-taskid="tk1905f2b4">Next Monday</button><button type="button" class="pop-preset" data-preset="2weeks" data-taskid="tk1905f2b4">2 weeks</button><hr class="pop-rule"><label class="pop-pick">Pick date <input type="date" class="task-snooze-pick" data-taskid="tk1905f2b4"></label><div class="pop-foot"><button type="button" class="pop-cancel" data-taskid="tk1905f2b4">Cancel</button><button type="button" class="pop-snooze" data-taskid="tk1905f2b4">Snooze</button></div></div>
+</span>
+<span class="task-status" data-taskid="tk1905f2b4"></span>
+</div>
+<div class="mp-row task-row" data-taskid="tk27d9d62f">
+<input type="checkbox" class="task-done" data-taskid="tk27d9d62f" aria-label="Mark done">
+<span class="mp-row-body task-text">Draft journalist data guide — available vs. unavailable data</span>
+<span class="task-controls">
+<button type="button" class="task-snooze" data-taskid="tk27d9d62f" aria-label="Snooze" title="Snooze">&#x1F4A4;</button>
+<button type="button" class="task-remove" data-taskid="tk27d9d62f" aria-label="Remove" title="Remove task">&times;</button>
+<div class="task-snooze-pop" data-taskid="tk27d9d62f" hidden><div class="pop-title">&#x1F4A4; Snooze until&hellip;</div><button type="button" class="pop-preset" data-preset="tomorrow" data-taskid="tk27d9d62f">Tomorrow</button><button type="button" class="pop-preset" data-preset="monday" data-taskid="tk27d9d62f">Next Monday</button><button type="button" class="pop-preset" data-preset="2weeks" data-taskid="tk27d9d62f">2 weeks</button><hr class="pop-rule"><label class="pop-pick">Pick date <input type="date" class="task-snooze-pick" data-taskid="tk27d9d62f"></label><div class="pop-foot"><button type="button" class="pop-cancel" data-taskid="tk27d9d62f">Cancel</button><button type="button" class="pop-snooze" data-taskid="tk27d9d62f">Snooze</button></div></div>
+</span>
+<span class="task-status" data-taskid="tk27d9d62f"></span>
+</div>
+<div class="mp-row task-row" data-taskid="tkabe88e13">
+<input type="checkbox" class="task-done" data-taskid="tkabe88e13" aria-label="Mark done">
+<span class="mp-row-body task-text">Dig back into OSS website work</span>
+<span class="task-controls">
+<button type="button" class="task-snooze" data-taskid="tkabe88e13" aria-label="Snooze" title="Snooze">&#x1F4A4;</button>
+<button type="button" class="task-remove" data-taskid="tkabe88e13" aria-label="Remove" title="Remove task">&times;</button>
+<div class="task-snooze-pop" data-taskid="tkabe88e13" hidden><div class="pop-title">&#x1F4A4; Snooze until&hellip;</div><button type="button" class="pop-preset" data-preset="tomorrow" data-taskid="tkabe88e13">Tomorrow</button><button type="button" class="pop-preset" data-preset="monday" data-taskid="tkabe88e13">Next Monday</button><button type="button" class="pop-preset" data-preset="2weeks" data-taskid="tkabe88e13">2 weeks</button><hr class="pop-rule"><label class="pop-pick">Pick date <input type="date" class="task-snooze-pick" data-taskid="tkabe88e13"></label><div class="pop-foot"><button type="button" class="pop-cancel" data-taskid="tkabe88e13">Cancel</button><button type="button" class="pop-snooze" data-taskid="tkabe88e13">Snooze</button></div></div>
+</span>
+<span class="task-status" data-taskid="tkabe88e13"></span>
+</div>
+<div class="mp-row task-row" data-taskid="tkc5b0169f">
+<input type="checkbox" class="task-done" data-taskid="tkc5b0169f" aria-label="Mark done">
+<span class="mp-row-body task-text">Find topic for next deep dive</span>
+<span class="task-controls">
+<button type="button" class="task-snooze" data-taskid="tkc5b0169f" aria-label="Snooze" title="Snooze">&#x1F4A4;</button>
+<button type="button" class="task-remove" data-taskid="tkc5b0169f" aria-label="Remove" title="Remove task">&times;</button>
+<div class="task-snooze-pop" data-taskid="tkc5b0169f" hidden><div class="pop-title">&#x1F4A4; Snooze until&hellip;</div><button type="button" class="pop-preset" data-preset="tomorrow" data-taskid="tkc5b0169f">Tomorrow</button><button type="button" class="pop-preset" data-preset="monday" data-taskid="tkc5b0169f">Next Monday</button><button type="button" class="pop-preset" data-preset="2weeks" data-taskid="tkc5b0169f">2 weeks</button><hr class="pop-rule"><label class="pop-pick">Pick date <input type="date" class="task-snooze-pick" data-taskid="tkc5b0169f"></label><div class="pop-foot"><button type="button" class="pop-cancel" data-taskid="tkc5b0169f">Cancel</button><button type="button" class="pop-snooze" data-taskid="tkc5b0169f">Snooze</button></div></div>
+</span>
+<span class="task-status" data-taskid="tkc5b0169f"></span>
+</div>
+<div class="mp-row task-row" data-taskid="tk47840f24">
+<input type="checkbox" class="task-done" data-taskid="tk47840f24" aria-label="Mark done">
+<span class="mp-row-body task-text">Review Fraud Team concept</span>
+<span class="task-controls">
+<button type="button" class="task-snooze" data-taskid="tk47840f24" aria-label="Snooze" title="Snooze">&#x1F4A4;</button>
+<button type="button" class="task-remove" data-taskid="tk47840f24" aria-label="Remove" title="Remove task">&times;</button>
+<div class="task-snooze-pop" data-taskid="tk47840f24" hidden><div class="pop-title">&#x1F4A4; Snooze until&hellip;</div><button type="button" class="pop-preset" data-preset="tomorrow" data-taskid="tk47840f24">Tomorrow</button><button type="button" class="pop-preset" data-preset="monday" data-taskid="tk47840f24">Next Monday</button><button type="button" class="pop-preset" data-preset="2weeks" data-taskid="tk47840f24">2 weeks</button><hr class="pop-rule"><label class="pop-pick">Pick date <input type="date" class="task-snooze-pick" data-taskid="tk47840f24"></label><div class="pop-foot"><button type="button" class="pop-cancel" data-taskid="tk47840f24">Cancel</button><button type="button" class="pop-snooze" data-taskid="tk47840f24">Snooze</button></div></div>
+</span>
+<span class="task-status" data-taskid="tk47840f24"></span>
+</div>
+<div class="mp-row task-row" data-taskid="tk2724b621">
+<input type="checkbox" class="task-done" data-taskid="tk2724b621" aria-label="Mark done">
+<span class="mp-row-body task-text">Research plain language readability tools (NV targets 8th grade)</span>
+<span class="task-controls">
+<button type="button" class="task-snooze" data-taskid="tk2724b621" aria-label="Snooze" title="Snooze">&#x1F4A4;</button>
+<button type="button" class="task-remove" data-taskid="tk2724b621" aria-label="Remove" title="Remove task">&times;</button>
+<div class="task-snooze-pop" data-taskid="tk2724b621" hidden><div class="pop-title">&#x1F4A4; Snooze until&hellip;</div><button type="button" class="pop-preset" data-preset="tomorrow" data-taskid="tk2724b621">Tomorrow</button><button type="button" class="pop-preset" data-preset="monday" data-taskid="tk2724b621">Next Monday</button><button type="button" class="pop-preset" data-preset="2weeks" data-taskid="tk2724b621">2 weeks</button><hr class="pop-rule"><label class="pop-pick">Pick date <input type="date" class="task-snooze-pick" data-taskid="tk2724b621"></label><div class="pop-foot"><button type="button" class="pop-cancel" data-taskid="tk2724b621">Cancel</button><button type="button" class="pop-snooze" data-taskid="tk2724b621">Snooze</button></div></div>
+</span>
+<span class="task-status" data-taskid="tk2724b621"></span>
+</div>
+<div class="mp-row task-row" data-taskid="tk84d6efcc">
+<input type="checkbox" class="task-done" data-taskid="tk84d6efcc" aria-label="Mark done">
+<span class="mp-row-body task-text">Use Jenny&#x27;s task inventory as cross-training/succession checklist (fiscal team — most rows one-deep on backup)</span>
+<span class="task-controls">
+<button type="button" class="task-snooze" data-taskid="tk84d6efcc" aria-label="Snooze" title="Snooze">&#x1F4A4;</button>
+<button type="button" class="task-remove" data-taskid="tk84d6efcc" aria-label="Remove" title="Remove task">&times;</button>
+<div class="task-snooze-pop" data-taskid="tk84d6efcc" hidden><div class="pop-title">&#x1F4A4; Snooze until&hellip;</div><button type="button" class="pop-preset" data-preset="tomorrow" data-taskid="tk84d6efcc">Tomorrow</button><button type="button" class="pop-preset" data-preset="monday" data-taskid="tk84d6efcc">Next Monday</button><button type="button" class="pop-preset" data-preset="2weeks" data-taskid="tk84d6efcc">2 weeks</button><hr class="pop-rule"><label class="pop-pick">Pick date <input type="date" class="task-snooze-pick" data-taskid="tk84d6efcc"></label><div class="pop-foot"><button type="button" class="pop-cancel" data-taskid="tk84d6efcc">Cancel</button><button type="button" class="pop-snooze" data-taskid="tk84d6efcc">Snooze</button></div></div>
+</span>
+<span class="task-status" data-taskid="tk84d6efcc"></span>
+</div>
+<div class="mp-row task-row" data-taskid="tka3131b9b">
+<input type="checkbox" class="task-done" data-taskid="tka3131b9b" aria-label="Mark done">
+<span class="mp-row-body task-text">Forever Tournament: enable Web Analytics (Cloudflare dashboard → Analytics &amp; Logs → Web Analytics → add forevertournament.com)</span>
+<span class="task-controls">
+<button type="button" class="task-snooze" data-taskid="tka3131b9b" aria-label="Snooze" title="Snooze">&#x1F4A4;</button>
+<button type="button" class="task-remove" data-taskid="tka3131b9b" aria-label="Remove" title="Remove task">&times;</button>
+<div class="task-snooze-pop" data-taskid="tka3131b9b" hidden><div class="pop-title">&#x1F4A4; Snooze until&hellip;</div><button type="button" class="pop-preset" data-preset="tomorrow" data-taskid="tka3131b9b">Tomorrow</button><button type="button" class="pop-preset" data-preset="monday" data-taskid="tka3131b9b">Next Monday</button><button type="button" class="pop-preset" data-preset="2weeks" data-taskid="tka3131b9b">2 weeks</button><hr class="pop-rule"><label class="pop-pick">Pick date <input type="date" class="task-snooze-pick" data-taskid="tka3131b9b"></label><div class="pop-foot"><button type="button" class="pop-cancel" data-taskid="tka3131b9b">Cancel</button><button type="button" class="pop-snooze" data-taskid="tka3131b9b">Snooze</button></div></div>
+</span>
+<span class="task-status" data-taskid="tka3131b9b"></span>
+</div>
+<div class="mp-row task-row" data-taskid="tka7ac92c6">
+<input type="checkbox" class="task-done" data-taskid="tka7ac92c6" aria-label="Mark done">
+<span class="mp-row-body task-text">Forever Tournament: edit + post HN-DEV-STORY-DRAFT.md when launch-ready; check subreddit self-promo rules before Reddit posts</span>
+<span class="task-controls">
+<button type="button" class="task-snooze" data-taskid="tka7ac92c6" aria-label="Snooze" title="Snooze">&#x1F4A4;</button>
+<button type="button" class="task-remove" data-taskid="tka7ac92c6" aria-label="Remove" title="Remove task">&times;</button>
+<div class="task-snooze-pop" data-taskid="tka7ac92c6" hidden><div class="pop-title">&#x1F4A4; Snooze until&hellip;</div><button type="button" class="pop-preset" data-preset="tomorrow" data-taskid="tka7ac92c6">Tomorrow</button><button type="button" class="pop-preset" data-preset="monday" data-taskid="tka7ac92c6">Next Monday</button><button type="button" class="pop-preset" data-preset="2weeks" data-taskid="tka7ac92c6">2 weeks</button><hr class="pop-rule"><label class="pop-pick">Pick date <input type="date" class="task-snooze-pick" data-taskid="tka7ac92c6"></label><div class="pop-foot"><button type="button" class="pop-cancel" data-taskid="tka7ac92c6">Cancel</button><button type="button" class="pop-snooze" data-taskid="tka7ac92c6">Snooze</button></div></div>
+</span>
+<span class="task-status" data-taskid="tka7ac92c6"></span>
+</div>
+<div class="mp-row task-row" data-taskid="tk10961546">
+<input type="checkbox" class="task-done" data-taskid="tk10961546" aria-label="Mark done">
+<span class="mp-row-body task-text">Forever Tournament: set up Bluesky account + secrets per AUTOPOST-SETUP.md (when vote volume warrants)</span>
+<span class="task-controls">
+<button type="button" class="task-snooze" data-taskid="tk10961546" aria-label="Snooze" title="Snooze">&#x1F4A4;</button>
+<button type="button" class="task-remove" data-taskid="tk10961546" aria-label="Remove" title="Remove task">&times;</button>
+<div class="task-snooze-pop" data-taskid="tk10961546" hidden><div class="pop-title">&#x1F4A4; Snooze until&hellip;</div><button type="button" class="pop-preset" data-preset="tomorrow" data-taskid="tk10961546">Tomorrow</button><button type="button" class="pop-preset" data-preset="monday" data-taskid="tk10961546">Next Monday</button><button type="button" class="pop-preset" data-preset="2weeks" data-taskid="tk10961546">2 weeks</button><hr class="pop-rule"><label class="pop-pick">Pick date <input type="date" class="task-snooze-pick" data-taskid="tk10961546"></label><div class="pop-foot"><button type="button" class="pop-cancel" data-taskid="tk10961546">Cancel</button><button type="button" class="pop-snooze" data-taskid="tk10961546">Snooze</button></div></div>
+</span>
+<span class="task-status" data-taskid="tk10961546"></span>
+</div>
+<div class="mp-row task-row" data-taskid="tk2b00d80f">
+<input type="checkbox" class="task-done" data-taskid="tk2b00d80f" aria-label="Mark done">
+<span class="mp-row-body task-text">Fix jukebox pool exhaustion: top up with date-rotated rated bands when unrated &lt; 20; expand pool to wider genres (pop etc.) per 7/7 inbox note — Madonna = 3★</span>
+<span class="task-controls">
+<button type="button" class="task-snooze" data-taskid="tk2b00d80f" aria-label="Snooze" title="Snooze">&#x1F4A4;</button>
+<button type="button" class="task-remove" data-taskid="tk2b00d80f" aria-label="Remove" title="Remove task">&times;</button>
+<div class="task-snooze-pop" data-taskid="tk2b00d80f" hidden><div class="pop-title">&#x1F4A4; Snooze until&hellip;</div><button type="button" class="pop-preset" data-preset="tomorrow" data-taskid="tk2b00d80f">Tomorrow</button><button type="button" class="pop-preset" data-preset="monday" data-taskid="tk2b00d80f">Next Monday</button><button type="button" class="pop-preset" data-preset="2weeks" data-taskid="tk2b00d80f">2 weeks</button><hr class="pop-rule"><label class="pop-pick">Pick date <input type="date" class="task-snooze-pick" data-taskid="tk2b00d80f"></label><div class="pop-foot"><button type="button" class="pop-cancel" data-taskid="tk2b00d80f">Cancel</button><button type="button" class="pop-snooze" data-taskid="tk2b00d80f">Snooze</button></div></div>
+</span>
+<span class="task-status" data-taskid="tk2b00d80f"></span>
+</div>
+<div class="mp-row task-row" data-taskid="tka43e383d">
+<input type="checkbox" class="task-done" data-taskid="tka43e383d" aria-label="Mark done">
+<span class="mp-row-body task-text">Book New Haven trip for IACA 2027 (Sep 20–23 @ Omni New Haven)</span>
+<span class="task-controls">
+<button type="button" class="task-snooze" data-taskid="tka43e383d" aria-label="Snooze" title="Snooze">&#x1F4A4;</button>
+<button type="button" class="task-remove" data-taskid="tka43e383d" aria-label="Remove" title="Remove task">&times;</button>
+<div class="task-snooze-pop" data-taskid="tka43e383d" hidden><div class="pop-title">&#x1F4A4; Snooze until&hellip;</div><button type="button" class="pop-preset" data-preset="tomorrow" data-taskid="tka43e383d">Tomorrow</button><button type="button" class="pop-preset" data-preset="monday" data-taskid="tka43e383d">Next Monday</button><button type="button" class="pop-preset" data-preset="2weeks" data-taskid="tka43e383d">2 weeks</button><hr class="pop-rule"><label class="pop-pick">Pick date <input type="date" class="task-snooze-pick" data-taskid="tka43e383d"></label><div class="pop-foot"><button type="button" class="pop-cancel" data-taskid="tka43e383d">Cancel</button><button type="button" class="pop-snooze" data-taskid="tka43e383d">Snooze</button></div></div>
+</span>
+<span class="task-status" data-taskid="tka43e383d"></span>
+</div>
+<div class="mp-row task-row" data-taskid="tke19aa655">
+<input type="checkbox" class="task-done" data-taskid="tke19aa655" aria-label="Mark done">
+<span class="mp-row-body task-text">Create dock/monitor setup diagram for post-SoHo-router transition</span>
+<span class="task-controls">
+<button type="button" class="task-snooze" data-taskid="tke19aa655" aria-label="Snooze" title="Snooze">&#x1F4A4;</button>
+<button type="button" class="task-remove" data-taskid="tke19aa655" aria-label="Remove" title="Remove task">&times;</button>
+<div class="task-snooze-pop" data-taskid="tke19aa655" hidden><div class="pop-title">&#x1F4A4; Snooze until&hellip;</div><button type="button" class="pop-preset" data-preset="tomorrow" data-taskid="tke19aa655">Tomorrow</button><button type="button" class="pop-preset" data-preset="monday" data-taskid="tke19aa655">Next Monday</button><button type="button" class="pop-preset" data-preset="2weeks" data-taskid="tke19aa655">2 weeks</button><hr class="pop-rule"><label class="pop-pick">Pick date <input type="date" class="task-snooze-pick" data-taskid="tke19aa655"></label><div class="pop-foot"><button type="button" class="pop-cancel" data-taskid="tke19aa655">Cancel</button><button type="button" class="pop-snooze" data-taskid="tke19aa655">Snooze</button></div></div>
+</span>
+<span class="task-status" data-taskid="tke19aa655"></span>
+</div>
+<div class="mp-row task-row" data-taskid="tk89ba9638">
+<input type="checkbox" class="task-done" data-taskid="tk89ba9638" aria-label="Mark done">
+<span class="mp-row-body task-text">IKEA clearance watch: identify items from inbox images when iPhone syncs, then set up Sunday morning check → <span class="wikilink">Home-Projects</span></span>
+<span class="task-controls">
+<button type="button" class="task-snooze" data-taskid="tk89ba9638" aria-label="Snooze" title="Snooze">&#x1F4A4;</button>
+<button type="button" class="task-remove" data-taskid="tk89ba9638" aria-label="Remove" title="Remove task">&times;</button>
+<div class="task-snooze-pop" data-taskid="tk89ba9638" hidden><div class="pop-title">&#x1F4A4; Snooze until&hellip;</div><button type="button" class="pop-preset" data-preset="tomorrow" data-taskid="tk89ba9638">Tomorrow</button><button type="button" class="pop-preset" data-preset="monday" data-taskid="tk89ba9638">Next Monday</button><button type="button" class="pop-preset" data-preset="2weeks" data-taskid="tk89ba9638">2 weeks</button><hr class="pop-rule"><label class="pop-pick">Pick date <input type="date" class="task-snooze-pick" data-taskid="tk89ba9638"></label><div class="pop-foot"><button type="button" class="pop-cancel" data-taskid="tk89ba9638">Cancel</button><button type="button" class="pop-snooze" data-taskid="tk89ba9638">Snooze</button></div></div>
+</span>
+<span class="task-status" data-taskid="tk89ba9638"></span>
+</div>
+<div class="mp-row task-row" data-taskid="tkabafe570">
+<input type="checkbox" class="task-done" data-taskid="tkabafe570" aria-label="Mark done">
+<span class="mp-row-body task-text">Resume Melissa Buddy Q&amp;A walkthrough at Q7 <em>(woke from snooze)</em></span>
+<span class="task-controls">
+<button type="button" class="task-snooze" data-taskid="tkabafe570" aria-label="Snooze" title="Snooze">&#x1F4A4;</button>
+<button type="button" class="task-remove" data-taskid="tkabafe570" aria-label="Remove" title="Remove task">&times;</button>
+<div class="task-snooze-pop" data-taskid="tkabafe570" hidden><div class="pop-title">&#x1F4A4; Snooze until&hellip;</div><button type="button" class="pop-preset" data-preset="tomorrow" data-taskid="tkabafe570">Tomorrow</button><button type="button" class="pop-preset" data-preset="monday" data-taskid="tkabafe570">Next Monday</button><button type="button" class="pop-preset" data-preset="2weeks" data-taskid="tkabafe570">2 weeks</button><hr class="pop-rule"><label class="pop-pick">Pick date <input type="date" class="task-snooze-pick" data-taskid="tkabafe570"></label><div class="pop-foot"><button type="button" class="pop-cancel" data-taskid="tkabafe570">Cancel</button><button type="button" class="pop-snooze" data-taskid="tkabafe570">Snooze</button></div></div>
+</span>
+<span class="task-status" data-taskid="tkabafe570"></span>
+</div>
+<div class="mp-row task-row" data-taskid="tk94c3a136">
+<input type="checkbox" class="task-done" data-taskid="tk94c3a136" aria-label="Mark done">
+<span class="mp-row-body task-text">Review 20 recipe picks for Paprika → <span class="wikilink">Recipe-Picks-2026-06-07</span> <em>(woke from snooze)</em></span>
+<span class="task-controls">
+<button type="button" class="task-snooze" data-taskid="tk94c3a136" aria-label="Snooze" title="Snooze">&#x1F4A4;</button>
+<button type="button" class="task-remove" data-taskid="tk94c3a136" aria-label="Remove" title="Remove task">&times;</button>
+<div class="task-snooze-pop" data-taskid="tk94c3a136" hidden><div class="pop-title">&#x1F4A4; Snooze until&hellip;</div><button type="button" class="pop-preset" data-preset="tomorrow" data-taskid="tk94c3a136">Tomorrow</button><button type="button" class="pop-preset" data-preset="monday" data-taskid="tk94c3a136">Next Monday</button><button type="button" class="pop-preset" data-preset="2weeks" data-taskid="tk94c3a136">2 weeks</button><hr class="pop-rule"><label class="pop-pick">Pick date <input type="date" class="task-snooze-pick" data-taskid="tk94c3a136"></label><div class="pop-foot"><button type="button" class="pop-cancel" data-taskid="tk94c3a136">Cancel</button><button type="button" class="pop-snooze" data-taskid="tk94c3a136">Snooze</button></div></div>
+</span>
+<span class="task-status" data-taskid="tk94c3a136"></span>
+</div>
+<div class="mp-row task-row" data-taskid="tk8b708b95">
+<input type="checkbox" class="task-done" data-taskid="tk8b708b95" aria-label="Mark done">
+<span class="mp-row-body task-text">Review &quot;Books to check out&quot; archived note <em>(woke from snooze)</em></span>
+<span class="task-controls">
+<button type="button" class="task-snooze" data-taskid="tk8b708b95" aria-label="Snooze" title="Snooze">&#x1F4A4;</button>
+<button type="button" class="task-remove" data-taskid="tk8b708b95" aria-label="Remove" title="Remove task">&times;</button>
+<div class="task-snooze-pop" data-taskid="tk8b708b95" hidden><div class="pop-title">&#x1F4A4; Snooze until&hellip;</div><button type="button" class="pop-preset" data-preset="tomorrow" data-taskid="tk8b708b95">Tomorrow</button><button type="button" class="pop-preset" data-preset="monday" data-taskid="tk8b708b95">Next Monday</button><button type="button" class="pop-preset" data-preset="2weeks" data-taskid="tk8b708b95">2 weeks</button><hr class="pop-rule"><label class="pop-pick">Pick date <input type="date" class="task-snooze-pick" data-taskid="tk8b708b95"></label><div class="pop-foot"><button type="button" class="pop-cancel" data-taskid="tk8b708b95">Cancel</button><button type="button" class="pop-snooze" data-taskid="tk8b708b95">Snooze</button></div></div>
+</span>
+<span class="task-status" data-taskid="tk8b708b95"></span>
+</div>
+<div class="mp-row task-row" data-taskid="tk1e97543b">
+<input type="checkbox" class="task-done" data-taskid="tk1e97543b" aria-label="Mark done">
+<span class="mp-row-body task-text">Consider restarting Alamo Drafthouse Season Pass <em>(woke from snooze)</em></span>
+<span class="task-controls">
+<button type="button" class="task-snooze" data-taskid="tk1e97543b" aria-label="Snooze" title="Snooze">&#x1F4A4;</button>
+<button type="button" class="task-remove" data-taskid="tk1e97543b" aria-label="Remove" title="Remove task">&times;</button>
+<div class="task-snooze-pop" data-taskid="tk1e97543b" hidden><div class="pop-title">&#x1F4A4; Snooze until&hellip;</div><button type="button" class="pop-preset" data-preset="tomorrow" data-taskid="tk1e97543b">Tomorrow</button><button type="button" class="pop-preset" data-preset="monday" data-taskid="tk1e97543b">Next Monday</button><button type="button" class="pop-preset" data-preset="2weeks" data-taskid="tk1e97543b">2 weeks</button><hr class="pop-rule"><label class="pop-pick">Pick date <input type="date" class="task-snooze-pick" data-taskid="tk1e97543b"></label><div class="pop-foot"><button type="button" class="pop-cancel" data-taskid="tk1e97543b">Cancel</button><button type="button" class="pop-snooze" data-taskid="tk1e97543b">Snooze</button></div></div>
+</span>
+<span class="task-status" data-taskid="tk1e97543b"></span>
+</div>
+<div class="mp-row task-row" data-taskid="tk52934262">
+<input type="checkbox" class="task-done" data-taskid="tk52934262" aria-label="Mark done">
+<span class="mp-row-body task-text">Buy foil tape (light boxes) <em>(woke from snooze)</em></span>
+<span class="task-controls">
+<button type="button" class="task-snooze" data-taskid="tk52934262" aria-label="Snooze" title="Snooze">&#x1F4A4;</button>
+<button type="button" class="task-remove" data-taskid="tk52934262" aria-label="Remove" title="Remove task">&times;</button>
+<div class="task-snooze-pop" data-taskid="tk52934262" hidden><div class="pop-title">&#x1F4A4; Snooze until&hellip;</div><button type="button" class="pop-preset" data-preset="tomorrow" data-taskid="tk52934262">Tomorrow</button><button type="button" class="pop-preset" data-preset="monday" data-taskid="tk52934262">Next Monday</button><button type="button" class="pop-preset" data-preset="2weeks" data-taskid="tk52934262">2 weeks</button><hr class="pop-rule"><label class="pop-pick">Pick date <input type="date" class="task-snooze-pick" data-taskid="tk52934262"></label><div class="pop-foot"><button type="button" class="pop-cancel" data-taskid="tk52934262">Cancel</button><button type="button" class="pop-snooze" data-taskid="tk52934262">Snooze</button></div></div>
+</span>
+<span class="task-status" data-taskid="tk52934262"></span>
+</div>
+<div class="mp-row task-row" data-taskid="tkc8bba737">
+<input type="checkbox" class="task-done" data-taskid="tkc8bba737" aria-label="Mark done">
+<span class="mp-row-body task-text">COOP refresh — only plan on file is 2020-vintage. See <span class="wikilink">Business-Services-COOP</span> <em>(woke from snooze)</em></span>
+<span class="task-controls">
+<button type="button" class="task-snooze" data-taskid="tkc8bba737" aria-label="Snooze" title="Snooze">&#x1F4A4;</button>
+<button type="button" class="task-remove" data-taskid="tkc8bba737" aria-label="Remove" title="Remove task">&times;</button>
+<div class="task-snooze-pop" data-taskid="tkc8bba737" hidden><div class="pop-title">&#x1F4A4; Snooze until&hellip;</div><button type="button" class="pop-preset" data-preset="tomorrow" data-taskid="tkc8bba737">Tomorrow</button><button type="button" class="pop-preset" data-preset="monday" data-taskid="tkc8bba737">Next Monday</button><button type="button" class="pop-preset" data-preset="2weeks" data-taskid="tkc8bba737">2 weeks</button><hr class="pop-rule"><label class="pop-pick">Pick date <input type="date" class="task-snooze-pick" data-taskid="tkc8bba737"></label><div class="pop-foot"><button type="button" class="pop-cancel" data-taskid="tkc8bba737">Cancel</button><button type="button" class="pop-snooze" data-taskid="tkc8bba737">Snooze</button></div></div>
+</span>
+<span class="task-status" data-taskid="tkc8bba737"></span>
+</div>
+</section>
+<script>window.__HAMHAM_TASKS__ = {"tkb956576d": "Run `claude update` (2.1.214 → 2.1.218) — at the keyboard, auto-update stays off on purpose → [[Claude-Code-Autoupdate-TCC-Churn]]", "tk1cbb7919": "Add unlocked front-door issue to work meeting agenda (from Dianna — raised in her staff meeting 7/21)", "tk4bbbb9b3": "Review SLT meeting work dates (7/22 inbox note — image only, unreadable at intake)", "tkaa2e5f4e": "Schedule remaining review meetings: Mai Nhia, Trudy, Jessica, Jenny (due 6/30 — overdue)", "tk2376abb5": "Trudy: updated signed PD to HR before 6/30 (overdue)", "tk6cc5ec00": "Post reception job (ASAP — per Jessica)", "tk57b35d01": "Post UCC vacancies ASAP (Trudy's team down 2→3)", "tk745e9f6e": "Submit Achievement Award nominations to Meagan (window Jul 1–Aug 31) → [[Achievement-Awards-2026]]", "tk67ff83c9": "BS Hub: re-upload hub.html/hub.aspx + hub-admin.html from `DEPLOY/` to Teams (training removed; PDFs retired — browser print only)", "tkf33f399e": "BS Hub: Fix docs 060/117/110 content losses (see FIDELITY-AUDIT-2026-07-11.md §1) + SME-verify 020 certificate matrix grids", "tkd701550a": "BS Hub: Top coverage gap — BIR Declaration of Wrongful Filing needs a procedure first (it's your program); see SITE-COVERAGE-GAPS-2026-07-11.md", "tk7a6e1eaf": "BS Hub: Standalone training tool — build pending; seed in `_training-tool-seed/` → [[Work/Projects/bs-procedure-hub-training-tool]]", "tk716006f3": "Submit travel expense form", "tkb5be3afb": "Re-open Grindhouse in Godot from `~/Desktop/Projects/Game_Projects/Grindhouse_Godot/project.godot` (one time — heals Godot's project list after the 7/9 reorg)", "tk9735942b": "Ask about Power BI dataset access + CRM \"waiting on customer\" status (Queue Tracker v2 gate)", "tk221fb591": "Prep full Briefing for the new BIR/UCC/Notary team build → stub in [[bir]]", "tk591208b2": "Set up small workgroup for BIR email blocking procedures", "tkc584dcfa": "Set up giant intro call: service companies, Mary, Jessica, Nhia, Trudy", "tka98df6b3": "OSS Pop-up: determine filings offered + write SOP", "tk6380e6d1": "OSS Pop-up: confirm staff roster by Aug 5 (courthouse rotunda; equipment test same day)", "tk4be2c97b": "Check w/ Jenny: chafing dish + sterno inventory for OSS picnic", "tk6cbc3e55": "OSS picnic (Sept): price out Costco fruit trays + cookies; check what can be pre-ordered (you're on trivia + Costco)", "tk1905f2b4": "Bring up summer renewal email question at team meeting", "tk27d9d62f": "Draft journalist data guide — available vs. unavailable data", "tkabe88e13": "Dig back into OSS website work", "tkc5b0169f": "Find topic for next deep dive", "tk47840f24": "Review Fraud Team concept", "tk2724b621": "Research plain language readability tools (NV targets 8th grade)", "tk84d6efcc": "Use Jenny's task inventory as cross-training/succession checklist (fiscal team — most rows one-deep on backup)", "tka3131b9b": "Forever Tournament: enable Web Analytics (Cloudflare dashboard → Analytics & Logs → Web Analytics → add forevertournament.com)", "tka7ac92c6": "Forever Tournament: edit + post HN-DEV-STORY-DRAFT.md when launch-ready; check subreddit self-promo rules before Reddit posts", "tk10961546": "Forever Tournament: set up Bluesky account + secrets per AUTOPOST-SETUP.md (when vote volume warrants)", "tk2b00d80f": "Fix jukebox pool exhaustion: top up with date-rotated rated bands when unrated \u003c 20; expand pool to wider genres (pop etc.) per 7/7 inbox note — Madonna = 3★", "tka43e383d": "Book New Haven trip for IACA 2027 (Sep 20–23 @ Omni New Haven)", "tke19aa655": "Create dock/monitor setup diagram for post-SoHo-router transition", "tk89ba9638": "IKEA clearance watch: identify items from inbox images when iPhone syncs, then set up Sunday morning check → [[02-Wiki/Ideas/Home-Projects]]", "tkabafe570": "Resume Melissa Buddy Q&A walkthrough at Q7 *(woke from snooze)*", "tk94c3a136": "Review 20 recipe picks for Paprika → [[Recipe-Picks-2026-06-07]] *(woke from snooze)*", "tk8b708b95": "Review \"Books to check out\" archived note *(woke from snooze)*", "tk1e97543b": "Consider restarting Alamo Drafthouse Season Pass *(woke from snooze)*", "tk52934262": "Buy foil tape (light boxes) *(woke from snooze)*", "tkc8bba737": "COOP refresh — only plan on file is 2020-vintage. See [[Business-Services-COOP]] *(woke from snooze)*"};</script><section class="daily-section">
+<h2 class="head"><span class="num">§ 03</span>Project Status Pulse</h2>
+<div class="mp-reg-rule"></div>
+<p class="panel-intro">Tap a project for the full status.</p>
+<details class="pulse-card">
+<summary>
+<span class="name">Grindhouse: The Last Show (Godot, V3)</span>
+<span class="mp-pill active">ACTIVE</span>
+</summary>
+<div class="pulse-body">
+<p>Status: Vertical slice playable. Built in Godot 4.7 at ~/Desktop/Projects/Game_Projects/Grindhouse_Godot/. Reigns-style booking game: book a bill → lights down → ~3 blind film-reel incident cards → permadeath reckoning. Five forces (VICE / CRUSADE / MOB / PARANORMAL / REPUTATION) + the Till persist across nights. Art: 2D SNES camp (Zombies Ate My Neighbors lane). Old &quot;Run the Night&quot; usher build archived to .archive/ (reversible). Browser tycoon untouched.</p>
+<p class="pulse-next"><b>Next:</b> Adam playtests one night (Godot 4.7, F5 — the only question screenshots can&#x27;t answer). Then: Gemini lobby bg (fresh browser session); more patron archetypes; pixel BitmapFont; remaining ~32 events into cards; sound.</p>
+</div>
+</details>
+<details class="pulse-card">
+<summary>
+<span class="name">Ripley Scent Markers</span>
+<span class="mp-pill active">ACTIVE</span>
+</summary>
+<div class="pulse-body">
+<p>Scent-landmark navigation for Ripley (blind), hazard-first: vanilla = stop/careful at stairs &amp; drop-offs (Phase 1); ginger/doorways only if needed later; lavender/chamomile shelved — destinations self-announce. Rosemary rejected (caution-list oil). 3D-printed felt-insert housings, 2 mount variants (countersunk screw / Command-strip channel), SCAD + STLs in project folder.</p>
+<p class="pulse-next"><b>Next:</b> Adam fills Phase 1 hazard list, buys vanilla extract + 1.5&quot; felt pads, test-prints one housing.</p>
+</div>
+</details>
+<details class="pulse-card">
+<summary>
+<span class="name">The Forever Tournament (web game)</span>
+<span class="mp-pill active">ACTIVE</span>
+</summary>
+<div class="pulse-body">
+<p>Status: LIVE at forevertournament.com. Growth build shipped 2026-07-12 (version 0b4caaee): share permalink pages (/m/:a-:b), OG card images via resvg-wasm (matchup + result variants), updated Share button with deadpan low-n captions, daily Bluesky autopost scaffold (autopost.js), Show HN draft. Admin backend (7 modules) + Arena engine dark (launch-ready). Color themes with public ♥ favoriting live. Two random ICONIC things → pick one → Glicko-2 scored → forever.</p>
+<p>Decisions: text-only (no images); Cloudflare (Workers + D1 + KV); Glicko-2 from launch; symposium look locked; colorways v1 = ♥ favorites (tournament in phase 2); admin = shell + module registry.</p>
+<p class="pulse-next"><b>Next:</b> (1) Enable Web Analytics on Cloudflare dashboard → add forevertournament.com; (2) set up Bluesky account + secrets per AUTOPOST-SETUP.md when vote volume warrants; (3) edit + post HN-DEV-STORY-DRAFT.md. Then Phase 2: colorway tournament + nightly Main Event arm.</p>
+</div>
+</details>
+<details class="pulse-card">
+<summary>
+<span class="name">GIALLO (Roblox Game)</span>
+<span class="mp-pill active">ACTIVE</span>
+</summary>
+<div class="pulse-body">
+<p>Status: V3 HALLWAY-FIRST REBUILD IN PROGRESS. V2 workspace cleared 2026-06-10 (all 21,232 parts archived to ServerStorage._ArchivedVilla_2026-05-27). Hallway-First Protocol active (03-Projects/Giallo/HALLWAY-FIRST-PROTOCOL): P0–P2 done (room locks, portal registry frozen). Jun 26-27: Ballroom rebuilt (chandelier, 16 pilasters, wedding banquet, 178 textures catalogued), GrandHall + wrapping Gallery corridor (10 evil paintings uploaded), Foyer (imperial open-return stair, 2F ring), UpperHall (arched window, E/W openings). 4 rooms live in workspace. See 03-Projects/Giallo/CARRY-FORWARD for all open items + next steps.</p>
+<p>Genre: Neo-Giallo Escape Horror (1 Killer vs 5-7 Survivors in Italian villa)</p>
+<p>Game ID: 9891781035 | Place ID: 128361412361164 | Game Place: 81009436157338 | Lobby: 77305131164681</p>
+<p>Renamed from &quot;Echoes of Crimson: The Witness&quot; on 2026-03-21</p>
+<p class="pulse-next"><b>Next:</b> P3 GO/NO-GO decision (furniture: hybrid preserve-and-reimport vs rebuild-fresh) — Adam&#x27;s call gates all 29 remaining rooms. Then: datum cascade lock amendments (GrandHall/Foyer datum at 416.5, not the old 436.5), Foyer top-door transitions, portal registry append.</p>
+</div>
+</details>
+<details class="pulse-card">
+<summary>
+<span class="name">Filing Requirements Manual</span>
+<span class="mp-pill active">ACTIVE</span>
+</summary>
+<div class="pulse-body">
+<p>30+ page PDF, professional government style, plain language for new employees</p>
+<p>Combines &quot;BS Filing Requirements 11.5.24&quot; + Authentication Procedures</p>
+<p>Structure: headings, tip boxes, filing comparisons, glossary always last</p>
+</div>
+</details>
+</section><section class="daily-section"><h2 class="head"><span class="num">§ 04</span>End-of-Day Update</h2><div class="mp-reg-rule"></div>
+<section class="panel" aria-label="End-of-day update">
+  <h2>End-of-day update</h2>
+  <p class="panel-intro">
+    Check tasks as you finish them. Click <b>Download</b> or <b>Copy</b> at end
+    of day and stash the summary in your <code>00-Inbox/</code> — tomorrow's
+    briefing eats it for breakfast. Quick thoughts go straight into a new
+    Obsidian note. State auto-saves to this browser only.
+  </p>
+  <div class="panel-buttons">
+    <button id="save-btn" class="btn primary" type="button">Save</button>
+    <button id="download-btn" class="btn" type="button">Download .md</button>
+    <button id="copy-btn" class="btn" type="button">Copy</button>
+    <button id="clear-btn" class="btn" type="button">Reset</button>
+    <span id="saved-indicator" class="saved-indicator" aria-live="polite"></span>
+  </div>
+</section>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+</section><section class="daily-section" id="fieldnotes-section" data-day="2026-07-23">
+<h2 class="head"><span class="num">§ 05</span>Field Notes</h2>
+<div class="mp-reg-rule"></div>
+<p class="panel-intro">Quick taste check, themed daily. Tap a side, answer what you like, then Copy / Download / Send. Today: <em>Concert night rules</em>.</p>
+<div class="fn-theme" data-theme="Concert night rules"></div>
+<div class="fn-tot-wrap"><div class="fn-tot" data-a="Front of the pit" data-b="Back by the soundboard"><button type="button" class="fn-pick" data-side="a">Front of the pit</button><span class="fn-vs">vs</span><button type="button" class="fn-pick" data-side="b">Back by the soundboard</button></div><div class="fn-tot" data-a="Show up at doors" data-b="Walk in right before the headliner"><button type="button" class="fn-pick" data-side="a">Show up at doors</button><span class="fn-vs">vs</span><button type="button" class="fn-pick" data-side="b">Walk in right before the headliner</button></div><div class="fn-tot" data-a="Tiny club, 200 people" data-b="Arena, 20,000 people"><button type="button" class="fn-pick" data-side="a">Tiny club, 200 people</button><span class="fn-vs">vs</span><button type="button" class="fn-pick" data-side="b">Arena, 20,000 people</button></div><div class="fn-tot" data-a="Know every word" data-b="Mostly there for the vibe"><button type="button" class="fn-pick" data-side="a">Know every word</button><span class="fn-vs">vs</span><button type="button" class="fn-pick" data-side="b">Mostly there for the vibe</button></div><div class="fn-tot" data-a="Solo show" data-b="Brought the crew"><button type="button" class="fn-pick" data-side="a">Solo show</button><span class="fn-vs">vs</span><button type="button" class="fn-pick" data-side="b">Brought the crew</button></div></div>
+<div class="fn-open-wrap"><div class="fn-open"><label>What&#x27;s the concert that wrecked you — the one where you walked out changed, for better or worse?</label><input type="text" class="fn-answer" data-q="What&#x27;s the concert that wrecked you — the one where you walked out changed, for better or worse?" placeholder="…" autocomplete="off"></div><div class="fn-open"><label>You&#x27;re seeing a band for the first time. Do you go in cold or do you spend a week listening to their catalog first?</label><input type="text" class="fn-answer" data-q="You&#x27;re seeing a band for the first time. Do you go in cold or do you spend a week listening to their catalog first?" placeholder="…" autocomplete="off"></div>
+<div class="fn-open fn-plank"><label>💪 Plank — seconds held today?</label><input type="number" min="0" class="fn-plank-in" placeholder="0" autocomplete="off"></div></div>
+<div class="panel-buttons"><button type="button" class="mp-btn primary fn-copy">Copy</button><button type="button" class="mp-btn fn-download">Download</button><button type="button" class="mp-btn ghost fn-send">Send to inbox</button><span class="panel-status fn-status"></span></div>
+</section><section class="daily-section" id="movies-section" data-day="2026-07-23">
+<h2 class="head"><span class="num">§ 06</span>The Picture Show</h2>
+<div class="mp-reg-rule"></div>
+<p class="panel-intro">20 films today. Tap a mark on the ones you've seen — any mark logs it as <em>seen</em>; Loved / Hated also feed your taste lanes. Builds the film log.</p>
+<div class="mv-wrap"><div class="mv-row" data-title="Texas Chain Saw Massacre" data-year="1974"><span class="mv-name">Texas Chain Saw Massacre <span class="mv-year">(1974)</span></span><span class="mv-marks"><button type="button" class="mv-mark" data-mark="loved">Loved</button><button type="button" class="mv-mark" data-mark="fine">Fine</button><button type="button" class="mv-mark" data-mark="nmt">Not my thing</button><button type="button" class="mv-mark" data-mark="hated">Hated</button></span></div><div class="mv-row" data-title="Late Night with the Devil" data-year="2023"><span class="mv-name">Late Night with the Devil <span class="mv-year">(2023)</span></span><span class="mv-marks"><button type="button" class="mv-mark" data-mark="loved">Loved</button><button type="button" class="mv-mark" data-mark="fine">Fine</button><button type="button" class="mv-mark" data-mark="nmt">Not my thing</button><button type="button" class="mv-mark" data-mark="hated">Hated</button></span></div><div class="mv-row" data-title="Five Fingers of Death" data-year="1972"><span class="mv-name">Five Fingers of Death <span class="mv-year">(1972)</span></span><span class="mv-marks"><button type="button" class="mv-mark" data-mark="loved">Loved</button><button type="button" class="mv-mark" data-mark="fine">Fine</button><button type="button" class="mv-mark" data-mark="nmt">Not my thing</button><button type="button" class="mv-mark" data-mark="hated">Hated</button></span></div><div class="mv-row" data-title="Spaceballs" data-year="1987"><span class="mv-name">Spaceballs <span class="mv-year">(1987)</span></span><span class="mv-marks"><button type="button" class="mv-mark" data-mark="loved">Loved</button><button type="button" class="mv-mark" data-mark="fine">Fine</button><button type="button" class="mv-mark" data-mark="nmt">Not my thing</button><button type="button" class="mv-mark" data-mark="hated">Hated</button></span></div><div class="mv-row" data-title="The Friends of Eddie Coyle" data-year="1973"><span class="mv-name">The Friends of Eddie Coyle <span class="mv-year">(1973)</span></span><span class="mv-marks"><button type="button" class="mv-mark" data-mark="loved">Loved</button><button type="button" class="mv-mark" data-mark="fine">Fine</button><button type="button" class="mv-mark" data-mark="nmt">Not my thing</button><button type="button" class="mv-mark" data-mark="hated">Hated</button></span></div><div class="mv-row" data-title="Sweet Sweetback&#x27;s Baadasssss Song" data-year="1971"><span class="mv-name">Sweet Sweetback&#x27;s Baadasssss Song <span class="mv-year">(1971)</span></span><span class="mv-marks"><button type="button" class="mv-mark" data-mark="loved">Loved</button><button type="button" class="mv-mark" data-mark="fine">Fine</button><button type="button" class="mv-mark" data-mark="nmt">Not my thing</button><button type="button" class="mv-mark" data-mark="hated">Hated</button></span></div><div class="mv-row" data-title="Liquid Sky" data-year="1982"><span class="mv-name">Liquid Sky <span class="mv-year">(1982)</span></span><span class="mv-marks"><button type="button" class="mv-mark" data-mark="loved">Loved</button><button type="button" class="mv-mark" data-mark="fine">Fine</button><button type="button" class="mv-mark" data-mark="nmt">Not my thing</button><button type="button" class="mv-mark" data-mark="hated">Hated</button></span></div><div class="mv-row" data-title="The Lodge" data-year="2019"><span class="mv-name">The Lodge <span class="mv-year">(2019)</span></span><span class="mv-marks"><button type="button" class="mv-mark" data-mark="loved">Loved</button><button type="button" class="mv-mark" data-mark="fine">Fine</button><button type="button" class="mv-mark" data-mark="nmt">Not my thing</button><button type="button" class="mv-mark" data-mark="hated">Hated</button></span></div><div class="mv-row" data-title="The Body Snatcher" data-year="1945"><span class="mv-name">The Body Snatcher <span class="mv-year">(1945)</span></span><span class="mv-marks"><button type="button" class="mv-mark" data-mark="loved">Loved</button><button type="button" class="mv-mark" data-mark="fine">Fine</button><button type="button" class="mv-mark" data-mark="nmt">Not my thing</button><button type="button" class="mv-mark" data-mark="hated">Hated</button></span></div><div class="mv-row" data-title="Blow Out" data-year="1981"><span class="mv-name">Blow Out <span class="mv-year">(1981)</span></span><span class="mv-marks"><button type="button" class="mv-mark" data-mark="loved">Loved</button><button type="button" class="mv-mark" data-mark="fine">Fine</button><button type="button" class="mv-mark" data-mark="nmt">Not my thing</button><button type="button" class="mv-mark" data-mark="hated">Hated</button></span></div><div class="mv-row" data-title="Son of Frankenstein" data-year="1939"><span class="mv-name">Son of Frankenstein <span class="mv-year">(1939)</span></span><span class="mv-marks"><button type="button" class="mv-mark" data-mark="loved">Loved</button><button type="button" class="mv-mark" data-mark="fine">Fine</button><button type="button" class="mv-mark" data-mark="nmt">Not my thing</button><button type="button" class="mv-mark" data-mark="hated">Hated</button></span></div><div class="mv-row" data-title="Frankenstein Must Be Destroyed" data-year="1969"><span class="mv-name">Frankenstein Must Be Destroyed <span class="mv-year">(1969)</span></span><span class="mv-marks"><button type="button" class="mv-mark" data-mark="loved">Loved</button><button type="button" class="mv-mark" data-mark="fine">Fine</button><button type="button" class="mv-mark" data-mark="nmt">Not my thing</button><button type="button" class="mv-mark" data-mark="hated">Hated</button></span></div><div class="mv-row" data-title="Island of Lost Souls" data-year="1932"><span class="mv-name">Island of Lost Souls <span class="mv-year">(1932)</span></span><span class="mv-marks"><button type="button" class="mv-mark" data-mark="loved">Loved</button><button type="button" class="mv-mark" data-mark="fine">Fine</button><button type="button" class="mv-mark" data-mark="nmt">Not my thing</button><button type="button" class="mv-mark" data-mark="hated">Hated</button></span></div><div class="mv-row" data-title="Titane" data-year="2021"><span class="mv-name">Titane <span class="mv-year">(2021)</span></span><span class="mv-marks"><button type="button" class="mv-mark" data-mark="loved">Loved</button><button type="button" class="mv-mark" data-mark="fine">Fine</button><button type="button" class="mv-mark" data-mark="nmt">Not my thing</button><button type="button" class="mv-mark" data-mark="hated">Hated</button></span></div><div class="mv-row" data-title="The 36th Chamber of Shaolin" data-year="1978"><span class="mv-name">The 36th Chamber of Shaolin <span class="mv-year">(1978)</span></span><span class="mv-marks"><button type="button" class="mv-mark" data-mark="loved">Loved</button><button type="button" class="mv-mark" data-mark="fine">Fine</button><button type="button" class="mv-mark" data-mark="nmt">Not my thing</button><button type="button" class="mv-mark" data-mark="hated">Hated</button></span></div><div class="mv-row" data-title="Tetsuo: The Iron Man" data-year="1989"><span class="mv-name">Tetsuo: The Iron Man <span class="mv-year">(1989)</span></span><span class="mv-marks"><button type="button" class="mv-mark" data-mark="loved">Loved</button><button type="button" class="mv-mark" data-mark="fine">Fine</button><button type="button" class="mv-mark" data-mark="nmt">Not my thing</button><button type="button" class="mv-mark" data-mark="hated">Hated</button></span></div><div class="mv-row" data-title="Time Bandits" data-year="1981"><span class="mv-name">Time Bandits <span class="mv-year">(1981)</span></span><span class="mv-marks"><button type="button" class="mv-mark" data-mark="loved">Loved</button><button type="button" class="mv-mark" data-mark="fine">Fine</button><button type="button" class="mv-mark" data-mark="nmt">Not my thing</button><button type="button" class="mv-mark" data-mark="hated">Hated</button></span></div><div class="mv-row" data-title="Thief" data-year="1981"><span class="mv-name">Thief <span class="mv-year">(1981)</span></span><span class="mv-marks"><button type="button" class="mv-mark" data-mark="loved">Loved</button><button type="button" class="mv-mark" data-mark="fine">Fine</button><button type="button" class="mv-mark" data-mark="nmt">Not my thing</button><button type="button" class="mv-mark" data-mark="hated">Hated</button></span></div><div class="mv-row" data-title="Prince of Darkness" data-year="1987"><span class="mv-name">Prince of Darkness <span class="mv-year">(1987)</span></span><span class="mv-marks"><button type="button" class="mv-mark" data-mark="loved">Loved</button><button type="button" class="mv-mark" data-mark="fine">Fine</button><button type="button" class="mv-mark" data-mark="nmt">Not my thing</button><button type="button" class="mv-mark" data-mark="hated">Hated</button></span></div><div class="mv-row" data-title="House of Frankenstein" data-year="1944"><span class="mv-name">House of Frankenstein <span class="mv-year">(1944)</span></span><span class="mv-marks"><button type="button" class="mv-mark" data-mark="loved">Loved</button><button type="button" class="mv-mark" data-mark="fine">Fine</button><button type="button" class="mv-mark" data-mark="nmt">Not my thing</button><button type="button" class="mv-mark" data-mark="hated">Hated</button></span></div></div>
+<div class="panel-buttons"><button type="button" class="mp-btn primary mv-copy">Copy</button><button type="button" class="mp-btn mv-download">Download</button><button type="button" class="mp-btn ghost mv-send">Send to inbox</button><span class="panel-status mv-status"></span></div>
+</section><section class="daily-section" id="jukebox-section" data-day="2026-07-23">
+<h2 class="head"><span class="num">§ 07</span>Jukebox — Spin the Stack</h2>
+<div class="mp-reg-rule"></div>
+<p class="panel-intro">20 from the stack. Rate 1–5, or tap <em>Never heard</em> / <em>Don&#39;t listen</em> (tap again to clear). 5s and 1s tune your taste lanes; new 5s land on the watchlist.</p>
+<div class="jb-wrap"><div class="jb-row" data-name="Cream" data-lane="classic-rock"><span class="jb-name">Cream <span class="jb-lane">[classic-rock]</span></span><span class="jb-stars"><button type="button" class="jb-star" data-n="1">1</button><button type="button" class="jb-star" data-n="2">2</button><button type="button" class="jb-star" data-n="3">3</button><button type="button" class="jb-star" data-n="4">4</button><button type="button" class="jb-star" data-n="5">5</button><button type="button" class="jb-flag" data-mark="nh">Never heard</button><button type="button" class="jb-flag" data-mark="dl">Don&#39;t listen</button></span></div><div class="jb-row" data-name="Deep Purple" data-lane="classic-rock"><span class="jb-name">Deep Purple <span class="jb-lane">[classic-rock]</span></span><span class="jb-stars"><button type="button" class="jb-star" data-n="1">1</button><button type="button" class="jb-star" data-n="2">2</button><button type="button" class="jb-star" data-n="3">3</button><button type="button" class="jb-star" data-n="4">4</button><button type="button" class="jb-star" data-n="5">5</button><button type="button" class="jb-flag" data-mark="nh">Never heard</button><button type="button" class="jb-flag" data-mark="dl">Don&#39;t listen</button></span></div><div class="jb-row" data-name="Spirit" data-lane="classic-rock"><span class="jb-name">Spirit <span class="jb-lane">[classic-rock]</span></span><span class="jb-stars"><button type="button" class="jb-star" data-n="1">1</button><button type="button" class="jb-star" data-n="2">2</button><button type="button" class="jb-star" data-n="3">3</button><button type="button" class="jb-star" data-n="4">4</button><button type="button" class="jb-star" data-n="5">5</button><button type="button" class="jb-flag" data-mark="nh">Never heard</button><button type="button" class="jb-flag" data-mark="dl">Don&#39;t listen</button></span></div><div class="jb-row" data-name="Kadavar" data-lane="stoner"><span class="jb-name">Kadavar <span class="jb-lane">[stoner]</span></span><span class="jb-stars"><button type="button" class="jb-star" data-n="1">1</button><button type="button" class="jb-star" data-n="2">2</button><button type="button" class="jb-star" data-n="3">3</button><button type="button" class="jb-star" data-n="4">4</button><button type="button" class="jb-star" data-n="5">5</button><button type="button" class="jb-flag" data-mark="nh">Never heard</button><button type="button" class="jb-flag" data-mark="dl">Don&#39;t listen</button></span></div><div class="jb-row" data-name="The Jam" data-lane="post-punk"><span class="jb-name">The Jam <span class="jb-lane">[post-punk]</span></span><span class="jb-stars"><button type="button" class="jb-star" data-n="1">1</button><button type="button" class="jb-star" data-n="2">2</button><button type="button" class="jb-star" data-n="3">3</button><button type="button" class="jb-star" data-n="4">4</button><button type="button" class="jb-star" data-n="5">5</button><button type="button" class="jb-flag" data-mark="nh">Never heard</button><button type="button" class="jb-flag" data-mark="dl">Don&#39;t listen</button></span></div><div class="jb-row" data-name="Cursive" data-lane="hardcore"><span class="jb-name">Cursive <span class="jb-lane">[hardcore]</span></span><span class="jb-stars"><button type="button" class="jb-star" data-n="1">1</button><button type="button" class="jb-star" data-n="2">2</button><button type="button" class="jb-star" data-n="3">3</button><button type="button" class="jb-star" data-n="4">4</button><button type="button" class="jb-star" data-n="5">5</button><button type="button" class="jb-flag" data-mark="nh">Never heard</button><button type="button" class="jb-flag" data-mark="dl">Don&#39;t listen</button></span></div><div class="jb-row" data-name="Prodigy" data-lane="hip-hop"><span class="jb-name">Prodigy <span class="jb-lane">[hip-hop]</span></span><span class="jb-stars"><button type="button" class="jb-star" data-n="1">1</button><button type="button" class="jb-star" data-n="2">2</button><button type="button" class="jb-star" data-n="3">3</button><button type="button" class="jb-star" data-n="4">4</button><button type="button" class="jb-star" data-n="5">5</button><button type="button" class="jb-flag" data-mark="nh">Never heard</button><button type="button" class="jb-flag" data-mark="dl">Don&#39;t listen</button></span></div><div class="jb-row" data-name="Wishbone Ash" data-lane="classic-rock"><span class="jb-name">Wishbone Ash <span class="jb-lane">[classic-rock]</span></span><span class="jb-stars"><button type="button" class="jb-star" data-n="1">1</button><button type="button" class="jb-star" data-n="2">2</button><button type="button" class="jb-star" data-n="3">3</button><button type="button" class="jb-star" data-n="4">4</button><button type="button" class="jb-star" data-n="5">5</button><button type="button" class="jb-flag" data-mark="nh">Never heard</button><button type="button" class="jb-flag" data-mark="dl">Don&#39;t listen</button></span></div><div class="jb-row" data-name="Bootsy Collins" data-lane="soul-funk"><span class="jb-name">Bootsy Collins <span class="jb-lane">[soul-funk]</span></span><span class="jb-stars"><button type="button" class="jb-star" data-n="1">1</button><button type="button" class="jb-star" data-n="2">2</button><button type="button" class="jb-star" data-n="3">3</button><button type="button" class="jb-star" data-n="4">4</button><button type="button" class="jb-star" data-n="5">5</button><button type="button" class="jb-flag" data-mark="nh">Never heard</button><button type="button" class="jb-flag" data-mark="dl">Don&#39;t listen</button></span></div><div class="jb-row" data-name="Gil Scott-Heron" data-lane="soul-funk"><span class="jb-name">Gil Scott-Heron <span class="jb-lane">[soul-funk]</span></span><span class="jb-stars"><button type="button" class="jb-star" data-n="1">1</button><button type="button" class="jb-star" data-n="2">2</button><button type="button" class="jb-star" data-n="3">3</button><button type="button" class="jb-star" data-n="4">4</button><button type="button" class="jb-star" data-n="5">5</button><button type="button" class="jb-flag" data-mark="nh">Never heard</button><button type="button" class="jb-flag" data-mark="dl">Don&#39;t listen</button></span></div><div class="jb-row" data-name="The Band" data-lane="classic-rock"><span class="jb-name">The Band <span class="jb-lane">[classic-rock]</span></span><span class="jb-stars"><button type="button" class="jb-star" data-n="1">1</button><button type="button" class="jb-star" data-n="2">2</button><button type="button" class="jb-star" data-n="3">3</button><button type="button" class="jb-star" data-n="4">4</button><button type="button" class="jb-star" data-n="5">5</button><button type="button" class="jb-flag" data-mark="nh">Never heard</button><button type="button" class="jb-flag" data-mark="dl">Don&#39;t listen</button></span></div><div class="jb-row" data-name="Generation X" data-lane="punk"><span class="jb-name">Generation X <span class="jb-lane">[punk]</span></span><span class="jb-stars"><button type="button" class="jb-star" data-n="1">1</button><button type="button" class="jb-star" data-n="2">2</button><button type="button" class="jb-star" data-n="3">3</button><button type="button" class="jb-star" data-n="4">4</button><button type="button" class="jb-star" data-n="5">5</button><button type="button" class="jb-flag" data-mark="nh">Never heard</button><button type="button" class="jb-flag" data-mark="dl">Don&#39;t listen</button></span></div><div class="jb-row" data-name="The War on Drugs" data-lane="pop"><span class="jb-name">The War on Drugs <span class="jb-lane">[pop]</span></span><span class="jb-stars"><button type="button" class="jb-star" data-n="1">1</button><button type="button" class="jb-star" data-n="2">2</button><button type="button" class="jb-star" data-n="3">3</button><button type="button" class="jb-star" data-n="4">4</button><button type="button" class="jb-star" data-n="5">5</button><button type="button" class="jb-flag" data-mark="nh">Never heard</button><button type="button" class="jb-flag" data-mark="dl">Don&#39;t listen</button></span></div><div class="jb-row" data-name="Sham 69" data-lane="punk"><span class="jb-name">Sham 69 <span class="jb-lane">[punk]</span></span><span class="jb-stars"><button type="button" class="jb-star" data-n="1">1</button><button type="button" class="jb-star" data-n="2">2</button><button type="button" class="jb-star" data-n="3">3</button><button type="button" class="jb-star" data-n="4">4</button><button type="button" class="jb-star" data-n="5">5</button><button type="button" class="jb-flag" data-mark="nh">Never heard</button><button type="button" class="jb-flag" data-mark="dl">Don&#39;t listen</button></span></div><div class="jb-row" data-name="Riot" data-lane="metal"><span class="jb-name">Riot <span class="jb-lane">[metal]</span></span><span class="jb-stars"><button type="button" class="jb-star" data-n="1">1</button><button type="button" class="jb-star" data-n="2">2</button><button type="button" class="jb-star" data-n="3">3</button><button type="button" class="jb-star" data-n="4">4</button><button type="button" class="jb-star" data-n="5">5</button><button type="button" class="jb-flag" data-mark="nh">Never heard</button><button type="button" class="jb-flag" data-mark="dl">Don&#39;t listen</button></span></div><div class="jb-row" data-name="Turnpike Troubadours" data-lane="americana"><span class="jb-name">Turnpike Troubadours <span class="jb-lane">[americana]</span></span><span class="jb-stars"><button type="button" class="jb-star" data-n="1">1</button><button type="button" class="jb-star" data-n="2">2</button><button type="button" class="jb-star" data-n="3">3</button><button type="button" class="jb-star" data-n="4">4</button><button type="button" class="jb-star" data-n="5">5</button><button type="button" class="jb-flag" data-mark="nh">Never heard</button><button type="button" class="jb-flag" data-mark="dl">Don&#39;t listen</button></span></div><div class="jb-row" data-name="Brandi Carlile" data-lane="americana"><span class="jb-name">Brandi Carlile <span class="jb-lane">[americana]</span></span><span class="jb-stars"><button type="button" class="jb-star" data-n="1">1</button><button type="button" class="jb-star" data-n="2">2</button><button type="button" class="jb-star" data-n="3">3</button><button type="button" class="jb-star" data-n="4">4</button><button type="button" class="jb-star" data-n="5">5</button><button type="button" class="jb-flag" data-mark="nh">Never heard</button><button type="button" class="jb-flag" data-mark="dl">Don&#39;t listen</button></span></div><div class="jb-row" data-name="Booker T. &amp; the M.G.&#x27;s" data-lane="soul-funk"><span class="jb-name">Booker T. &amp; the M.G.&#x27;s <span class="jb-lane">[soul-funk]</span></span><span class="jb-stars"><button type="button" class="jb-star" data-n="1">1</button><button type="button" class="jb-star" data-n="2">2</button><button type="button" class="jb-star" data-n="3">3</button><button type="button" class="jb-star" data-n="4">4</button><button type="button" class="jb-star" data-n="5">5</button><button type="button" class="jb-flag" data-mark="nh">Never heard</button><button type="button" class="jb-flag" data-mark="dl">Don&#39;t listen</button></span></div><div class="jb-row" data-name="Shame" data-lane="post-punk"><span class="jb-name">Shame <span class="jb-lane">[post-punk]</span></span><span class="jb-stars"><button type="button" class="jb-star" data-n="1">1</button><button type="button" class="jb-star" data-n="2">2</button><button type="button" class="jb-star" data-n="3">3</button><button type="button" class="jb-star" data-n="4">4</button><button type="button" class="jb-star" data-n="5">5</button><button type="button" class="jb-flag" data-mark="nh">Never heard</button><button type="button" class="jb-flag" data-mark="dl">Don&#39;t listen</button></span></div><div class="jb-row" data-name="Roy Ayers" data-lane="soul-funk"><span class="jb-name">Roy Ayers <span class="jb-lane">[soul-funk]</span></span><span class="jb-stars"><button type="button" class="jb-star" data-n="1">1</button><button type="button" class="jb-star" data-n="2">2</button><button type="button" class="jb-star" data-n="3">3</button><button type="button" class="jb-star" data-n="4">4</button><button type="button" class="jb-star" data-n="5">5</button><button type="button" class="jb-flag" data-mark="nh">Never heard</button><button type="button" class="jb-flag" data-mark="dl">Don&#39;t listen</button></span></div></div>
+<div class="panel-buttons"><button type="button" class="mp-btn primary jb-copy">Copy</button><button type="button" class="mp-btn jb-download">Download</button><button type="button" class="mp-btn ghost jb-send">Send to inbox</button><span class="panel-status jb-status"></span></div>
+</section></main><footer class="mp-colophon"><hr>Set in Bowlby One, Iowan Old Style, IBM Plex Sans, IBM Plex Mono, and Bodoni Moda.<br>Printed on cream-paper substrate with cinnabar and cinecolor cyan registration.<span class="mp-logotype">MARQUEE PRESS</span>Twin Cities · MMXXVI · The Daily — Vol. XXVI · Issue №204 · S/N 204 of 365<hr></footer>
+<script>
+(function () {
+  var day = document.body.dataset.day || "unknown";
+  var KEY = "hamham-state-" + day;
+  var state;
+  try { state = JSON.parse(localStorage.getItem(KEY) || "{}"); }
+  catch (e) { state = {}; }
+  state.checked = state.checked || {};
+  if (typeof state.notes !== "string") state.notes = "";
+  if (typeof state.savedAt !== "string") state.savedAt = "";
+
+  var indicator = document.getElementById("saved-indicator");
+  function fmtTime(iso) {
+    if (!iso) return "";
+    var d = new Date(iso);
+    if (isNaN(d.getTime())) return "";
+    return d.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+  }
+  function refreshIndicator() {
+    if (!indicator) return;
+    indicator.textContent = state.savedAt ? "Saved " + fmtTime(state.savedAt) : "Not saved yet";
+  }
+  function save(silent) {
+    state.savedAt = new Date().toISOString();
+    try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {}
+    refreshIndicator();
+    if (!silent) toast("Saved");
+  }
+
+  document.querySelectorAll("li.task input[type=checkbox]").forEach(function (cb) {
+    var id = cb.dataset.task;
+    if (state.checked[id]) {
+      cb.checked = true;
+      cb.closest("li.task").classList.add("checked");
+    }
+    cb.addEventListener("change", function () {
+      state.checked[id] = cb.checked;
+      cb.closest("li.task").classList.toggle("checked", cb.checked);
+      save(true);
+    });
+  });
+
+  var notesEl = document.getElementById("notes");
+  if (notesEl) {
+    notesEl.value = state.notes;
+    notesEl.addEventListener("input", function () { state.notes = notesEl.value; save(true); });
+  }
+
+  var quickEl = document.getElementById("quick-add");
+  function addQuick() {
+    if (!quickEl || !notesEl) return;
+    var v = quickEl.value.trim();
+    if (!v) return;
+    var stamp = new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+    var line = stamp + " — " + v;
+    notesEl.value = notesEl.value ? line + "\n" + notesEl.value : line;
+    state.notes = notesEl.value;
+    quickEl.value = "";
+    save(true);
+    notesEl.scrollTop = 0;
+  }
+  if (quickEl) {
+    quickEl.addEventListener("keydown", function (e) {
+      if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); addQuick(); }
+    });
+    var qBtn = document.getElementById("quick-add-btn");
+    if (qBtn) qBtn.addEventListener("click", addQuick);
+  }
+
+  var saveBtn = document.getElementById("save-btn");
+  if (saveBtn) saveBtn.addEventListener("click", function () { save(false); });
+
+  function buildMarkdown() {
+    var completed = [], open = [];
+    document.querySelectorAll("li.task").forEach(function (li) {
+      var cb = li.querySelector("input[type=checkbox]");
+      var label = li.querySelector("label");
+      if (!cb || !label) return;
+      var text = label.innerText.trim();
+      if (cb.checked) completed.push(text); else open.push(text);
+    });
+    var lines = ["# End-of-day update — " + day, ""];
+    if (completed.length) { lines.push("## Completed"); completed.forEach(function (t) { lines.push("- [x] " + t); }); lines.push(""); }
+    if (open.length) { lines.push("## Still open"); open.forEach(function (t) { lines.push("- [ ] " + t); }); lines.push(""); }
+    var noteText = (state.notes || "").trim();
+    if (noteText) { lines.push("## Notes"); lines.push(noteText); lines.push(""); }
+    return lines.join("\n");
+  }
+
+  function toast(msg) {
+    var el = document.getElementById("toast");
+    if (!el) return;
+    el.textContent = msg;
+    el.classList.add("show");
+    setTimeout(function () { el.classList.remove("show"); }, 1800);
+  }
+
+  var copyBtn = document.getElementById("copy-btn");
+  if (copyBtn) {
+    copyBtn.addEventListener("click", function () {
+      var md = buildMarkdown();
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(md).then(
+          function () { toast("Copied — paste into 00-Inbox/"); },
+          function () { fallbackCopy(md); }
+        );
+      } else fallbackCopy(md);
+    });
+  }
+  function fallbackCopy(text) {
+    var ta = document.createElement("textarea");
+    ta.value = text;
+    ta.style.position = "fixed"; ta.style.left = "-9999px";
+    document.body.appendChild(ta); ta.select();
+    try { document.execCommand("copy"); toast("Copied"); }
+    catch (e) { toast("Copy failed"); }
+    document.body.removeChild(ta);
+  }
+
+  var dlBtn = document.getElementById("download-btn");
+  if (dlBtn) {
+    dlBtn.addEventListener("click", function () {
+      var md = buildMarkdown();
+      var blob = new Blob([md], { type: "text/markdown;charset=utf-8" });
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement("a");
+      a.href = url; a.download = day + "-eod-update.md";
+      document.body.appendChild(a); a.click(); document.body.removeChild(a);
+      setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+      toast("Downloaded " + day + "-eod-update.md");
+    });
+  }
+
+  var clearBtn = document.getElementById("clear-btn");
+  if (clearBtn) {
+    clearBtn.addEventListener("click", function () {
+      if (!confirm("Reset checkboxes and notes for " + day + "?")) return;
+      state = { checked: {}, notes: "", savedAt: "" };
+      try { localStorage.removeItem(KEY); } catch (e) {}
+      document.querySelectorAll("li.task input[type=checkbox]").forEach(function (cb) {
+        cb.checked = false;
+        cb.closest("li.task").classList.remove("checked");
+      });
+      if (notesEl) notesEl.value = "";
+      refreshIndicator();
+      toast("Reset");
+    });
+  }
+
+  refreshIndicator();
+  window.addEventListener("beforeunload", function () { save(true); });
+})();
+</script>
+<script>
+(function () {
+  var day = document.body.dataset.day || "unknown";
+  var KEY = "hamham-tasks-" + day;
+  var MAP = window.__HAMHAM_TASKS__ || {};
+  var actions;
+  try { actions = JSON.parse(localStorage.getItem(KEY) || "{}"); }
+  catch (e) { actions = {}; }
+
+  function rowFor(id)    { return document.querySelector('.task-row[data-taskid="' + id + '"]'); }
+  function statusFor(id) { return document.querySelector('.task-status[data-taskid="' + id + '"]'); }
+
+  function applyState(id) {
+    var row = rowFor(id); if (!row) return;
+    var a = actions[id];
+    var cb = row.querySelector(".task-done");
+    var snzBtn = row.querySelector(".task-snooze");
+    var pick = row.querySelector(".task-snooze-pick");
+    var st = statusFor(id);
+    row.classList.remove("is-done", "is-removed", "is-snoozed");
+    if (snzBtn) snzBtn.classList.remove("is-active");
+    if (st) st.innerHTML = "";
+    if (!a) {
+      if (cb) cb.checked = false;
+      if (pick) pick.value = "";
+      return;
+    }
+    if (a.verb === "done") {
+      row.classList.add("is-done");
+      if (cb) cb.checked = true;
+    } else if (a.verb === "remove") {
+      row.classList.add("is-removed");
+      if (st) st.innerHTML = '&times; removed &middot; <a href="#" class="task-undo" data-taskid="' + id + '">undo</a>';
+    } else if (a.verb === "snooze") {
+      row.classList.add("is-snoozed");
+      if (snzBtn) snzBtn.classList.add("is-active");
+      if (pick && a.date) pick.value = a.date;
+      if (st) st.innerHTML = '\u{1F4A4} until ' + (a.date || "?") + ' &middot; <a href="#" class="task-undo" data-taskid="' + id + '">clear</a>';
+    }
+  }
+
+  function save() {
+    try { localStorage.setItem(KEY, JSON.stringify(actions)); } catch (e) {}
+    updatePending();
+  }
+  function setAction(id, a) {
+    if (a) actions[id] = a; else delete actions[id];
+    applyState(id);
+    save();
+  }
+
+  document.querySelectorAll(".task-done").forEach(function (cb) {
+    cb.addEventListener("change", function () {
+      setAction(cb.dataset.taskid, cb.checked ? { verb: "done" } : null);
+    });
+  });
+  document.querySelectorAll(".task-remove").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      setAction(btn.dataset.taskid, { verb: "remove" });
+    });
+  });
+  // ---- Snooze popup: presets (Tomorrow / Next Monday / 2 weeks) + pick-a-date ----
+  function pad(n) { return (n < 10 ? "0" : "") + n; }
+  function fmt(d) { return d.getFullYear() + "-" + pad(d.getMonth() + 1) + "-" + pad(d.getDate()); }
+  function addDays(n) { var d = new Date(); d.setHours(12, 0, 0, 0); d.setDate(d.getDate() + n); return d; }
+  function nextMonday() {
+    var d = new Date(); d.setHours(12, 0, 0, 0);
+    var delta = (8 - d.getDay()) % 7;   // getDay: Sun=0..Sat=6, Mon=1
+    if (delta === 0) delta = 7;          // always land on a FUTURE Monday
+    d.setDate(d.getDate() + delta);
+    return d;
+  }
+  function presetDate(kind) {
+    if (kind === "tomorrow") return fmt(addDays(1));
+    if (kind === "2weeks")   return fmt(addDays(14));
+    if (kind === "monday")   return fmt(nextMonday());
+    return "";
+  }
+  function popFor(id) { return document.querySelector('.task-snooze-pop[data-taskid="' + id + '"]'); }
+  function closeAllPops(except) {
+    document.querySelectorAll(".task-snooze-pop").forEach(function (p) {
+      if (p !== except) p.hidden = true;
+    });
+  }
+  function commitSnooze(id, date) {
+    if (!date) return;
+    setAction(id, { verb: "snooze", date: date });   // -> "snooze <text> until <date>" in the export
+    var p = popFor(id); if (p) p.hidden = true;
+  }
+
+  document.querySelectorAll(".task-snooze").forEach(function (btn) {
+    btn.addEventListener("click", function (e) {
+      e.stopPropagation();
+      var id = btn.dataset.taskid;
+      var p = popFor(id); if (!p) return;
+      var willOpen = p.hidden;
+      closeAllPops(willOpen ? p : null);
+      p.hidden = !willOpen;
+    });
+  });
+  document.querySelectorAll(".task-snooze-pop").forEach(function (p) {
+    p.addEventListener("click", function (e) { e.stopPropagation(); });
+    var id = p.dataset.taskid;
+    p.querySelectorAll(".pop-preset").forEach(function (b) {
+      b.addEventListener("click", function () { commitSnooze(id, presetDate(b.dataset.preset)); });
+    });
+    var pick = p.querySelector(".task-snooze-pick");
+    var go = p.querySelector(".pop-snooze");
+    if (go) go.addEventListener("click", function () {
+      if (pick && pick.value) commitSnooze(id, pick.value);
+    });
+    if (pick) pick.addEventListener("keydown", function (e) {
+      if (e.key === "Enter" && pick.value) commitSnooze(id, pick.value);
+    });
+    var cancel = p.querySelector(".pop-cancel");
+    if (cancel) cancel.addEventListener("click", function () { p.hidden = true; });
+  });
+
+  document.addEventListener("click", function (e) {
+    var u = e.target.closest ? e.target.closest(".task-undo") : null;
+    if (u) { e.preventDefault(); setAction(u.dataset.taskid, null); return; }
+    closeAllPops(null);   // any click outside a popup or 💤 button closes them
+  });
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape") closeAllPops(null);
+  });
+
+  function buildChanges() {
+    var dones = [], rms = [], snz = [];
+    Object.keys(actions).forEach(function (id) {
+      var a = actions[id], text = MAP[id];
+      if (!text) return;
+      if (a.verb === "done")        dones.push("done " + text);
+      else if (a.verb === "remove") rms.push("remove " + text);
+      else if (a.verb === "snooze") snz.push("snooze " + text + " until " + (a.date || ""));
+    });
+    var body = dones.concat(rms).concat(snz);
+    if (!body.length) return "";
+    return ["## Task changes"].concat(body).join("\n") + "\n";
+  }
+
+  var pendEl = document.getElementById("task-pending");
+  function updatePending() {
+    if (!pendEl) return;
+    var n = Object.keys(actions).length;
+    pendEl.textContent = n
+      ? (n + " change" + (n > 1 ? "s" : "") + " queued — copy to your inbox")
+      : "No changes queued";
+    pendEl.classList.toggle("has-pending", n > 0);
+  }
+
+  function toast(msg) {
+    var el = document.getElementById("toast"); if (!el) return;
+    el.textContent = msg;
+    el.classList.add("show");
+    setTimeout(function () { el.classList.remove("show"); }, 1800);
+  }
+
+  function fallbackCopy(text) {
+    var ta = document.createElement("textarea");
+    ta.value = text; ta.style.position = "fixed"; ta.style.left = "-9999px";
+    document.body.appendChild(ta); ta.select();
+    try { document.execCommand("copy"); toast("Copied"); }
+    catch (e) { toast("Copy failed"); }
+    document.body.removeChild(ta);
+  }
+
+  var copyBtn = document.getElementById("tasks-copy");
+  if (copyBtn) copyBtn.addEventListener("click", function () {
+    var md = buildChanges();
+    if (!md) { toast("No task changes to copy"); return; }
+    if (navigator.clipboard && navigator.clipboard.writeText)
+      navigator.clipboard.writeText(md).then(
+        function () { toast("Copied — drop in 00-Inbox/"); },
+        function () { fallbackCopy(md); });
+    else fallbackCopy(md);
+  });
+
+  var dlBtn = document.getElementById("tasks-download");
+  if (dlBtn) dlBtn.addEventListener("click", function () {
+    var md = buildChanges();
+    if (!md) { toast("No task changes"); return; }
+    var blob = new Blob([md], { type: "text/markdown;charset=utf-8" });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement("a");
+    a.href = url; a.download = day + "-task-changes.md";
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+    toast("Downloaded " + day + "-task-changes.md");
+  });
+
+  Object.keys(actions).forEach(applyState);
+  updatePending();
+})();
+</script>
+
+<script>
+/* --- Daily Adam panels controller (injected by daily_panels.py) --- */
+(function(){
+  var WORKER = "https://daily-adam-inbox.ts9nz54twk.workers.dev";
+  // One-time connect: #connect=SECRET -> localStorage, then scrub from URL.
+  try {
+    var h = location.hash || "";
+    var m = h.match(/connect=([^&]+)/);
+    if (m) {
+      localStorage.setItem("hamham-writeback-secret", decodeURIComponent(m[1]));
+      history.replaceState(null, "", location.pathname + location.search);
+    }
+  } catch(e){}
+
+  function day(sec){ return (sec && sec.dataset.day) || new Date().toISOString().slice(0,10); }
+  function lsKey(p, d){ return "da-" + p + "-" + d; }
+  function load(p, d){ try { return JSON.parse(localStorage.getItem(lsKey(p,d)) || "{}"); } catch(e){ return {}; } }
+  function save(p, d, st){ try { localStorage.setItem(lsKey(p,d), JSON.stringify(st)); } catch(e){} }
+
+  function deliver(kind, md, statusEl, btn){
+    // Copy + Download always work. Send needs the connect secret.
+    return md;
+  }
+  function copy(md, statusEl){
+    navigator.clipboard.writeText(md).then(function(){ flash(statusEl,"Copied ✓"); },
+      function(){ var t=document.createElement("textarea"); t.value=md; document.body.appendChild(t); t.select(); try{document.execCommand("copy");flash(statusEl,"Copied ✓");}catch(e){flash(statusEl,"Copy failed");} document.body.removeChild(t); });
+  }
+  function download(md, fname, statusEl){
+    var b=new Blob([md],{type:"text/markdown"}); var u=URL.createObjectURL(b);
+    var a=document.createElement("a"); a.href=u; a.download=fname; document.body.appendChild(a); a.click();
+    document.body.removeChild(a); URL.revokeObjectURL(u); flash(statusEl,"Downloaded ✓");
+  }
+  function send(kind, md, d, statusEl){
+    var secret = localStorage.getItem("hamham-writeback-secret");
+    if(!secret){ flash(statusEl,"Open the connect bookmark once to enable Send"); return; }
+    flash(statusEl,"Sending…");
+    fetch(WORKER + "/drop", {method:"POST", headers:{"Content-Type":"application/json","X-Daily-Secret":secret},
+      body: JSON.stringify({kind:kind, day:d, md:md})})
+      .then(function(r){ flash(statusEl, r.ok ? "Sent to inbox ✓" : "Send failed ("+r.status+")"); })
+      .catch(function(){ flash(statusEl,"Send failed (offline?)"); });
+  }
+  var flashT;
+  function flash(el, msg){ if(!el) return; el.textContent=msg; clearTimeout(flashT); flashT=setTimeout(function(){el.textContent="";}, 4000); }
+
+  // ---------- Field Notes ----------
+  (function(){
+    var sec = document.getElementById("fieldnotes-section"); if(!sec) return;
+    var d = day(sec), st = load("fn", d);
+    st.picks = st.picks || {}; st.answers = st.answers || {};
+    var theme = (sec.querySelector(".fn-theme")||{}).dataset ? sec.querySelector(".fn-theme").dataset.theme : "";
+    sec.querySelectorAll(".fn-tot").forEach(function(row, i){
+      var key = i;
+      row.querySelectorAll(".fn-pick").forEach(function(btn){
+        if(st.picks[key]===btn.dataset.side) btn.classList.add("on");
+        btn.addEventListener("click", function(){
+          row.querySelectorAll(".fn-pick").forEach(function(b){b.classList.remove("on");});
+          if(st.picks[key]===btn.dataset.side){ delete st.picks[key]; }
+          else { btn.classList.add("on"); st.picks[key]=btn.dataset.side; }
+          save("fn", d, st);
+        });
+      });
+    });
+    sec.querySelectorAll(".fn-answer").forEach(function(inp, i){
+      if(st.answers["q"+i]) inp.value = st.answers["q"+i];
+      inp.addEventListener("input", function(){ st.answers["q"+i]=inp.value; save("fn", d, st); });
+    });
+    var plank = sec.querySelector(".fn-plank-in");
+    if(plank){ if(st.plank) plank.value=st.plank; plank.addEventListener("input", function(){ st.plank=plank.value; save("fn", d, st); }); }
+    function md(){
+      var out = "## Field Notes — " + d + "\n\n### This or That\n_Theme: " + theme + "_\n";
+      var any=false;
+      sec.querySelectorAll(".fn-tot").forEach(function(row,i){
+        var side = st.picks[i]; if(!side) return; any=true;
+        var choice = side==="a" ? row.dataset.a : row.dataset.b;
+        out += "- " + row.dataset.a + " vs " + row.dataset.b + " → " + choice + "\n";
+      });
+      if(!any) out += "- (none picked)\n";
+      var opens="";
+      sec.querySelectorAll(".fn-answer").forEach(function(inp,i){ if(inp.value.trim()){ opens += "- " + inp.dataset.q + " → " + inp.value.trim() + "\n"; }});
+      if(plank && plank.value.trim()) opens += "- Plank held → " + plank.value.trim() + " sec\n";
+      if(opens) out += "\n### Open Answer\n" + opens;
+      return out;
+    }
+    var stat = sec.querySelector(".fn-status");
+    sec.querySelector(".fn-copy").onclick=function(){copy(md(),stat);};
+    sec.querySelector(".fn-download").onclick=function(){download(md(),"fieldnotes-"+d+".md",stat);};
+    sec.querySelector(".fn-send").onclick=function(){send("fieldnotes",md(),d,stat);};
+  })();
+
+  // ---------- Movies ----------
+  (function(){
+    var sec = document.getElementById("movies-section"); if(!sec) return;
+    var d = day(sec), st = load("mv", d); st.marks = st.marks || {};
+    sec.querySelectorAll(".mv-row").forEach(function(row){
+      var id = row.dataset.title + "|" + row.dataset.year;
+      row.querySelectorAll(".mv-mark").forEach(function(btn){
+        if(st.marks[id]===btn.dataset.mark) btn.classList.add("on");
+        btn.addEventListener("click", function(){
+          row.querySelectorAll(".mv-mark").forEach(function(b){b.classList.remove("on");});
+          if(st.marks[id]===btn.dataset.mark){ delete st.marks[id]; }
+          else { btn.classList.add("on"); st.marks[id]=btn.dataset.mark; }
+          save("mv", d, st);
+        });
+      });
+    });
+    function md(){
+      var out = "## Movie Checklist — " + d + "\n\n"; var any=false;
+      sec.querySelectorAll(".mv-row").forEach(function(row){
+        var id = row.dataset.title + "|" + row.dataset.year; var mk = st.marks[id]; if(!mk) return; any=true;
+        var tail = mk==="loved" ? ", loved" : mk==="hated" ? ", hated" : "";
+        out += "- " + row.dataset.title + " (" + row.dataset.year + ") → seen" + tail + "\n";
+      });
+      if(!any) out += "- (none marked)\n";
+      return out;
+    }
+    var stat = sec.querySelector(".mv-status");
+    sec.querySelector(".mv-copy").onclick=function(){copy(md(),stat);};
+    sec.querySelector(".mv-download").onclick=function(){download(md(),"movies-"+d+".md",stat);};
+    sec.querySelector(".mv-send").onclick=function(){send("movies",md(),d,stat);};
+  })();
+
+  // ---------- Jukebox ----------
+  (function(){
+    var sec = document.getElementById("jukebox-section"); if(!sec) return;
+    var d = day(sec), st = load("jb", d); st.rates = st.rates || {};
+    sec.querySelectorAll(".jb-row").forEach(function(row){
+      var id = row.dataset.name;
+      function paint(){
+        var r = st.rates[id];
+        row.querySelectorAll(".jb-star").forEach(function(b){ b.classList.toggle("on", typeof r === "number" && +b.dataset.n <= r); });
+        row.querySelectorAll(".jb-flag").forEach(function(b){ b.classList.toggle("on", r === b.dataset.mark); });
+      }
+      paint();
+      row.querySelectorAll(".jb-star").forEach(function(btn){
+        btn.addEventListener("click", function(){
+          var n = +btn.dataset.n;
+          if(st.rates[id]===n){ delete st.rates[id]; } else { st.rates[id]=n; }
+          save("jb", d, st); paint();
+        });
+      });
+      row.querySelectorAll(".jb-flag").forEach(function(btn){
+        btn.addEventListener("click", function(){
+          var mk = btn.dataset.mark;
+          if(st.rates[id]===mk){ delete st.rates[id]; } else { st.rates[id]=mk; }
+          save("jb", d, st); paint();
+        });
+      });
+    });
+    function md(){
+      var out = "## Jukebox — " + d + "\n\n"; var any=false;
+      sec.querySelectorAll(".jb-row").forEach(function(row){
+        var r = st.rates[row.dataset.name]; if(!r) return; any=true;
+        var tail = r==="nh" ? "never heard of them" : r==="dl" ? "don't listen to them" : r + "/5";
+        out += "- " + row.dataset.name + " [" + row.dataset.lane + "] → " + tail + "\n";
+      });
+      if(!any) out += "- (none rated)\n";
+      return out;
+    }
+    var stat = sec.querySelector(".jb-status");
+    sec.querySelector(".jb-copy").onclick=function(){copy(md(),stat);};
+    sec.querySelector(".jb-download").onclick=function(){download(md(),"jukebox-"+d+".md",stat);};
+    sec.querySelector(".jb-send").onclick=function(){send("jukebox",md(),d,stat);};
+  })();
+})();
+</script>
+</body>
+</html>

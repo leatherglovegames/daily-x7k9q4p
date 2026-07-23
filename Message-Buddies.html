@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Message the Buddies — Marquee Press</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;700&family=Bodoni+Moda:ital,wght@0,400;0,500;0,700;0,900;1,400;1,700;1,900&family=Lora:ital,wght@0,400;0,500;0,700;1,400&family=IBM+Plex+Mono:wght@300;400;500;700&family=IBM+Plex+Sans:wght@400;500;700&family=Bowlby+One&display=swap" rel="stylesheet">
+<style>
+:root {
+  --paper: #f1e8d2;
+  --paper-dark: #e8dcc0;
+  --paper-deep: #ddcfa8;
+  --ink: #2c1c0e;
+  --ink-soft: #5a4634;
+  --ink-faint: #7a6750;
+  --marquee-red: #b32027;
+  --marquee-red-dark: #851a1f;
+  --marquee-gold: #f5d447;
+  --cool-accent: #0d5c5e;
+  --penguin-orange: #e85a26;
+  --forest: #1b6e2a;
+  --greta-purple: #6e3b8a;
+  --melissa-pink: #c44a7e;
+  --font-body: 'Iowan Old Style', 'Lora', Georgia, serif;
+  --font-mono: 'IBM Plex Mono', 'Courier New', monospace;
+  --font-display-serif: 'Bodoni Moda', Georgia, serif;
+  --font-heavy: 'Bowlby One', sans-serif;
+  --font-sans: 'IBM Plex Sans', sans-serif;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  background-image:
+    radial-gradient(circle at 1px 1px,rgba(255,20,147,0.04) 1px,transparent 1.5px),
+    radial-gradient(circle at 3px 3px,rgba(0,206,209,0.04) 1px,transparent 1.5px),
+    radial-gradient(circle at 2px 2px,rgba(0,0,0,0.10) 1px,transparent 1.5px);
+  background-size: 4px 4px, 4px 4px, 5px 5px;
+  border-top: 14px solid var(--penguin-orange);
+  border-bottom: 14px solid var(--penguin-orange);
+  padding-bottom: 60px;
+}
+
+a { color: var(--cool-accent); font-style: italic; font-weight: 700; text-decoration: none; }
+a:hover { color: var(--marquee-red); }
+strong { color: var(--ink); font-weight: 700; }
+em { font-style: italic; color: var(--ink); }
+
+/* TOP BACK BAR */
+.topbar {
+  background: var(--ink);
+  color: var(--paper);
+  padding: 12px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+.topbar a.back {
+  color: var(--marquee-gold);
+  font-family: var(--font-mono);
+  font-style: normal;
+  font-weight: 700;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.topbar a.back::before { content: "←"; font-size: 14px; }
+.topbar .right { color: var(--marquee-gold); }
+
+/* SPEC STRIP */
+.spec-strip-top {
+  background: var(--penguin-orange);
+  color: #f5ead4;
+  padding: 12px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+.spec-strip-top .roundel {
+  background: var(--penguin-orange);
+  color: #f5ead4;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 13px;
+  border: 2px solid var(--ink);
+  box-shadow: inset 0 0 0 4px var(--penguin-orange), inset 0 0 0 5px #f5ead4;
+}
+
+/* HERO */
+.hero {
+  background: var(--ink);
+  color: var(--paper);
+  padding: 48px 32px 60px;
+  min-height: 320px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.hero::before {
+  content: "";
+  position: absolute;
+  top: -50px;
+  right: -60px;
+  width: 220px;
+  height: 220px;
+  background: var(--marquee-red);
+  transform: rotate(15deg);
+}
+.hero .kicker {
+  position: relative;
+  z-index: 2;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--marquee-red);
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+.hero .title {
+  position: relative;
+  z-index: 2;
+  font-family: var(--font-heavy);
+  font-size: 40px;
+  line-height: 1;
+  margin-top: 10px;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  transform: rotate(-9deg);
+  transform-origin: left center;
+  letter-spacing: 0.005em;
+  word-break: keep-all;
+}
+.hero .title .line2 { color: var(--marquee-gold); }
+.hero .subtitle {
+  position: relative;
+  z-index: 2;
+  font-family: var(--font-body);
+  font-style: italic;
+  font-size: 18px;
+  color: var(--marquee-gold);
+  margin-top: 22px;
+  transform: rotate(1deg);
+}
+
+/* MAIN */
+main {
+  max-width: 820px;
+  margin: 32px auto 0;
+  padding: 0 24px;
+}
+
+/* TWO BUDDY COMPOSE CARDS — bordered card layout R6 Q10 */
+.buddies {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  margin-top: 20px;
+}
+
+.buddy-card {
+  border: 1px solid var(--ink);
+  border-radius: 6px;
+  background: var(--paper);
+  overflow: hidden;
+}
+.buddy-card .buddy-header {
+  padding: 14px 20px;
+  color: #f5ead4;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-family: var(--font-sans);
+}
+.buddy-card.greta .buddy-header { background: var(--greta-purple); }
+.buddy-card.melissa .buddy-header { background: var(--melissa-pink); }
+
+.buddy-card .avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: #f5ead4;
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-heavy);
+  font-size: 18px;
+  border: 2px solid var(--ink);
+  box-shadow: inset 0 0 0 4px #f5ead4, inset 0 0 0 5px var(--ink);
+}
+.buddy-card .header-text { flex: 1; }
+.buddy-card .header-text .name {
+  font-family: var(--font-heavy);
+  font-size: 20px;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  line-height: 1;
+}
+.buddy-card .header-text .sub {
+  font-family: var(--font-body);
+  font-style: italic;
+  font-size: 13px;
+  margin-top: 4px;
+  opacity: 0.9;
+}
+.buddy-card .header-status {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  background: rgba(0,0,0,0.3);
+  padding: 4px 10px;
+  border-radius: 30px;
+  font-weight: 700;
+}
+.buddy-card .header-status::before {
+  content: "●";
+  color: var(--marquee-gold);
+  margin-right: 6px;
+}
+
+.buddy-card .body {
+  padding: 20px;
+}
+
+.buddy-card textarea {
+  width: 100%;
+  min-height: 120px;
+  padding: 14px;
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--ink);
+  background: var(--paper-dark);
+  border: 1px solid var(--ink);
+  border-radius: 6px;
+  resize: vertical;
+  outline: none;
+}
+.buddy-card textarea:focus {
+  border-color: var(--marquee-red);
+  box-shadow: 2px 2px 0 var(--cool-accent);
+}
+.buddy-card textarea::placeholder {
+  color: var(--ink-faint);
+  font-style: italic;
+}
+
+.buddy-card .toolbar {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 12px;
+  align-items: center;
+}
+.buddy-card .quick-btn {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 6px 12px;
+  background: var(--paper-dark);
+  color: var(--ink);
+  border: 1px solid var(--ink);
+  border-radius: 30px;
+  cursor: pointer;
+  font-weight: 700;
+}
+.buddy-card .quick-btn:hover {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.buddy-card .send-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 16px;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.buddy-card .char-count {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ink-faint);
+  letter-spacing: 0.08em;
+}
+.buddy-card .send-btn {
+  background: var(--penguin-orange);
+  color: #f5ead4;
+  border: 1px solid var(--ink);
+  border-radius: 30px;
+  padding: 11px 26px;
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: box-shadow 0.15s, transform 0.1s;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.buddy-card .send-btn:hover {
+  box-shadow: 3px 3px 0 var(--cool-accent);
+}
+.buddy-card .send-btn.sent {
+  background: var(--forest);
+}
+.buddy-card .send-btn::before { content: "✉"; font-size: 14px; }
+.buddy-card .send-btn.sent::before { content: "★"; }
+
+/* SEND BOTH FOOTER ACTION */
+.send-both {
+  background: var(--ink);
+  color: var(--paper);
+  padding: 24px;
+  margin: 32px 0 0;
+  text-align: center;
+  border: 6px double var(--marquee-gold);
+}
+.send-both .label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.3em;
+  color: var(--marquee-gold);
+  text-transform: uppercase;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+.send-both h3 {
+  font-family: var(--font-heavy);
+  font-size: 24px;
+  margin: 0 0 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+.send-both .send-both-btn {
+  background: var(--marquee-red);
+  color: var(--paper);
+  border: 2px solid var(--marquee-gold);
+  border-radius: 30px;
+  padding: 13px 32px;
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.send-both .send-both-btn:hover {
+  box-shadow: 4px 4px 0 var(--marquee-gold);
+}
+
+/* COLOPHON */
+.colophon {
+  margin: 60px 0 0;
+  padding: 30px 24px;
+  text-align: center;
+  font-family: var(--font-body);
+  font-style: italic;
+  font-size: 13px;
+  color: var(--ink-soft);
+  line-height: 1.6;
+}
+.colophon .logotype {
+  font-family: var(--font-heavy);
+  font-style: normal;
+  font-size: 22px;
+  color: var(--ink);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  display: block;
+  margin: 14px 0 6px;
+}
+.colophon hr {
+  border: 0;
+  border-top: 1px solid var(--ink);
+  width: 160px;
+  margin: 8px auto;
+}
+
+@media (max-width: 720px) {
+  .hero { padding: 36px 20px 48px; min-height: 280px; }
+  .hero .title { font-size: 28px; line-height: 1.05; }
+  .hero .subtitle { font-size: 16px; margin-top: 18px; }
+  .hero::before { width: 140px; height: 140px; top: -30px; right: -30px; }
+  main { padding: 0 16px; }
+  .spec-strip-top { flex-direction: column; align-items: stretch; gap: 8px; padding: 10px 16px; text-align: center; }
+}
+@media (max-width: 480px) {
+  .hero { padding: 32px 16px 44px; min-height: 260px; }
+  .hero .title { font-size: 24px; line-height: 1.1; transform: rotate(-6deg); }
+  .hero .kicker { font-size: 11px; letter-spacing: 0.22em; }
+  .hero .subtitle { font-size: 14px; transform: rotate(0); margin-top: 14px; }
+  .hero::before { width: 110px; height: 110px; }
+  .topbar { flex-direction: column; gap: 6px; text-align: center; padding: 10px 16px; font-size: 10px; }
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="back" href="index.html">Back to the Daily</a>
+  <span class="right">// Message · Buddies</span>
+</div>
+
+<div class="spec-strip-top">
+  <span>Marquee Press · Buddy Channel</span>
+  <span>Wednesday · May 27, 2026</span>
+  <div class="roundel">✉</div>
+</div>
+
+<div class="hero">
+  <div class="kicker">// QUICK MESSAGE / TWO RECIPIENTS</div>
+  <div class="title">Send to<br><span class="line2">Both Buddies</span></div>
+  <div class="subtitle">— compose, then dispatch to Greta's pixel buddy or Melissa's —</div>
+</div>
+
+<main>
+
+<div class="buddies">
+
+  <!-- GRETA -->
+  <div class="buddy-card greta">
+    <div class="buddy-header">
+      <div class="avatar">G</div>
+      <div class="header-text">
+        <div class="name">Greta-Pixel-Buddy</div>
+        <div class="sub">USB-tethered 8-bit Adam · lives at Mom's house</div>
+      </div>
+      <div class="header-status">Online</div>
+    </div>
+    <div class="body">
+      <textarea id="greta-msg" placeholder="Write something to Greta — the buddy will display it on her desktop. Keep it under 240 characters; it's a tiny 8-bit screen."></textarea>
+      <div class="toolbar">
+        <button class="quick-btn" data-quick="greta" data-text="Hi sweetie, hope school's good. Love you. — Dad">Hi sweetie</button>
+        <button class="quick-btn" data-quick="greta" data-text="Have a good weekend at Mom's. See you Monday. ★">Weekend</button>
+        <button class="quick-btn" data-quick="greta" data-text="Goodnight little one ★★★">Goodnight</button>
+      </div>
+      <div class="send-row">
+        <span class="char-count" id="greta-count">0 / 240</span>
+        <button class="send-btn" id="greta-send">Send to Greta</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MELISSA -->
+  <div class="buddy-card melissa">
+    <div class="buddy-header">
+      <div class="avatar">M</div>
+      <div class="header-text">
+        <div class="name">Melissa-Buddy</div>
+        <div class="sub">Q&amp;A walkthrough paused at Q7 · at home</div>
+      </div>
+      <div class="header-status">Online</div>
+    </div>
+    <div class="body">
+      <textarea id="melissa-msg" placeholder="Write something to Melissa. The buddy delivers it; she can reply too."></textarea>
+      <div class="toolbar">
+        <button class="quick-btn" data-quick="melissa" data-text="Hey love — just checking in. ❤️">Checking in</button>
+        <button class="quick-btn" data-quick="melissa" data-text="Picking up dinner on the way home. Cracker Barrel cheese sticks?">Dinner</button>
+        <button class="quick-btn" data-quick="melissa" data-text="What time tomorrow for Don Q?">Don Q timing</button>
+      </div>
+      <div class="send-row">
+        <span class="char-count" id="melissa-count">0 / 240</span>
+        <button class="send-btn" id="melissa-send">Send to Melissa</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="send-both">
+  <div class="label">// Twin Dispatch</div>
+  <h3>Send to Both Buddies</h3>
+  <button class="send-both-btn" id="send-both">★ Dispatch to Both ★</button>
+</div>
+
+</main>
+
+<footer class="colophon">
+  <hr>
+  Set in Bowlby One, Iowan Old Style, IBM Plex Sans, IBM Plex Mono, and Bodoni Moda.<br>
+  Buddy delivery routed through the Buddy network. Mechanism: TBD (placeholder dispatch).
+  <span class="logotype">MARQUEE PRESS</span>
+  Buddy Channel · S/N 001
+  <hr>
+</footer>
+
+<script>
+// Quick-fill buttons
+document.querySelectorAll('.quick-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const target = btn.dataset.quick;
+    const text = btn.dataset.text;
+    const textarea = document.getElementById(target + '-msg');
+    textarea.value = text;
+    textarea.focus();
+    updateCount(target);
+  });
+});
+
+// Char count
+function updateCount(target) {
+  const ta = document.getElementById(target + '-msg');
+  const counter = document.getElementById(target + '-count');
+  const len = ta.value.length;
+  counter.textContent = `${len} / 240`;
+  counter.style.color = len > 240 ? '#b32027' : '';
+}
+['greta', 'melissa'].forEach(target => {
+  document.getElementById(target + '-msg').addEventListener('input', () => updateCount(target));
+});
+
+// Send buttons — placeholder dispatch (copy to clipboard for now)
+function sendMsg(target) {
+  const ta = document.getElementById(target + '-msg');
+  const btn = document.getElementById(target + '-send');
+  if (!ta.value.trim()) { ta.focus(); return; }
+
+  // Placeholder: copy to clipboard so Adam can paste into the actual channel
+  navigator.clipboard.writeText(`[To ${target}]\n${ta.value}`).catch(() => {});
+
+  const original = btn.textContent;
+  btn.classList.add('sent');
+  btn.textContent = 'Queued ★';
+  setTimeout(() => {
+    btn.classList.remove('sent');
+    btn.textContent = original;
+  }, 2000);
+}
+document.getElementById('greta-send').addEventListener('click', () => sendMsg('greta'));
+document.getElementById('melissa-send').addEventListener('click', () => sendMsg('melissa'));
+
+// Send both
+document.getElementById('send-both').addEventListener('click', () => {
+  sendMsg('greta');
+  sendMsg('melissa');
+  const btn = document.getElementById('send-both');
+  const original = btn.textContent;
+  btn.textContent = '★ Dispatched to Both ★';
+  setTimeout(() => btn.textContent = original, 2200);
+});
+</script>
+
+</body>
+</html>
