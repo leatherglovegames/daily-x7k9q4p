@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Melissa-Pixel-Buddy — Marquee Press</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;700&family=Bodoni+Moda:ital,wght@0,400;0,500;0,700;0,900;1,400;1,700;1,900&family=Lora:ital,wght@0,400;0,500;0,700;1,400&family=IBM+Plex+Mono:wght@300;400;500;700&family=IBM+Plex+Sans:wght@400;500;700&family=Bowlby+One&display=swap" rel="stylesheet">
+<style>
+:root {
+  --paper: #f1e8d2;
+  --paper-dark: #e8dcc0;
+  --paper-deep: #ddcfa8;
+  --ink: #2c1c0e;
+  --ink-soft: #5a4634;
+  --ink-faint: #7a6750;
+  --marquee-red: #b32027;
+  --marquee-red-dark: #851a1f;
+  --marquee-gold: #f5d447;
+  --marquee-gold-dark: #c9a917;
+  --cool-accent: #0d5c5e;
+  --penguin-orange: #e85a26;
+  --forest: #1b6e2a;
+  --melissa-pink: #c44a7e;
+  --font-body: 'Iowan Old Style', 'Lora', Georgia, serif;
+  --font-mono: 'IBM Plex Mono', 'Courier New', monospace;
+  --font-display-serif: 'Bodoni Moda', Georgia, serif;
+  --font-heavy: 'Bowlby One', sans-serif;
+  --font-sans: 'IBM Plex Sans', sans-serif;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+html { color-scheme: light; }
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  background-image:
+    radial-gradient(circle at 1px 1px,rgba(255,20,147,0.04) 1px,transparent 1.5px),
+    radial-gradient(circle at 3px 3px,rgba(0,206,209,0.04) 1px,transparent 1.5px),
+    radial-gradient(circle at 2px 2px,rgba(0,0,0,0.10) 1px,transparent 1.5px);
+  background-size: 4px 4px, 4px 4px, 5px 5px;
+  border-top: 14px solid var(--penguin-orange);
+  border-bottom: 14px solid var(--penguin-orange);
+  padding-bottom: 60px;
+}
+
+a { color: var(--cool-accent); font-style: italic; font-weight: 700; text-decoration: none; }
+a:hover { color: var(--marquee-red); }
+strong { color: var(--ink); font-weight: 700; }
+em { font-style: italic; color: var(--ink); }
+
+/* TOP BACK BAR */
+.topbar {
+  background: var(--ink);
+  color: var(--paper);
+  padding: 12px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+.topbar a.back {
+  color: var(--marquee-gold);
+  font-family: var(--font-mono);
+  font-style: normal;
+  font-weight: 700;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.topbar a.back::before { content: "\2190"; font-size: 14px; }
+.topbar .right { color: var(--marquee-gold); }
+
+/* SPEC STRIP */
+.spec-strip {
+  background: var(--penguin-orange);
+  color: #f5ead4;
+  padding: 12px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.spec-strip .roundel {
+  background: var(--penguin-orange);
+  color: #f5ead4;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 13px;
+  border: 2px solid var(--ink);
+  box-shadow: inset 0 0 0 4px var(--penguin-orange), inset 0 0 0 5px #f5ead4;
+  flex-shrink: 0;
+}
+
+/* HERO */
+.hero {
+  background: var(--ink);
+  color: var(--paper);
+  padding: 48px 32px 60px;
+  min-height: 320px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.hero::before {
+  content: "";
+  position: absolute;
+  top: -50px;
+  right: -60px;
+  width: 220px;
+  height: 220px;
+  background: var(--melissa-pink);
+  transform: rotate(15deg);
+}
+.hero .kicker {
+  position: relative;
+  z-index: 2;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--melissa-pink);
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+.hero .title {
+  position: relative;
+  z-index: 2;
+  font-family: var(--font-heavy);
+  font-size: 40px;
+  line-height: 1;
+  margin-top: 10px;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  transform: rotate(-9deg);
+  transform-origin: left center;
+  letter-spacing: 0.005em;
+  word-break: keep-all;
+}
+.hero .title .line2 { color: var(--marquee-gold); }
+.hero .subtitle {
+  position: relative;
+  z-index: 2;
+  font-family: var(--font-body);
+  font-style: italic;
+  font-size: 18px;
+  color: var(--marquee-gold);
+  margin-top: 22px;
+  transform: rotate(1deg);
+}
+
+/* MAIN */
+main {
+  max-width: 820px;
+  margin: 32px auto 0;
+  padding: 0 24px;
+}
+
+/* RISO RULE */
+.reg-rule {
+  margin: 16px 0 24px;
+  height: 4px;
+  position: relative;
+  clear: both;
+}
+.reg-rule::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: var(--marquee-red);
+}
+.reg-rule::after {
+  content: "";
+  position: absolute;
+  top: 2px; left: 1px; right: -1px;
+  height: 2px;
+  background: var(--cool-accent);
+}
+
+/* SECTION */
+.section { margin-bottom: 48px; }
+.section-head {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin: 0;
+}
+.section-head .num {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.2em;
+  color: var(--melissa-pink);
+  font-weight: 700;
+  text-transform: uppercase;
+}
+.section-head .label {
+  font-family: var(--font-heavy);
+  font-weight: 400;
+  font-size: 22px;
+  line-height: 1.15;
+  text-transform: uppercase;
+  color: var(--ink);
+  letter-spacing: 0.01em;
+}
+
+/* STATUS PILL */
+.pill {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: 30px;
+  white-space: nowrap;
+  display: inline-block;
+}
+.pill.done { background: var(--forest); color: var(--paper); }
+.pill.pink { background: var(--melissa-pink); color: var(--paper); }
+.pill.maint { background: var(--paper-dark); color: var(--ink); border: 1px solid var(--ink); }
+
+/* SIDEBAR */
+.sidebar {
+  background: var(--paper-dark);
+  border-top: 4px solid var(--melissa-pink);
+  border-bottom: 4px solid var(--melissa-pink);
+  padding: 16px 24px;
+  margin: 24px 0;
+}
+.sidebar .sidebar-label {
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 10px;
+  color: var(--melissa-pink);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+.sidebar p {
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: 14px;
+  color: var(--ink);
+  margin: 4px 0 0;
+  line-height: 1.5;
+}
+
+/* CARD */
+.card {
+  border: 1px solid var(--ink);
+  border-radius: 6px;
+  background: var(--paper);
+  padding: 16px 24px;
+  margin-bottom: 12px;
+}
+
+/* PULL QUOTE */
+.pullquote {
+  border-left: 4px solid var(--melissa-pink);
+  box-shadow: 1px 1px 0 var(--cool-accent);
+  padding: 14px 18px;
+  background: var(--paper);
+  font-family: var(--font-body);
+  font-style: italic;
+  font-size: 17px;
+  color: var(--ink);
+  line-height: 1.4;
+  margin: 24px 0;
+}
+
+/* DROP CAP */
+.dropcap {
+  font-family: var(--font-display-serif);
+  font-weight: 900;
+  font-size: 68px;
+  color: var(--melissa-pink);
+  float: left;
+  line-height: 0.85;
+  margin: 6px 12px 0 0;
+}
+
+/* FEATURE LIST */
+.feature-list {
+  list-style: none;
+  padding: 0;
+  margin: 12px 0;
+}
+.feature-list li {
+  padding: 8px 0;
+  border-bottom: 1px solid var(--paper-dark);
+  font-size: 15px;
+  line-height: 1.45;
+}
+.feature-list li:last-child { border-bottom: none; }
+.feature-list li strong {
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.04em;
+}
+
+/* CALLOUT */
+.callout {
+  margin: 24px 0;
+  padding: 14px 18px;
+  border-left: 4px solid var(--marquee-gold);
+  background: var(--paper-deep);
+  border-radius: 0 6px 6px 0;
+}
+.callout .callout-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--marquee-gold-dark);
+  margin-bottom: 4px;
+  font-weight: 700;
+}
+.callout p { margin: 4px 0 0; font-size: 15px; }
+
+/* BREAK DINGBAT */
+.break {
+  text-align: center;
+  color: var(--ink);
+  letter-spacing: 0.8em;
+  margin: 16px 0;
+  font-size: 14px;
+}
+.break::before { content: "* * *"; }
+
+/* COLOPHON */
+.colophon {
+  margin: 60px 0 0;
+  padding: 30px 24px;
+  text-align: center;
+  font-family: var(--font-body);
+  font-style: italic;
+  font-size: 13px;
+  color: var(--ink-soft);
+  line-height: 1.6;
+}
+.colophon .logotype {
+  font-family: var(--font-heavy);
+  font-style: normal;
+  font-size: 22px;
+  color: var(--ink);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  display: block;
+  margin: 14px 0 6px;
+}
+.colophon hr {
+  border: 0;
+  border-top: 1px solid var(--ink);
+  width: 160px;
+  margin: 8px auto;
+}
+
+@media (max-width: 720px) {
+  .hero { padding: 36px 20px 48px; min-height: 280px; }
+  .hero .title { font-size: 28px; line-height: 1.05; }
+  .hero .subtitle { font-size: 16px; margin-top: 18px; }
+  .hero::before { width: 140px; height: 140px; top: -30px; right: -30px; }
+  main { padding: 0 16px; }
+  .spec-strip { flex-direction: column; align-items: stretch; gap: 8px; padding: 10px 16px; text-align: center; }
+}
+@media (max-width: 480px) {
+  .hero { padding: 32px 16px 44px; min-height: 260px; }
+  .hero .title { font-size: 24px; line-height: 1.1; transform: rotate(-6deg); }
+  .hero .kicker { font-size: 11px; letter-spacing: 0.22em; }
+  .hero .subtitle { font-size: 14px; transform: rotate(0); margin-top: 14px; }
+  .hero::before { width: 110px; height: 110px; }
+  .topbar { flex-direction: column; gap: 6px; text-align: center; padding: 10px 16px; font-size: 10px; }
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="back" href="index.html">Back to the Daily</a>
+  <span class="right">// Melissa-Pixel-Buddy</span>
+</div>
+
+<div class="spec-strip">
+  <span>Marquee Press · Project File</span>
+  <span>Shipped v2.6 · Maintenance Mode</span>
+  <div class="roundel">M</div>
+</div>
+
+<div class="hero">
+  <div class="kicker">// Active Project / Hardware Buddy</div>
+  <div class="title">Melissa<br><span class="line2">Pixel Buddy</span></div>
+  <div class="subtitle">— Adam Dream Date: a pixel-art dating show on a tiny screen —</div>
+</div>
+
+<main>
+
+<!-- STATUS -->
+<div class="section">
+  <div class="section-head">
+    <span class="num">01</span>
+    <span class="label">Status</span>
+  </div>
+  <div class="reg-rule"></div>
+  <p><span class="pill done">Shipped v2.6</span> <span class="pill maint">Maintenance</span></p>
+  <p>A pixel-art dating-show game built for Adam's fiancee Melissa, running on the same ESP32 CYD hardware as the Greta Buddy. Full game loop plays end-to-end. Bidirectional messaging live via Cloudflare Worker. Currently in maintenance mode with Q&A content walkthrough paused at Q13.</p>
+</div>
+
+<!-- WHAT IT IS -->
+<div class="section">
+  <div class="section-head">
+    <span class="num">02</span>
+    <span class="label">The Game</span>
+  </div>
+  <div class="reg-rule"></div>
+  <p><span class="dropcap">T</span>hree multiverse pixel-art Adams stand behind curtains, Dating Game style (1965). Melissa interviews them through a Q&A round, picks her favorite, watches a curtain reveal, then plays through a five-choice date. Score high enough and she takes him home with a randomized reveal from the END tile pool. Tone: adult, flirty, romantic. Framing: fun game, not competitive.</p>
+
+  <div class="pullquote">
+    INTRO &rarr; Q&amp;A &times; 3 &rarr; PICK &rarr; REVEAL &rarr; DATE &times; 5 &rarr; OUTCOME &rarr; REPLAY
+  </div>
+
+  <ul class="feature-list">
+    <li><strong>17 bachelor archetypes</strong> — biker, chef, cowboy, director, lawyer, surfer, tux, wrestler, renfest, firefighter, rockstar, doctor, pirate, astronaut, detective, lumberjack, vampire count</li>
+    <li><strong>60-question Q&A bank</strong> — 8 answers each, Mr. Show humor pass, curated voice</li>
+    <li><strong>Scoring</strong> — love +1, fine +0.5, hate -0.5 + early end. Threshold: 3+ hearts to take him home</li>
+    <li><strong>Hidden mechanics</strong> — SUPER answers (~10% stealth roll), gay-reveal (negative score + coin flip), vampire secret END (~25% override)</li>
+    <li><strong>52 pixel-art tiles</strong> — Hyper Light Drifter art direction, RGB565 native at 100x100</li>
+    <li><strong>Audio jingles</strong> — ~10 cues via the on-board speaker</li>
+  </ul>
+</div>
+
+<!-- HARDWARE -->
+<div class="section">
+  <div class="section-head">
+    <span class="num">03</span>
+    <span class="label">Hardware</span>
+  </div>
+  <div class="reg-rule"></div>
+
+  <div class="sidebar">
+    <div class="sidebar-label">Platform</div>
+    <p>ESP32-2432S028R "Cheap Yellow Display" (CYD) — same board as Greta-Buddy</p>
+  </div>
+
+  <div class="card">
+    <p style="margin:0; font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--melissa-pink); font-weight: 700;">Build Stats (v2.6)</p>
+    <p style="margin: 8px 0 0; font-size: 15px;">Flash: <strong>69.3%</strong> (2.82 MB) &middot; RAM: <strong>35.6%</strong> &middot; Display: 2.8" ILI9341 portrait (240x320)</p>
+  </div>
+</div>
+
+<!-- v2 FEATURES -->
+<div class="section">
+  <div class="section-head">
+    <span class="num">04</span>
+    <span class="label">v2 Stack</span>
+  </div>
+  <div class="reg-rule"></div>
+  <p>v2 added a full WiFi + NTP + messaging stack on top of the base game:</p>
+  <ul class="feature-list">
+    <li><strong>Neon-heart screensaver</strong> — 17 Adams crossfade through parametric pink + cyan heart after 5 min idle</li>
+    <li><strong>On-device WiFi setup</strong> — SSID picker, soft keyboard, NVS save, auto-reconnect</li>
+    <li><strong>Bidirectional mail</strong> — outbound compose on device, inbound polling from Cloudflare Worker every 60s</li>
+    <li><strong>Global long-press menu</strong> — hold 2s on any screen for quick access to mail, settings, resume, quit</li>
+  </ul>
+</div>
+
+<!-- COMING SOON -->
+<div class="callout">
+  <div class="callout-label">Coming Soon</div>
+  <p>Full detail page with the v2.6 Claude Design UI pass (Heart Lockets, Polaroid Notes, Marquee Bulbs keyboard, Letterboard menu), the complete bachelor roster, and the content pipeline breakdown.</p>
+</div>
+
+<div class="break"></div>
+
+<p style="font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-faint); text-align: center;">See also: <a href="Greta-Buddy.html">Greta-Buddy</a> · <a href="Message-Buddies.html">Message the Buddies</a></p>
+
+</main>
+
+<footer class="colophon">
+  <hr>
+  Set in Bowlby One, Iowan Old Style, IBM Plex Sans, IBM Plex Mono, and Bodoni Moda.
+  <span class="logotype">MARQUEE PRESS</span>
+  Project File · Melissa-Pixel-Buddy · S/N 003
+  <hr>
+</footer>
+
+</body>
+</html>
